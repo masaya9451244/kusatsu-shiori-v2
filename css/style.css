@@ -1,0 +1,889 @@
+/* ========== 変数定義 ========== */
+:root {
+    --brick-onsen: #B96A55;
+    --onsen-white: #F8F7F4;
+    --warm-beige: #E9DDC9;
+    --wood-brown: #C6A07C;
+    --steam-pink: #F1D6D2;
+    --deep-brick: #8E4B3A;
+
+    --font-heading: 'M PLUS Rounded 1c', 'Noto Sans JP', sans-serif;
+    --font-body: 'Noto Sans JP', sans-serif;
+    --font-accent: 'Noto Serif JP', serif;
+}
+
+/* ========== リセット・ベース ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--onsen-white);
+    color: #333;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ========== 共通スタイル ========== */
+.screen {
+    display: none;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.screen.active {
+    display: block;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ========== 選択画面 ========== */
+#select-screen {
+    background: linear-gradient(180deg, var(--onsen-white) 0%, var(--steam-pink) 50%, var(--brick-onsen) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.select-container {
+    text-align: center;
+    max-width: 400px;
+}
+
+.select-decoration {
+    margin-bottom: 30px;
+}
+
+.select-illust {
+    width: 150px;
+    height: 150px;
+    opacity: 0.8;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+    object-fit: contain;
+}
+
+/* 画像が読み込めない場合のプレースホルダー */
+img {
+    background: var(--warm-beige);
+}
+
+img[src$=".png"]:not([src^="data"]),
+img[src$=".jpg"]:not([src^="data"]) {
+    background: linear-gradient(135deg, var(--warm-beige) 0%, var(--steam-pink) 100%);
+}
+
+.select-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--deep-brick);
+    margin-bottom: 10px;
+}
+
+.select-subtitle {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.select-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.select-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px 30px;
+    border: none;
+    border-radius: 50px;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.select-btn.primary {
+    background: linear-gradient(135deg, var(--brick-onsen), var(--deep-brick));
+    color: white;
+}
+
+.select-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(185, 106, 85, 0.4);
+}
+
+.select-btn.secondary {
+    background: white;
+    color: var(--brick-onsen);
+    border: 2px solid var(--brick-onsen);
+}
+
+.select-btn.secondary:hover {
+    background: var(--steam-pink);
+}
+
+.btn-icon {
+    font-size: 1.3rem;
+}
+
+/* ========== サプライズ演出 共通 ========== */
+.surprise-screen {
+    background: linear-gradient(180deg, var(--onsen-white) 0%, var(--steam-pink) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.surprise-content {
+    text-align: center;
+    max-width: 400px;
+    z-index: 10;
+}
+
+.next-btn {
+    margin-top: 40px;
+    padding: 15px 40px;
+    background: var(--brick-onsen);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.next-btn:hover {
+    background: var(--deep-brick);
+    transform: translateY(-2px);
+}
+
+.next-btn.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ========== ステップ1: お祝いメッセージ ========== */
+#confetti-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.birthday-message {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--deep-brick);
+    line-height: 1.8;
+    min-height: 100px;
+}
+
+/* ========== ステップ2: 封筒演出 ========== */
+.envelope-intro {
+    font-size: 1.2rem;
+    color: var(--deep-brick);
+    margin-bottom: 30px;
+}
+
+.envelope-container {
+    position: relative;
+    width: 280px;
+    height: 200px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.envelope-body {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(135deg, #f5e6d3, #e8d4c0);
+    border-radius: 5px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    overflow: hidden;
+}
+
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(135deg, #ecdcc8, #dfc9b3);
+    clip-path: polygon(0 0, 50% 80%, 100% 0);
+    transform-origin: top center;
+    transition: transform 0.8s ease;
+    z-index: 2;
+}
+
+.envelope-container.opened .envelope-flap {
+    transform: rotateX(180deg);
+}
+
+.letter {
+    position: absolute;
+    top: 20px;
+    left: 10%;
+    width: 80%;
+    height: 120px;
+    background: white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transform: translateY(0);
+    transition: transform 0.8s ease 0.3s;
+}
+
+.envelope-container.opened .letter {
+    transform: translateY(-80px);
+}
+
+.letter-text {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: var(--deep-brick);
+    line-height: 1.8;
+}
+
+.tap-guide {
+    position: absolute;
+    bottom: -35px;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--brick-onsen);
+    animation: pulse 2s infinite;
+}
+
+.envelope-container.opened .tap-guide {
+    display: none;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ========== ステップ3: スクラッチカード ========== */
+.scratch-intro {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--deep-brick);
+    margin-bottom: 20px;
+}
+
+.scratch-container {
+    position: relative;
+    width: 300px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.scratch-result {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--brick-onsen), var(--deep-brick));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.destination {
+    font-family: var(--font-accent);
+    font-size: 2.5rem;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+#scratch-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+}
+
+.scratch-guide {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--brick-onsen);
+    animation: pulse 2s infinite;
+}
+
+.scratch-container.revealed .scratch-guide {
+    display: none;
+}
+
+.steam-container {
+    position: absolute;
+    bottom: 30%;
+    left: 0;
+    right: 0;
+    height: 200px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.steam {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    animation: steam-rise 3s ease-out infinite;
+}
+
+@keyframes steam-rise {
+    0% {
+        opacity: 0;
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-150px) scale(2);
+    }
+}
+
+/* ========== ステップ4: 宿ティザー ========== */
+.hotel-teaser {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--deep-brick);
+    line-height: 1.8;
+    animation: bounce-text 0.6s ease infinite;
+}
+
+@keyframes bounce-text {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* ========== ステップ5: スライドショー ========== */
+.slideshow-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.slide {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.slide.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide-image {
+    width: 100%;
+    height: 250px;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slide-text {
+    text-align: center;
+}
+
+.slide-main {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--deep-brick);
+    margin-bottom: 10px;
+}
+
+.slide-sub {
+    font-size: 1rem;
+    color: #666;
+}
+
+.slide-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 25px 0;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--warm-beige);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: var(--brick-onsen);
+    transform: scale(1.2);
+}
+
+/* ========== ステップ6: 宿発表 ========== */
+.stars-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.star {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: twinkle 1s ease infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.hotel-reveal {
+    font-family: var(--font-accent);
+    font-size: 2rem;
+    color: var(--deep-brick);
+    animation: scale-in 0.8s ease;
+    z-index: 10;
+    position: relative;
+}
+
+@keyframes scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ========== ステップ7: 締め ========== */
+.closing-message {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--deep-brick);
+    margin-bottom: 40px;
+}
+
+.start-btn {
+    padding: 18px 50px;
+    background: linear-gradient(135deg, var(--brick-onsen), var(--deep-brick));
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(185, 106, 85, 0.4);
+}
+
+.start-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 25px rgba(185, 106, 85, 0.5);
+}
+
+/* ========== メインコンテンツ ========== */
+#main-content {
+    padding-top: 60px;
+}
+
+/* ヘッダー・ナビ */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(248, 247, 244, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 10px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.nav-item {
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    color: #666;
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.nav-item.active {
+    color: var(--deep-brick);
+    background: var(--steam-pink);
+}
+
+.nav-item:hover {
+    color: var(--brick-onsen);
+}
+
+/* メインエリア */
+.main {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* セクション共通 */
+.section {
+    padding: 40px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: var(--deep-brick);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title-icon {
+    font-size: 1.5rem;
+}
+
+/* ========== ホーム（表紙）セクション ========== */
+.intro-section {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(180deg, var(--onsen-white) 0%, var(--steam-pink) 100%);
+    border-radius: 0 0 30px 30px;
+    margin-bottom: 20px;
+}
+
+.intro-illust {
+    margin-bottom: 20px;
+}
+
+.float-illust {
+    width: 180px;
+    height: auto;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.intro-title {
+    font-family: var(--font-accent);
+    font-size: 2.5rem;
+    color: var(--deep-brick);
+    margin-bottom: 5px;
+}
+
+.intro-subtitle {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--brick-onsen);
+    margin-bottom: 15px;
+}
+
+.intro-desc {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.intro-date {
+    display: inline-flex;
+    flex-direction: column;
+    background: white;
+    padding: 15px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.date-label {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.date-main {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--deep-brick);
+    font-weight: 700;
+}
+
+/* ========== 日程セクション ========== */
+.day-card {
+    background: white;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.day-header {
+    background: linear-gradient(135deg, var(--brick-onsen), var(--deep-brick));
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.day-label {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: white;
+    font-weight: 700;
+}
+
+.day-date {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.9);
+}
+
+.timeline {
+    padding: 20px;
+}
+
+.timeline-item {
+    display: flex;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px dashed var(--warm-beige);
+}
+
+.timeline-item:last-child {
+    border-bottom: none;
+}
+
+.time {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    color: var(--brick-onsen);
+    font-weight: 700;
+    min-width: 60px;
+}
+
+.event {
+    flex: 1;
+}
+
+.event-title {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.event-desc {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.event-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: var(--brick-onsen);
+    text-decoration: none;
+    padding: 5px 12px;
+    background: var(--steam-pink);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.event-link:hover {
+    background: var(--brick-onsen);
+    color: white;
+}
+
+/* ========== 観光セクション ========== */
+.spot-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.spot-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.spot-image {
+    height: 180px;
+    overflow: hidden;
+}
+
+.spot-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.spot-card:hover .spot-image img {
+    transform: scale(1.05);
+}
+
+.spot-content {
+    padding: 20px;
+}
+
+.spot-name {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--deep-brick);
+    margin-bottom: 10px;
+}
+
+.spot-desc {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+.spot-meta {
+    font-size: 0.8rem;
+    color: var(--brick-onsen);
+}
+
+/* ========== グルメ・宿 準備中 ========== */
+.preparing-message {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.preparing-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    animation: bounce 2s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.preparing-text {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--brick-onsen);
+    margin-bottom: 5px;
+}
+
+.preparing-sub {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* ========== フッター ========== */
+.footer {
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 20px;
+}
+
+.footer-message {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: var(--brick-onsen);
+    margin-bottom: 5px;
+}
+
+.footer-sub {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* ========== レスポンシブ ========== */
+@media (min-width: 768px) {
+    .select-btn {
+        padding: 20px 50px;
+    }
+
+    .birthday-message {
+        font-size: 2.2rem;
+    }
+
+    .intro-title {
+        font-size: 3rem;
+    }
+
+    .destination {
+        font-size: 3rem;
+    }
+}

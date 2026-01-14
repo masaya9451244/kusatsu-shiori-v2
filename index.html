@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>特別な旅へご招待</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- ========== 選択画面 ========== -->
+    <div id="select-screen" class="screen active">
+        <div class="select-container">
+            <div class="select-decoration">
+                <img src="images/shigureni/onsen-girl.png" alt="" class="select-illust">
+            </div>
+            <h1 class="select-title">ようこそ</h1>
+            <p class="select-subtitle">特別な招待状が届いています</p>
+            <div class="select-buttons">
+                <button id="btn-first-time" class="select-btn primary">
+                    <span class="btn-icon">✨</span>
+                    <span class="btn-text">初めて見る</span>
+                </button>
+                <button id="btn-revisit" class="select-btn secondary">
+                    <span class="btn-icon">📖</span>
+                    <span class="btn-text">もう一度見る</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== サプライズ演出 ========== -->
+    <!-- ステップ1: お祝いメッセージ -->
+    <div id="surprise-step1" class="screen surprise-screen">
+        <canvas id="confetti-canvas"></canvas>
+        <div class="surprise-content">
+            <p class="birthday-message" id="birthday-text"></p>
+            <button id="btn-next-step1" class="next-btn hidden">次へ →</button>
+        </div>
+    </div>
+
+    <!-- ステップ2: 封筒演出 -->
+    <div id="surprise-step2" class="screen surprise-screen">
+        <div class="surprise-content">
+            <p class="envelope-intro">特別な招待状が届いています</p>
+            <div class="envelope-container" id="envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-body">
+                    <div class="letter" id="letter">
+                        <p class="letter-text">今回行く旅行の<br>行き先を発表します。</p>
+                    </div>
+                </div>
+                <p class="tap-guide">タップして開ける</p>
+            </div>
+            <button id="btn-next-step2" class="next-btn hidden">次へ →</button>
+        </div>
+    </div>
+
+    <!-- ステップ3: スクラッチカード -->
+    <div id="surprise-step3" class="screen surprise-screen">
+        <div class="surprise-content">
+            <p class="scratch-intro">行き先は...</p>
+            <div class="scratch-container">
+                <div class="scratch-result">
+                    <p class="destination">草津温泉！</p>
+                </div>
+                <canvas id="scratch-canvas"></canvas>
+                <p class="scratch-guide">★ ここをこすってね ★</p>
+            </div>
+            <div class="steam-container" id="steam-container"></div>
+            <button id="btn-next-step3" class="next-btn hidden">次へ →</button>
+        </div>
+    </div>
+
+    <!-- ステップ4: 宿ティザー -->
+    <div id="surprise-step4" class="screen surprise-screen">
+        <div class="surprise-content">
+            <p class="hotel-teaser" id="hotel-teaser-text"></p>
+            <button id="btn-next-step4" class="next-btn hidden">次へ →</button>
+        </div>
+    </div>
+
+    <!-- ステップ5: 宿の魅力スライドショー -->
+    <div id="surprise-step5" class="screen surprise-screen">
+        <div class="slideshow-container">
+            <div class="slide active" data-slide="0">
+                <div class="slide-image">
+                    <img src="images/photos/hotel-exterior.jpg" alt="外観">
+                </div>
+                <div class="slide-text">
+                    <p class="slide-main">洋館スタイルの欧風リゾートホテル</p>
+                    <p class="slide-sub">ドイツ・グリム童話のテイストを取り入れたお部屋</p>
+                </div>
+            </div>
+            <div class="slide" data-slide="1">
+                <div class="slide-image">
+                    <img src="images/photos/hotel-onsen.jpg" alt="星空テラス">
+                </div>
+                <div class="slide-text">
+                    <p class="slide-main">満天の星を眺める露天風呂</p>
+                    <p class="slide-sub">貸し切り露天風呂も完備</p>
+                </div>
+            </div>
+            <div class="slide" data-slide="2">
+                <div class="slide-image">
+                    <img src="images/photos/hotel-bath.jpg" alt="温泉">
+                </div>
+                <div class="slide-text">
+                    <p class="slide-main">湯畑・万代鉱・湯川の湯</p>
+                    <p class="slide-sub">3つの源泉を堪能</p>
+                </div>
+            </div>
+            <div class="slide" data-slide="3">
+                <div class="slide-image">
+                    <img src="images/photos/hotel-breakfast.jpg" alt="朝食">
+                </div>
+                <div class="slide-text">
+                    <p class="slide-main">ステンドグラスが印象的なレストラン</p>
+                    <p class="slide-sub">バイキング形式の朝食</p>
+                </div>
+            </div>
+            <div class="slide-dots">
+                <span class="dot active" data-dot="0"></span>
+                <span class="dot" data-dot="1"></span>
+                <span class="dot" data-dot="2"></span>
+                <span class="dot" data-dot="3"></span>
+            </div>
+            <button id="btn-next-step5" class="next-btn">次へ →</button>
+        </div>
+    </div>
+
+    <!-- ステップ6: 宿発表 -->
+    <div id="surprise-step6" class="screen surprise-screen">
+        <div class="surprise-content">
+            <div class="stars-container" id="stars-container"></div>
+            <p class="hotel-reveal">🌟 ラビスタ草津ヒルズ！ 🌟</p>
+            <button id="btn-next-step6" class="next-btn">次へ →</button>
+        </div>
+    </div>
+
+    <!-- ステップ7: 締め -->
+    <div id="surprise-step7" class="screen surprise-screen">
+        <div class="surprise-content">
+            <p class="closing-message">素敵な思い出を作ろうね 💕</p>
+            <button id="btn-start-shiori" class="start-btn">しおりを見る →</button>
+        </div>
+    </div>
+
+    <!-- ========== メインコンテンツ ========== -->
+    <div id="main-content" class="screen">
+        <!-- ヘッダー -->
+        <header class="header">
+            <nav class="nav">
+                <a href="#home" class="nav-item active" data-section="home">ホーム</a>
+                <a href="#schedule" class="nav-item" data-section="schedule">日程</a>
+                <a href="#sightseeing" class="nav-item" data-section="sightseeing">観光</a>
+                <a href="#gourmet" class="nav-item" data-section="gourmet">グルメ</a>
+                <a href="#stay" class="nav-item" data-section="stay">宿</a>
+            </nav>
+        </header>
+
+        <!-- メインエリア -->
+        <main class="main">
+            <!-- ホーム（表紙） -->
+            <section id="home" class="section intro-section">
+                <div class="intro-content">
+                    <div class="intro-illust">
+                        <img src="images/shigureni/onsen-couple.png" alt="" class="float-illust">
+                    </div>
+                    <h1 class="intro-title">草津温泉</h1>
+                    <p class="intro-subtitle">ふたりだけのほっこり旅</p>
+                    <p class="intro-desc">湯けむりに包まれて<br>2日間のゆるやかな時間</p>
+                    <div class="intro-date">
+                        <span class="date-label">2025年</span>
+                        <span class="date-main">1/30 - 31</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 日程 -->
+            <section id="schedule" class="section schedule-section">
+                <h2 class="section-title">
+                    <span class="title-icon">📅</span>
+                    旅のスケジュール
+                </h2>
+
+                <!-- Day1 -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-label">Day 1</span>
+                        <span class="day-date">1月30日（木）</span>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="time">8:30</div>
+                            <div class="event">
+                                <div class="event-title">🚗 和光市 出発</div>
+                                <p class="event-desc">いざ草津へ！ドライブ楽しもう</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">12:30</div>
+                            <div class="event">
+                                <div class="event-title">📍 草津 到着</div>
+                                <p class="event-desc">ホテルで荷物を預ける</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">13:00</div>
+                            <div class="event">
+                                <div class="event-title">♨️ 湯畑散策 & ランチ</div>
+                                <p class="event-desc">草津のシンボルを見に行こう</p>
+                                <a href="#gourmet" class="event-link">→ グルメ情報を見る</a>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">14:30</div>
+                            <div class="event">
+                                <div class="event-title">🏨 チェックイン</div>
+                                <p class="event-desc">宿でのんびり過ごそう</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">夜</div>
+                            <div class="event">
+                                <div class="event-title">🌙 自由時間</div>
+                                <p class="event-desc">温泉に浸かったり、星空を眺めたり</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day2 -->
+                <div class="day-card">
+                    <div class="day-header">
+                        <span class="day-label">Day 2</span>
+                        <span class="day-date">1月31日（金）</span>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="time">11:00</div>
+                            <div class="event">
+                                <div class="event-title">🧳 チェックアウト</div>
+                                <p class="event-desc">素敵な時間をありがとう</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="time">11:00〜</div>
+                            <div class="event">
+                                <div class="event-title">📸 草津観光</div>
+                                <p class="event-desc">温泉街をゆっくり散策</p>
+                                <a href="#sightseeing" class="event-link">→ 観光スポットを見る</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 観光 -->
+            <section id="sightseeing" class="section sightseeing-section">
+                <h2 class="section-title">
+                    <span class="title-icon">📸</span>
+                    観光スポット
+                </h2>
+
+                <div class="spot-cards">
+                    <div class="spot-card">
+                        <div class="spot-image">
+                            <img src="images/photos/yubatake.jpg" alt="湯畑">
+                        </div>
+                        <div class="spot-content">
+                            <h3 class="spot-name">♨️ 湯畑</h3>
+                            <p class="spot-desc">草津温泉のシンボル。毎分4,000リットルの温泉が湧き出す様子は圧巻。夜のライトアップも幻想的。</p>
+                            <p class="spot-meta">📍 草津温泉街の中心</p>
+                        </div>
+                    </div>
+
+                    <div class="spot-card">
+                        <div class="spot-image">
+                            <img src="images/photos/nishi.jpg" alt="西の河原公園">
+                        </div>
+                        <div class="spot-content">
+                            <h3 class="spot-name">🏔️ 西の河原公園</h3>
+                            <p class="spot-desc">温泉が川となって流れる幻想的な公園。湯けむりが立ち上る神秘的な光景が広がります。</p>
+                            <p class="spot-meta">📍 湯畑から徒歩15分</p>
+                        </div>
+                    </div>
+
+                    <div class="spot-card">
+                        <div class="spot-image">
+                            <img src="images/photos/netsunoyu.jpg" alt="熱乃湯">
+                        </div>
+                        <div class="spot-content">
+                            <h3 class="spot-name">🎭 熱乃湯（湯もみショー）</h3>
+                            <p class="spot-desc">草津名物「湯もみ」を見学できる施設。「草津よいとこ一度はおいで〜」の歌と共に行われる伝統的な湯もみは必見。</p>
+                            <p class="spot-meta">📍 湯畑前 / 大人600円</p>
+                        </div>
+                    </div>
+
+                    <div class="spot-card">
+                        <div class="spot-image">
+                            <img src="images/photos/kousenji.jpg" alt="光泉寺">
+                        </div>
+                        <div class="spot-content">
+                            <h3 class="spot-name">⛩️ 光泉寺</h3>
+                            <p class="spot-desc">湯畑を見下ろす高台にある古刹。石段を登ると草津温泉街を一望できる絶景スポット。縁結びのパワースポット。</p>
+                            <p class="spot-meta">📍 湯畑から徒歩3分</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- グルメ -->
+            <section id="gourmet" class="section gourmet-section">
+                <h2 class="section-title">
+                    <span class="title-icon">🍽️</span>
+                    グルメ
+                </h2>
+                <div class="preparing-message">
+                    <div class="preparing-icon">🍜</div>
+                    <p class="preparing-text">準備中...</p>
+                    <p class="preparing-sub">美味しいお店を探しています</p>
+                </div>
+            </section>
+
+            <!-- 宿 -->
+            <section id="stay" class="section stay-section">
+                <h2 class="section-title">
+                    <span class="title-icon">🏨</span>
+                    宿泊先
+                </h2>
+                <div class="preparing-message">
+                    <div class="preparing-icon">🛏️</div>
+                    <p class="preparing-text">準備中...</p>
+                    <p class="preparing-sub">詳細情報を追加予定です</p>
+                </div>
+            </section>
+
+            <!-- フッター -->
+            <footer class="footer">
+                <p class="footer-message">素敵な旅になりますように ✿</p>
+                <p class="footer-sub">Happy Birthday Trip 🎂</p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
