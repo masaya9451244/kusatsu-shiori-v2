@@ -91,7 +91,7 @@ function startSurprise() {
 
     // お祝いメッセージをタイプライター表示
     setTimeout(() => {
-        typeWriter('birthday-text', '🎂 菜々穂さん、\nお誕生日おめでとう！ 🎂', 100, () => {
+        typeWriter('birthday-text', '🎂 菜々穂さん、🎂\nお誕生日おめでとう！', 100, () => {
             showButton('btn-next-step1');
         });
     }, 500);

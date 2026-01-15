@@ -313,14 +313,32 @@ img {
     z-index: 5;
 }
 
+/* shigureniイラスト（お祝い画面） */
+.birthday-illust {
+    margin-bottom: 20px;
+}
+
+.birthday-illust-img {
+    width: 150px;
+    height: auto;
+    animation: illust-bounce 3s ease-in-out infinite;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+}
+
+@keyframes illust-bounce {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+}
+
 .birthday-message {
-    font-family: var(--font-heading);
-    font-size: 1.9rem;
+    font-family: var(--font-accent);
+    font-size: 2.2rem;
     color: var(--deep-brick);
-    line-height: 2;
+    line-height: 1.8;
     min-height: 120px;
     text-shadow: 0 2px 15px rgba(255,255,255,0.8);
     position: relative;
+    letter-spacing: 0.05em;
 }
 
 /* 装飾的なハート */
@@ -782,12 +800,30 @@ img {
     background: linear-gradient(180deg, var(--soft-pink) 0%, var(--steam-pink) 50%, var(--brick-onsen) 100%);
 }
 
+/* shigureniイラスト（締め画面） */
+.closing-illust {
+    margin-bottom: 25px;
+}
+
+.closing-illust-img {
+    width: 200px;
+    height: auto;
+    animation: illust-float 4s ease-in-out infinite;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.15));
+}
+
+@keyframes illust-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
 .closing-message {
-    font-family: var(--font-heading);
-    font-size: 1.6rem;
+    font-family: var(--font-accent);
+    font-size: 1.8rem;
     color: var(--deep-brick);
     margin-bottom: 45px;
     text-shadow: 0 2px 10px rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
 }
 
 .start-btn {
