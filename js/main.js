@@ -62,6 +62,12 @@ function goToStep(stepNumber) {
 
     // 各ステップの初期化処理
     switch(stepNumber) {
+        case 3:
+            // スクラッチカード画面が表示された後にCanvasを初期化
+            setTimeout(() => {
+                initScratchCanvas();
+            }, 100);
+            break;
         case 4:
             typeWriter('hotel-teaser-text', 'そしてそして、\n宿泊する宿は！', 80, () => {
                 showButton('btn-next-step4');
@@ -207,6 +213,53 @@ function openEnvelope() {
 }
 
 // ========== スクラッチカード ==========
+let scratchCardInitialized = false;
+
+function initScratchCanvas() {
+    const canvas = document.getElementById('scratch-canvas');
+    const ctx = canvas.getContext('2d');
+    const container = canvas.parentElement;
+
+    // コンテナが表示されている場合のみ初期化
+    if (container.offsetWidth === 0 || container.offsetHeight === 0) {
+        return;
+    }
+
+    canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight;
+
+    // スクラッチ面をリセット
+    canvas.style.display = 'block';
+    container.classList.remove('revealed');
+
+    // グレーのスクラッチ面を描画
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#C0C0C0';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // キラキラ模様を追加
+    for (let i = 0; i < 50; i++) {
+        ctx.fillStyle = '#D8D8D8';
+        ctx.beginPath();
+        ctx.arc(
+            Math.random() * canvas.width,
+            Math.random() * canvas.height,
+            Math.random() * 3 + 1,
+            0,
+            Math.PI * 2
+        );
+        ctx.fill();
+    }
+
+    // 「こすってね」テキストを追加
+    ctx.fillStyle = '#999';
+    ctx.font = 'bold 16px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('ここをこすってね！', canvas.width / 2, canvas.height / 2);
+
+    scratchCardInitialized = true;
+}
+
 function setupScratchCard() {
     const canvas = document.getElementById('scratch-canvas');
     const ctx = canvas.getContext('2d');
@@ -217,6 +270,12 @@ function setupScratchCard() {
     // キャンバスサイズ設定
     function resizeCanvas() {
         const container = canvas.parentElement;
+
+        // コンテナが非表示の場合はスキップ
+        if (container.offsetWidth === 0 || container.offsetHeight === 0) {
+            return;
+        }
+
         canvas.width = container.offsetWidth;
         canvas.height = container.offsetHeight;
 
@@ -241,7 +300,8 @@ function setupScratchCard() {
         totalPixels = canvas.width * canvas.height;
     }
 
-    resizeCanvas();
+    // 初期化は画面表示時に行うため、ここでは呼ばない
+    // resizeCanvas();
 
     function getPos(e) {
         const rect = canvas.getBoundingClientRect();
