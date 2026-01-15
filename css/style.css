@@ -1750,7 +1750,60 @@ img {
     color: #999;
 }
 
-/* ========== レスポンシブ ========== */
+/* ========== レスポンシブ（スマホ最適化） ========== */
+/* 小さいスマホ向け（375px以下） */
+@media (max-width: 375px) {
+    .nav-item {
+        font-size: 0.75rem;
+        padding: 10px 8px;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+    }
+
+    .meal-name {
+        font-size: 1rem;
+    }
+
+    .meal-desc {
+        font-size: 0.85rem;
+    }
+
+    .hotel-name {
+        font-size: 1.3rem;
+    }
+
+    .hotel-feature {
+        padding: 10px;
+    }
+
+    .feature-icon {
+        font-size: 1.3rem;
+    }
+
+    .shuttle-table {
+        font-size: 0.85rem;
+    }
+
+    .shuttle-col {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+    }
+}
+
+/* 標準スマホ向け（376px〜480px） */
+@media (min-width: 376px) and (max-width: 480px) {
+    .meal-image {
+        height: 180px;
+    }
+
+    .hotel-hero {
+        height: 220px;
+    }
+}
+
+/* タブレット以上 */
 @media (min-width: 768px) {
     .select-btn {
         padding: 22px 55px;
@@ -1770,6 +1823,25 @@ img {
 
     .hotel-reveal {
         font-size: 2.6rem;
+    }
+
+    .meal-card {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .meal-image {
+        width: 200px;
+        height: auto;
+        flex-shrink: 0;
+    }
+
+    .hotel-hero {
+        height: 300px;
+    }
+
+    .hotel-gallery {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
