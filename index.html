@@ -14,7 +14,7 @@
     <div id="select-screen" class="screen active">
         <div class="select-container">
             <div class="select-decoration">
-                <img src="images/shigureni/onsen-girl.png" alt="" class="select-illust">
+                <img src="images/shigureni/プレゼントを早く渡したくてウズウズしている女の子のイラスト.avif" alt="" class="select-illust">
             </div>
             <h1 class="select-title">ようこそ</h1>
             <p class="select-subtitle">特別な招待状が届いています</p>
@@ -37,7 +37,7 @@
         <canvas id="confetti-canvas"></canvas>
         <div class="surprise-content">
             <div class="birthday-illust">
-                <img src="images/shigureni/onsen-girl.png" alt="" class="birthday-illust-img">
+                <img src="images/shigureni/プレゼントを早く渡したくてウズウズしている女の子のイラスト.avif" alt="" class="birthday-illust-img">
             </div>
             <p class="birthday-message" id="birthday-text"></p>
             <button id="btn-next-step1" class="next-btn hidden">次へ →</button>
@@ -48,14 +48,17 @@
     <div id="surprise-step2" class="screen surprise-screen">
         <div class="surprise-content">
             <p class="envelope-intro">特別な招待状が届いています</p>
-            <div class="envelope-container" id="envelope">
-                <div class="envelope-flap"></div>
-                <div class="envelope-body">
-                    <div class="letter" id="letter">
-                        <p class="letter-text">今回行く旅行の<br>行き先を発表します。</p>
-                    </div>
+            <div class="envelope-wrapper">
+                <!-- 手紙（固定位置・下に表示） -->
+                <div class="letter" id="letter">
+                    <p class="letter-text">今回行く旅行の<br>行き先を発表します。</p>
                 </div>
-                <p class="tap-guide">タップして開ける</p>
+                <!-- 封筒（手紙の上に重なり、タップで下に消える） -->
+                <div class="envelope-container" id="envelope">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-body"></div>
+                    <p class="tap-guide">タップして開ける</p>
+                </div>
             </div>
             <button id="btn-next-step2" class="next-btn hidden">次へ →</button>
         </div>
@@ -80,6 +83,9 @@
     <!-- ステップ4: 宿ティザー -->
     <div id="surprise-step4" class="screen surprise-screen">
         <div class="surprise-content">
+            <div class="teaser-illust">
+                <img src="images/shigureni/旅行の準備をするイラスト.avif" alt="" class="teaser-illust-img">
+            </div>
             <p class="hotel-teaser" id="hotel-teaser-text"></p>
             <button id="btn-next-step4" class="next-btn hidden">次へ →</button>
         </div>
@@ -90,7 +96,7 @@
         <div class="slideshow-container">
             <div class="slide active" data-slide="0">
                 <div class="slide-image">
-                    <img src="images/photos/hotel-exterior.jpg" alt="外観">
+                    <img src="images/photos/ホテルの外観の写真.jpg" alt="外観">
                 </div>
                 <div class="slide-text">
                     <p class="slide-main">洋館スタイルの欧風リゾートホテル</p>
@@ -99,7 +105,7 @@
             </div>
             <div class="slide" data-slide="1">
                 <div class="slide-image">
-                    <img src="images/photos/hotel-onsen.jpg" alt="星空テラス">
+                    <img src="images/photos/貸し切り温泉の写真.jpg" alt="貸切温泉">
                 </div>
                 <div class="slide-text">
                     <p class="slide-main">満天の星を眺める露天風呂</p>
@@ -108,20 +114,38 @@
             </div>
             <div class="slide" data-slide="2">
                 <div class="slide-image">
-                    <img src="images/photos/hotel-bath.jpg" alt="温泉">
+                    <img src="images/photos/全室温泉付き.jpg" alt="温泉">
                 </div>
                 <div class="slide-text">
-                    <p class="slide-main">湯畑・万代鉱・湯川の湯</p>
-                    <p class="slide-sub">3つの源泉を堪能</p>
+                    <p class="slide-main">全室に温泉付き！</p>
+                    <p class="slide-sub">お部屋でゆったり温泉を満喫</p>
                 </div>
             </div>
             <div class="slide" data-slide="3">
                 <div class="slide-image">
-                    <img src="images/photos/hotel-breakfast.jpg" alt="朝食">
+                    <img src="images/photos/朝食の写真.jpg" alt="朝食">
                 </div>
                 <div class="slide-text">
                     <p class="slide-main">ステンドグラスが印象的なレストラン</p>
                     <p class="slide-sub">バイキング形式の朝食</p>
+                </div>
+            </div>
+            <div class="slide" data-slide="4">
+                <div class="slide-image">
+                    <img src="images/photos/夜鳴きそばの写真.jpg" alt="夜鳴きそば">
+                </div>
+                <div class="slide-text">
+                    <p class="slide-main">夜鳴きそばサービス</p>
+                    <p class="slide-sub">夜食に嬉しい無料サービス</p>
+                </div>
+            </div>
+            <div class="slide" data-slide="5">
+                <div class="slide-image">
+                    <img src="images/photos/ラウンジの写真.jpg" alt="ラウンジ">
+                </div>
+                <div class="slide-text">
+                    <p class="slide-main">くつろぎのラウンジ</p>
+                    <p class="slide-sub">ドリンクサービスも充実</p>
                 </div>
             </div>
             <div class="slide-dots">
@@ -129,6 +153,8 @@
                 <span class="dot" data-dot="1"></span>
                 <span class="dot" data-dot="2"></span>
                 <span class="dot" data-dot="3"></span>
+                <span class="dot" data-dot="4"></span>
+                <span class="dot" data-dot="5"></span>
             </div>
             <button id="btn-next-step5" class="next-btn">次へ →</button>
         </div>
@@ -138,7 +164,10 @@
     <div id="surprise-step6" class="screen surprise-screen">
         <div class="surprise-content">
             <div class="stars-container" id="stars-container"></div>
-            <p class="hotel-reveal">🌟 ラビスタ草津ヒルズ！ 🌟</p>
+            <div class="hotel-reveal-img">
+                <img src="images/photos/ホテルの外観の写真.jpg" alt="ラビスタ草津ヒルズ">
+            </div>
+            <p class="hotel-reveal">🌟 ラビスタ草津<br>ヒルズ！ 🌟</p>
             <button id="btn-next-step6" class="next-btn">次へ →</button>
         </div>
     </div>
@@ -147,7 +176,7 @@
     <div id="surprise-step7" class="screen surprise-screen">
         <div class="surprise-content">
             <div class="closing-illust">
-                <img src="images/shigureni/onsen-couple.png" alt="" class="closing-illust-img">
+                <img src="images/shigureni/自撮りする女の子のイラスト.avif" alt="" class="closing-illust-img">
             </div>
             <p class="closing-message">素敵な思い出を作ろうね 💕</p>
             <button id="btn-start-shiori" class="start-btn">しおりを見る →</button>
@@ -170,10 +199,14 @@
         <!-- メインエリア -->
         <main class="main">
             <!-- ホーム（表紙） -->
-            <section id="home" class="section intro-section">
+            <section id="home" class="tab-content active intro-section">
+                <div class="intro-hero">
+                    <img src="images/photos/湯畑の写真.jpg" alt="草津温泉" class="intro-hero-img">
+                    <div class="intro-hero-overlay"></div>
+                </div>
                 <div class="intro-content">
                     <div class="intro-illust">
-                        <img src="images/shigureni/onsen-couple.png" alt="" class="float-illust">
+                        <img src="images/shigureni/マップを見ているときのイラスト.avif" alt="" class="float-illust">
                     </div>
                     <h1 class="intro-title">草津温泉</h1>
                     <p class="intro-subtitle">ふたりだけのほっこり旅</p>
@@ -186,11 +219,15 @@
             </section>
 
             <!-- 日程 -->
-            <section id="schedule" class="section schedule-section">
+            <section id="schedule" class="tab-content schedule-section">
                 <h2 class="section-title">
                     <span class="title-icon">📅</span>
                     旅のスケジュール
                 </h2>
+
+                <div class="schedule-illust">
+                    <img src="images/shigureni/旅行の準備をするイラスト.avif" alt="" class="schedule-illust-img">
+                </div>
 
                 <!-- Day1 -->
                 <div class="day-card">
@@ -265,16 +302,20 @@
             </section>
 
             <!-- 観光 -->
-            <section id="sightseeing" class="section sightseeing-section">
+            <section id="sightseeing" class="tab-content sightseeing-section">
                 <h2 class="section-title">
                     <span class="title-icon">📸</span>
                     観光スポット
                 </h2>
 
+                <div class="sightseeing-illust">
+                    <img src="images/shigureni/自撮りする女の子のイラスト.avif" alt="" class="sightseeing-illust-img">
+                </div>
+
                 <div class="spot-cards">
                     <div class="spot-card">
                         <div class="spot-image">
-                            <img src="images/photos/yubatake.jpg" alt="湯畑">
+                            <img src="images/photos/湯畑の写真.jpg" alt="湯畑">
                         </div>
                         <div class="spot-content">
                             <h3 class="spot-name">♨️ 湯畑</h3>
@@ -285,41 +326,19 @@
 
                     <div class="spot-card">
                         <div class="spot-image">
-                            <img src="images/photos/nishi.jpg" alt="西の河原公園">
+                            <img src="images/photos/湯畑の写真2.jpg" alt="湯畑夜景">
                         </div>
                         <div class="spot-content">
-                            <h3 class="spot-name">🏔️ 西の河原公園</h3>
-                            <p class="spot-desc">温泉が川となって流れる幻想的な公園。湯けむりが立ち上る神秘的な光景が広がります。</p>
-                            <p class="spot-meta">📍 湯畑から徒歩15分</p>
-                        </div>
-                    </div>
-
-                    <div class="spot-card">
-                        <div class="spot-image">
-                            <img src="images/photos/netsunoyu.jpg" alt="熱乃湯">
-                        </div>
-                        <div class="spot-content">
-                            <h3 class="spot-name">🎭 熱乃湯（湯もみショー）</h3>
-                            <p class="spot-desc">草津名物「湯もみ」を見学できる施設。「草津よいとこ一度はおいで〜」の歌と共に行われる伝統的な湯もみは必見。</p>
-                            <p class="spot-meta">📍 湯畑前 / 大人600円</p>
-                        </div>
-                    </div>
-
-                    <div class="spot-card">
-                        <div class="spot-image">
-                            <img src="images/photos/kousenji.jpg" alt="光泉寺">
-                        </div>
-                        <div class="spot-content">
-                            <h3 class="spot-name">⛩️ 光泉寺</h3>
-                            <p class="spot-desc">湯畑を見下ろす高台にある古刹。石段を登ると草津温泉街を一望できる絶景スポット。縁結びのパワースポット。</p>
-                            <p class="spot-meta">📍 湯畑から徒歩3分</p>
+                            <h3 class="spot-name">🌙 湯畑ライトアップ</h3>
+                            <p class="spot-desc">夜の湯畑は幻想的な雰囲気に包まれます。湯けむりがライトに照らされてとても綺麗！</p>
+                            <p class="spot-meta">📍 日没後〜</p>
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- グルメ -->
-            <section id="gourmet" class="section gourmet-section">
+            <section id="gourmet" class="tab-content gourmet-section">
                 <h2 class="section-title">
                     <span class="title-icon">🍽️</span>
                     グルメ
@@ -332,22 +351,180 @@
             </section>
 
             <!-- 宿 -->
-            <section id="stay" class="section stay-section">
+            <section id="stay" class="tab-content stay-section">
                 <h2 class="section-title">
                     <span class="title-icon">🏨</span>
                     宿泊先
                 </h2>
-                <div class="preparing-message">
-                    <div class="preparing-icon">🛏️</div>
-                    <p class="preparing-text">準備中...</p>
-                    <p class="preparing-sub">詳細情報を追加予定です</p>
+
+                <div class="hotel-showcase">
+                    <div class="hotel-hero">
+                        <video autoplay muted loop playsinline class="hotel-hero-video">
+                            <source src="images/photos/ラビスタの動画.mp4" type="video/mp4">
+                        </video>
+                        <div class="hotel-hero-overlay"></div>
+                        <span class="hotel-badge">Today's Stay</span>
+                    </div>
+                    <div class="hotel-info">
+                        <h3 class="hotel-name">ラビスタ草津ヒルズ</h3>
+                        <p class="hotel-tagline">〜 星空と温泉に癒される贅沢なひととき 〜</p>
+
+                        <div class="hotel-features">
+                            <div class="hotel-feature">
+                                <span class="feature-icon">♨️</span>
+                                <div class="feature-text">
+                                    <strong>全室温泉付き</strong>
+                                    <span>お部屋で温泉を満喫</span>
+                                </div>
+                            </div>
+                            <div class="hotel-feature">
+                                <span class="feature-icon">🌙</span>
+                                <div class="feature-text">
+                                    <strong>貸切露天風呂</strong>
+                                    <span>満天の星を眺める</span>
+                                </div>
+                            </div>
+                            <div class="hotel-feature">
+                                <span class="feature-icon">🍜</span>
+                                <div class="feature-text">
+                                    <strong>夜鳴きそば</strong>
+                                    <span>無料サービス</span>
+                                </div>
+                            </div>
+                            <div class="hotel-feature">
+                                <span class="feature-icon">🍳</span>
+                                <div class="feature-text">
+                                    <strong>朝食バイキング</strong>
+                                    <span>和洋バイキング</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hotel-gallery">
+                            <img src="images/photos/全室温泉付き.jpg" alt="客室温泉">
+                            <img src="images/photos/貸し切り温泉の写真.jpg" alt="貸切温泉">
+                            <img src="images/photos/朝食の写真.jpg" alt="朝食">
+                            <img src="images/photos/ラウンジの写真.jpg" alt="ラウンジ">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- お食事情報 -->
+                <div class="meal-info">
+                    <h3 class="meal-section-title">
+                        <span class="meal-icon">🍽️</span>
+                        お食事
+                    </h3>
+
+                    <!-- 夕食 -->
+                    <div class="meal-card">
+                        <div class="meal-image">
+                            <img src="images/photos/食事の写真.jpg" alt="夕食">
+                        </div>
+                        <div class="meal-content">
+                            <h4 class="meal-name">🌙 ご夕食</h4>
+                            <p class="meal-desc">季節の食材を使った洋食コース料理。地元産の旬の素材をふんだんに使用。</p>
+                            <div class="meal-meta">
+                                <p>📍 レストラン「マノス」（1F）</p>
+                                <p>🕐 17:20～ / 17:40～ / 19:50～ / 20:00～</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 朝食 -->
+                    <div class="meal-card">
+                        <div class="meal-image">
+                            <img src="images/photos/朝食の写真.jpg" alt="朝食">
+                        </div>
+                        <div class="meal-content">
+                            <h4 class="meal-name">🌅 ご朝食</h4>
+                            <p class="meal-desc">和洋バイキング形式。地元の食材や新鮮野菜を使った料理が並びます。</p>
+                            <div class="meal-meta">
+                                <p>📍 レストラン「マノス」（1F）</p>
+                                <p>🕐 7:00～9:00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 夜鳴きそば -->
+                    <div class="meal-card highlight">
+                        <div class="meal-image">
+                            <img src="images/photos/夜鳴きそばの写真.jpg" alt="夜鳴きそば">
+                        </div>
+                        <div class="meal-content">
+                            <h4 class="meal-name">🍜 夜鳴きそば</h4>
+                            <p class="meal-desc">無料サービス！醤油ラーメンとトマトラーメンからお選びいただけます。</p>
+                            <div class="meal-meta">
+                                <p>📍 6F「いこい処」</p>
+                                <p>🕐 22:00～23:00</p>
+                            </div>
+                            <span class="meal-badge">無料</span>
+                        </div>
+                    </div>
+
+                    <!-- ラウンジ -->
+                    <a href="images/info_lounge.pdf" target="_blank" class="meal-card-link">
+                        <div class="meal-card">
+                            <div class="meal-image">
+                                <img src="images/photos/ラウンジサービスの写真.jpg" alt="ラウンジ">
+                            </div>
+                            <div class="meal-content">
+                                <h4 class="meal-name">☕ ラウンジサービス</h4>
+                                <p class="meal-desc">コーヒー・紅茶などのドリンクはもちろん、アイスクリーム・ソーセージなど時間帯によって内容の異なるラウンジサービスが楽しめるくつろぎスペース。</p>
+                                <div class="meal-meta">
+                                    <p>📍 6F ラウンジ</p>
+                                    <p class="pdf-link">📄 詳細を見る →</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- シャトルバス時刻表 -->
+                <div class="shuttle-info">
+                    <div class="shuttle-illust">
+                        <img src="images/shigureni/バスのイラスト.avif" alt="バス" class="shuttle-illust-img">
+                    </div>
+                    <div class="shuttle-header">
+                        <span class="shuttle-icon">🚌</span>
+                        <h3 class="shuttle-title">無料シャトルバス</h3>
+                    </div>
+                    <p class="shuttle-desc">ホテル ⇔ 湯畑 間で運行中</p>
+                    <div class="shuttle-table">
+                        <div class="shuttle-row table-header">
+                            <div class="shuttle-col">ホテル発</div>
+                            <div class="shuttle-col">湯畑発</div>
+                        </div>
+                        <div class="shuttle-row">
+                            <div class="shuttle-col">17:35</div>
+                            <div class="shuttle-col">17:45</div>
+                        </div>
+                        <div class="shuttle-row">
+                            <div class="shuttle-col">18:35</div>
+                            <div class="shuttle-col">18:45</div>
+                        </div>
+                        <div class="shuttle-row">
+                            <div class="shuttle-col">19:35</div>
+                            <div class="shuttle-col">19:45</div>
+                        </div>
+                        <div class="shuttle-row">
+                            <div class="shuttle-col">20:05</div>
+                            <div class="shuttle-col">20:15</div>
+                        </div>
+                        <div class="shuttle-row">
+                            <div class="shuttle-col">20:35</div>
+                            <div class="shuttle-col">20:45</div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <!-- フッター -->
             <footer class="footer">
-                <p class="footer-message">素敵な旅になりますように ✿</p>
-                <p class="footer-sub">Happy Birthday Trip 🎂</p>
+                <div class="footer-illust">
+                    <img src="images/shigureni/雪遊びに全力を尽くす女の子のイラスト.avif" alt="" class="footer-illust-img">
+                </div>
+                <p class="footer-sub">Happy Birthday 🎂</p>
             </footer>
         </main>
     </div>

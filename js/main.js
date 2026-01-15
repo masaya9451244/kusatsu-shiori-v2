@@ -11,8 +11,14 @@ function initApp() {
     // イベントリスナー設定
     setupEventListeners();
 
-    // セクション表示監視
+    // 内部リンク設定（日程→観光、日程→グルメなど）
+    setupInternalLinks();
+
+    // セクション表示監視（タブ方式では不要）
     setupIntersectionObserver();
+
+    // ホテルヒーロー動画の全画面再生設定
+    setupHeroVideo();
 }
 
 // ========== イベントリスナー ==========
@@ -420,7 +426,7 @@ function startSlideshow() {
     updateSlide();
 
     slideInterval = setInterval(() => {
-        currentSlide = (currentSlide + 1) % 4;
+        currentSlide = (currentSlide + 1) % 6;
         updateSlide();
     }, 3000);
 }
@@ -445,7 +451,7 @@ function goToSlide(index) {
     if (slideInterval) {
         clearInterval(slideInterval);
         slideInterval = setInterval(() => {
-            currentSlide = (currentSlide + 1) % 4;
+            currentSlide = (currentSlide + 1) % 6;
             updateSlide();
         }, 3000);
     }
@@ -468,54 +474,110 @@ function createStars() {
     }
 }
 
-// ========== ナビゲーション ==========
+// ========== ナビゲーション（タブ切り替え） ==========
 function handleNavClick(e) {
     e.preventDefault();
 
-    // アクティブ状態更新
+    // アクティブ状態更新（ナビ）
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
     });
     e.target.classList.add('active');
 
-    // スクロール
+    // タブコンテンツ切り替え
     const targetId = e.target.getAttribute('href').substring(1);
-    const targetSection = document.getElementById(targetId);
+    switchTab(targetId);
+}
 
-    if (targetSection) {
-        const headerHeight = 60;
-        const targetPosition = targetSection.offsetTop - headerHeight;
+function switchTab(tabId) {
+    // 全タブを非表示
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
 
-        window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-        });
+    // 該当タブを表示
+    const targetTab = document.getElementById(tabId);
+    if (targetTab) {
+        targetTab.classList.add('active');
+        // ページトップにスクロール
+        window.scrollTo({ top: 0, behavior: 'instant' });
     }
 }
 
-// ========== スクロール監視 ==========
-function setupIntersectionObserver() {
-    const options = {
-        threshold: 0.3
-    };
+// ========== 日程内のリンク対応 ==========
+function setupInternalLinks() {
+    document.querySelectorAll('.event-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // ナビゲーション更新
-                const sectionId = entry.target.id;
-                document.querySelectorAll('.nav-item').forEach(item => {
-                    item.classList.remove('active');
-                    if (item.dataset.section === sectionId) {
-                        item.classList.add('active');
-                    }
-                });
-            }
+            // ナビのアクティブ状態を更新
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.section === targetId) {
+                    item.classList.add('active');
+                }
+            });
+
+            // タブ切り替え
+            switchTab(targetId);
         });
-    }, options);
+    });
+}
 
-    document.querySelectorAll('.section').forEach(section => {
-        observer.observe(section);
+// ========== スクロール監視（不要だが残す） ==========
+function setupIntersectionObserver() {
+    // タブ切り替え方式では使用しないが、互換性のため残す
+}
+
+// ========== ホテルヒーロー動画 全画面再生 ==========
+function setupHeroVideo() {
+    const heroVideo = document.querySelector('.hotel-hero-video');
+    const heroContainer = document.querySelector('.hotel-hero');
+
+    if (!heroVideo || !heroContainer) return;
+
+    // タップで全画面再生
+    heroContainer.addEventListener('click', () => {
+        // 音声ON、ループOFFで全画面再生
+        heroVideo.muted = false;
+        heroVideo.loop = false;
+        heroVideo.currentTime = 0;
+
+        // フルスクリーンAPIを試行
+        if (heroVideo.requestFullscreen) {
+            heroVideo.requestFullscreen();
+        } else if (heroVideo.webkitEnterFullscreen) {
+            // iOS Safari用
+            heroVideo.webkitEnterFullscreen();
+        } else if (heroVideo.webkitRequestFullscreen) {
+            heroVideo.webkitRequestFullscreen();
+        }
+
+        heroVideo.play();
+    });
+
+    // 全画面終了時にミュート・ループに戻す
+    heroVideo.addEventListener('ended', () => {
+        heroVideo.muted = true;
+        heroVideo.loop = true;
+        heroVideo.play();
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) {
+            heroVideo.muted = true;
+            heroVideo.loop = true;
+            heroVideo.play();
+        }
+    });
+
+    document.addEventListener('webkitfullscreenchange', () => {
+        if (!document.webkitFullscreenElement) {
+            heroVideo.muted = true;
+            heroVideo.loop = true;
+            heroVideo.play();
+        }
     });
 }
 
