@@ -537,46 +537,93 @@ function setupHeroVideo() {
 
     if (!heroVideo || !heroContainer) return;
 
+    // iOS Safari検出
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    // 動画の読み込みを確実にする
+    heroVideo.load();
+
+    // iOSでは自動再生が制限されるため、最初のタッチで再生開始
+    if (isIOS) {
+        let hasInteracted = false;
+        const startPlayback = () => {
+            if (!hasInteracted) {
+                hasInteracted = true;
+                heroVideo.play().catch(() => {});
+            }
+        };
+        document.addEventListener('touchstart', startPlayback, { once: true, passive: true });
+    }
+
     // タップで全画面再生
-    heroContainer.addEventListener('click', () => {
+    heroContainer.addEventListener('click', (e) => {
+        e.preventDefault();
+
         // 音声ON、ループOFFで全画面再生
         heroVideo.muted = false;
         heroVideo.loop = false;
         heroVideo.currentTime = 0;
 
-        // フルスクリーンAPIを試行
-        if (heroVideo.requestFullscreen) {
-            heroVideo.requestFullscreen();
-        } else if (heroVideo.webkitEnterFullscreen) {
-            // iOS Safari用
-            heroVideo.webkitEnterFullscreen();
-        } else if (heroVideo.webkitRequestFullscreen) {
-            heroVideo.webkitRequestFullscreen();
+        // iOS Safari用の全画面再生
+        if (isIOS && heroVideo.webkitEnterFullscreen) {
+            heroVideo.play().then(() => {
+                heroVideo.webkitEnterFullscreen();
+            }).catch((err) => {
+                console.log('iOS fullscreen error:', err);
+                // フォールバック: 通常再生
+                heroVideo.play();
+            });
         }
-
-        heroVideo.play();
+        // 標準の全画面API
+        else if (heroVideo.requestFullscreen) {
+            heroVideo.requestFullscreen().then(() => {
+                heroVideo.play();
+            }).catch(() => {
+                heroVideo.play();
+            });
+        }
+        // Webkit全画面
+        else if (heroVideo.webkitRequestFullscreen) {
+            heroVideo.webkitRequestFullscreen();
+            heroVideo.play();
+        }
+        // フォールバック
+        else {
+            heroVideo.play();
+        }
     });
 
     // 全画面終了時にミュート・ループに戻す
-    heroVideo.addEventListener('ended', () => {
+    const resetToLoop = () => {
         heroVideo.muted = true;
         heroVideo.loop = true;
-        heroVideo.play();
-    });
+        heroVideo.currentTime = 0;
+        heroVideo.play().catch(() => {});
+    };
+
+    heroVideo.addEventListener('ended', resetToLoop);
+
+    // iOS Safari用イベント
+    heroVideo.addEventListener('webkitendfullscreen', resetToLoop);
 
     document.addEventListener('fullscreenchange', () => {
         if (!document.fullscreenElement) {
-            heroVideo.muted = true;
-            heroVideo.loop = true;
-            heroVideo.play();
+            resetToLoop();
         }
     });
 
     document.addEventListener('webkitfullscreenchange', () => {
         if (!document.webkitFullscreenElement) {
-            heroVideo.muted = true;
-            heroVideo.loop = true;
-            heroVideo.play();
+            resetToLoop();
+        }
+    });
+
+    // 動画が一時停止されたら再開（iOS対策）
+    heroVideo.addEventListener('pause', () => {
+        if (heroVideo.muted && heroVideo.loop) {
+            setTimeout(() => {
+                heroVideo.play().catch(() => {});
+            }, 100);
         }
     });
 }

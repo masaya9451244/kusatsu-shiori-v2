@@ -38,11 +38,29 @@ body {
     overflow-x: hidden;
 }
 
+/* ========== iOS Safari対応 ========== */
+/* Safe area対応 */
+body {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* タッチ操作の最適化 */
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+/* 動画のインライン再生を強制 */
+video {
+    -webkit-playsinline: true;
+}
+
 /* ========== 共通スタイル ========== */
 .screen {
     display: none;
     min-height: 100vh;
     min-height: 100dvh;
+    min-height: -webkit-fill-available;
 }
 
 .screen.active {
