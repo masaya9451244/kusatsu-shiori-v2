@@ -395,27 +395,29 @@ img {
 .envelope-container {
     position: relative;
     width: 300px;
-    height: 220px;
+    height: 200px;
     margin: 0 auto;
     cursor: pointer;
     transition: transform 0.3s ease;
+    perspective: 1000px;
 }
 
 .envelope-container:hover:not(.opened) {
     transform: scale(1.03);
 }
 
+/* 封筒本体（前面） */
 .envelope-body {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 170px;
-    background: linear-gradient(180deg, #FDF5E6 0%, #F5E6D3 100%);
-    border-radius: 8px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15), inset 0 -3px 10px rgba(0,0,0,0.05);
-    overflow: hidden;
+    height: 140px;
+    background: linear-gradient(180deg, #F5E6D3 0%, #EDE0D0 100%);
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     border: 1px solid rgba(200,180,160,0.3);
-    z-index: 1;
+    border-top: none;
+    z-index: 3;
 }
 
 /* 封筒の模様 */
@@ -425,73 +427,76 @@ img {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 30px;
+    height: 25px;
     background: repeating-linear-gradient(
         90deg,
         var(--brick-onsen) 0px,
-        var(--brick-onsen) 15px,
-        var(--cream) 15px,
-        var(--cream) 30px
+        var(--brick-onsen) 12px,
+        var(--cream) 12px,
+        var(--cream) 24px
     );
-    opacity: 0.3;
+    opacity: 0.25;
+    border-radius: 0 0 12px 12px;
 }
 
+/* 封筒のフタ（三角形） */
 .envelope-flap {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 110px;
+    height: 100px;
     background: linear-gradient(180deg, #EDE0D0 0%, #F5E6D3 100%);
-    clip-path: polygon(0 0, 50% 85%, 100% 0);
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
     transform-origin: top center;
     transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    z-index: 2;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 4;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 /* 封筒のハートシール */
 .envelope-flap::after {
     content: '♥';
     position: absolute;
-    top: 55%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     color: var(--brick-onsen);
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .envelope-container.opened .envelope-flap {
-    transform: rotateX(180deg);
+    transform: rotateX(-180deg);
+    z-index: 1;
 }
 
 .envelope-container.opened .envelope-flap::after {
     opacity: 0;
 }
 
+/* 手紙（封筒の中に隠れている） */
 .letter {
     position: absolute;
-    top: 80px;
-    left: 8%;
-    width: 84%;
-    height: 130px;
+    top: 60px;
+    left: 10%;
+    width: 80%;
+    height: 120px;
     background: white;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 15px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transform: translateY(0);
     transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.3s;
     border: 1px solid rgba(200,180,160,0.2);
-    z-index: 0;
+    z-index: 2;
 }
 
 .envelope-container.opened .letter {
-    transform: translateY(-140px);
-    z-index: 3;
+    transform: translateY(-120px);
 }
 
 .letter-text {
@@ -505,11 +510,12 @@ img {
 
 .tap-guide {
     position: absolute;
-    bottom: -45px;
+    bottom: -40px;
     width: 100%;
     text-align: center;
-    font-family: var(--font-heading);
-    font-size: 0.95rem;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
     color: var(--brick-onsen);
     animation: tap-bounce 1.5s ease-in-out infinite;
 }
@@ -519,7 +525,8 @@ img {
 }
 
 .envelope-container.opened .tap-guide {
-    display: none;
+    opacity: 0;
+    pointer-events: none;
 }
 
 @keyframes tap-bounce {
