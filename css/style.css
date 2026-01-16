@@ -454,6 +454,8 @@ img {
     width: 300px;
     height: 350px;
     margin: 0 auto 20px;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
 }
 
 /* 手紙（最初は封筒の中に隠れている） */
@@ -511,6 +513,10 @@ img {
     transform: translateX(-50%);
     -webkit-transition: -webkit-transform 0.3s ease;
     transition: transform 0.3s ease;
+    -webkit-perspective: 800px;
+    perspective: 800px;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
 }
 
 .envelope-container:hover:not(.opened) {
@@ -556,10 +562,10 @@ img {
     border-radius: 0 0 16px 16px;
 }
 
-/* 封筒のフタ（三角形） - 上にスライドして消える */
+/* 封筒のフタ（三角形） - 3D回転で後ろに開く */
 .envelope-flap {
     position: absolute;
-    bottom: 50px;
+    bottom: 90px;
     left: 0;
     width: 100%;
     height: 90px;
@@ -567,18 +573,20 @@ img {
     clip-path: polygon(0 0, 50% 100%, 100% 0);
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     z-index: 20;
-    opacity: 1;
-    -webkit-transform: translateY(0) scale(1);
-    transform: translateY(0) scale(1);
-    -webkit-transition: opacity 0.5s ease-out, -webkit-transform 0.5s ease-out;
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    -webkit-transform-origin: top center;
+    transform-origin: top center;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform: rotateX(0deg);
+    transform: rotateX(0deg);
+    -webkit-transition: -webkit-transform 0.8s ease-out;
+    transition: transform 0.8s ease-out;
 }
 
-/* 封筒が開いたらフタが上に飛んで消える */
+/* 封筒が開いたらフタが後ろに倒れる */
 .envelope-container.opened .envelope-flap {
-    -webkit-transform: translateY(-120px) scale(0.8);
-    transform: translateY(-120px) scale(0.8);
-    opacity: 0;
+    -webkit-transform: rotateX(-180deg);
+    transform: rotateX(-180deg);
 }
 
 /* 封筒のハートシール */
