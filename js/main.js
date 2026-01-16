@@ -36,8 +36,13 @@ function setupEventListeners() {
     document.getElementById('btn-next-step6').addEventListener('click', () => goToStep(7));
     document.getElementById('btn-start-shiori').addEventListener('click', showMainContent);
 
-    // 封筒クリック
-    document.getElementById('envelope').addEventListener('click', openEnvelope);
+    // 封筒クリック（iOS Safari対応でtouchendも追加）
+    const envelope = document.getElementById('envelope');
+    envelope.addEventListener('click', openEnvelope);
+    envelope.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        openEnvelope();
+    });
 
     // スクラッチカード
     setupScratchCard();
