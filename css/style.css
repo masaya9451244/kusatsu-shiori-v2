@@ -937,7 +937,7 @@ img {
 /* ========== メインコンテンツ ========== */
 #main-content {
     padding-top: 65px;
-    display: block;
+    display: none;
 }
 
 #main-content.active {
@@ -955,6 +955,12 @@ img {
     z-index: 100;
     box-shadow: 0 2px 20px rgba(0,0,0,0.08);
     border-bottom: 1px solid rgba(185, 106, 85, 0.1);
+    display: none;
+}
+
+/* ヘッダーはしおり表示時のみ表示 */
+body.shiori-active .header {
+    display: block;
 }
 
 .nav {

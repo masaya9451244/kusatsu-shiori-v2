@@ -115,6 +115,9 @@ function showMainContent() {
     }
     showScreen('main-content');
 
+    // bodyにshiori-activeクラスを追加（ヘッダー表示用）
+    document.body.classList.add('shiori-active');
+
     // セクションを順次表示
     setTimeout(() => {
         document.querySelectorAll('.section').forEach((section, index) => {
