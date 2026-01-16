@@ -217,12 +217,19 @@ function startConfetti() {
 // ========== 封筒演出 ==========
 function openEnvelope() {
     const envelope = document.getElementById('envelope');
+    const wrapper = document.querySelector('.envelope-wrapper');
+
     if (!envelope.classList.contains('opened')) {
+        // 封筒のフタを開く
         envelope.classList.add('opened');
 
+        // 手紙を出すためにwrapperにもクラス追加
+        wrapper.classList.add('opened');
+
+        // 手紙が出てきた後にボタン表示
         setTimeout(() => {
             showButton('btn-next-step2');
-        }, 1200);
+        }, 1500);
     }
 }
 

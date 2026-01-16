@@ -452,17 +452,18 @@ img {
 .envelope-wrapper {
     position: relative;
     width: 300px;
-    height: 200px;
+    height: 280px;
     margin: 0 auto 20px;
+    perspective: 1000px;
 }
 
-/* 手紙（固定位置・中央） */
+/* 手紙（最初は封筒の中に隠れている） */
 .letter {
     position: absolute;
-    top: 50%;
+    bottom: 20px;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 260px;
+    transform: translateX(-50%) translateY(0);
+    width: 250px;
     height: 140px;
     background: white;
     border-radius: 12px;
@@ -472,7 +473,15 @@ img {
     padding: 20px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.15);
     border: 2px solid var(--steam-pink);
-    z-index: 1;
+    z-index: 5;
+    opacity: 0;
+    transition: transform 0.8s ease-out 0.4s, opacity 0.5s ease-out 0.3s;
+}
+
+/* 封筒が開いたら手紙が上に出てくる */
+.envelope-wrapper.opened .letter {
+    transform: translateX(-50%) translateY(-160px);
+    opacity: 1;
 }
 
 .letter-text {
@@ -484,44 +493,42 @@ img {
     text-align: center;
 }
 
-/* 封筒コンテナ（手紙の上に重なる） */
+/* 封筒コンテナ */
 .envelope-container {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    height: 180px;
     cursor: pointer;
     touch-action: manipulation;
     -webkit-user-select: none;
     user-select: none;
     z-index: 10;
-    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .envelope-container:hover:not(.opened) {
-    transform: scale(1.02);
+    transform: translateX(-50%) scale(1.02);
 }
 
-/* 封筒が開いた時 → 下にスライドして消える */
+/* 封筒が開いた時 */
 .envelope-container.opened {
-    transform: translateY(250px);
-    opacity: 0;
-    pointer-events: none;
+    cursor: default;
 }
 
 /* 封筒本体 */
 .envelope-body {
     position: absolute;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 280px;
+    left: 0;
+    width: 100%;
     height: 140px;
     background: linear-gradient(180deg, #F5E6D3 0%, #EDE0D0 100%);
     border-radius: 0 0 16px 16px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     border: 1px solid rgba(200,180,160,0.3);
+    z-index: 15;
 }
 
 /* 封筒の模様 */
@@ -543,17 +550,25 @@ img {
     border-radius: 0 0 16px 16px;
 }
 
-/* 封筒のフタ（三角形） */
+/* 封筒のフタ（三角形） - 3D回転で開く */
 .envelope-flap {
     position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 280px;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 90px;
     background: linear-gradient(180deg, #EDE0D0 0%, #F5E6D3 100%);
     clip-path: polygon(0 0, 50% 100%, 100% 0);
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transform-origin: top center;
+    transform: rotateX(0deg);
+    transition: transform 0.6s ease-out;
+    z-index: 20;
+}
+
+/* 封筒が開いたらフタが後ろに倒れる */
+.envelope-container.opened .envelope-flap {
+    transform: rotateX(-180deg);
 }
 
 /* 封筒のハートシール */
@@ -566,12 +581,18 @@ img {
     font-size: 1.8rem;
     color: var(--brick-onsen);
     opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+/* フタが開いたらハートを非表示 */
+.envelope-container.opened .envelope-flap::after {
+    opacity: 0;
 }
 
 /* タップガイド */
 .tap-guide {
     position: absolute;
-    bottom: -50px;
+    bottom: -40px;
     left: 0;
     width: 100%;
     text-align: center;
@@ -580,6 +601,7 @@ img {
     font-weight: 600;
     color: var(--brick-onsen);
     animation: tap-bounce 1.5s ease-in-out infinite;
+    transition: opacity 0.3s ease;
 }
 
 .tap-guide::before {
