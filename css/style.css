@@ -1823,6 +1823,94 @@ body.shiori-active .header {
     background: #fafafa;
 }
 
+/* ========== マジックベンダー ========== */
+.magic-vender-info {
+    margin-top: 25px;
+    background: linear-gradient(135deg, #f5f0ff 0%, #ffe8f5 50%, var(--cream) 100%);
+    border-radius: 16px;
+    padding: 20px;
+    border: 2px solid #d4a8d4;
+    position: relative;
+    overflow: hidden;
+}
+
+.magic-vender-info::before {
+    content: '✨';
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    opacity: 0.6;
+    -webkit-animation: sparkle-float 2s ease-in-out infinite;
+    animation: sparkle-float 2s ease-in-out infinite;
+}
+
+@-webkit-keyframes sparkle-float {
+    0%, 100% { -webkit-transform: translateY(0) rotate(0deg); transform: translateY(0) rotate(0deg); opacity: 0.6; }
+    50% { -webkit-transform: translateY(-5px) rotate(10deg); transform: translateY(-5px) rotate(10deg); opacity: 1; }
+}
+
+@keyframes sparkle-float {
+    0%, 100% { -webkit-transform: translateY(0) rotate(0deg); transform: translateY(0) rotate(0deg); opacity: 0.6; }
+    50% { -webkit-transform: translateY(-5px) rotate(10deg); transform: translateY(-5px) rotate(10deg); opacity: 1; }
+}
+
+.magic-vender-illust {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.magic-vender-illust-img {
+    width: 120px;
+    height: auto;
+    border-radius: 50%;
+    filter: drop-shadow(0 3px 10px rgba(150, 100, 180, 0.3));
+    -webkit-animation: gentle-float 4s ease-in-out infinite;
+    animation: gentle-float 4s ease-in-out infinite;
+}
+
+.magic-vender-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.magic-vender-icon {
+    font-size: 1.5rem;
+}
+
+.magic-vender-title {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #8B5A8B;
+}
+
+.magic-vender-desc {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.8;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.magic-vender-meta {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+}
+
+.magic-vender-meta p {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.85rem;
+    color: #666;
+    margin: 6px 0;
+}
+
 /* ========== フッター ========== */
 .footer {
     text-align: center;
