@@ -2040,6 +2040,587 @@ body.shiori-active .header {
     }
 }
 
+/* ========== 観光セクション - エリア別タブ ========== */
+.sightseeing-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.area-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 5px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.area-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.area-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 18px;
+    border: none;
+    background: white;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 80px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 2px solid transparent;
+    flex-shrink: 0;
+}
+
+.area-tab:hover {
+    background: var(--steam-pink);
+}
+
+.area-tab.active {
+    background: linear-gradient(135deg, var(--brick-onsen), var(--deep-brick));
+    border-color: var(--deep-brick);
+}
+
+.area-tab-icon {
+    font-size: 1.4rem;
+}
+
+.area-tab-name {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--deep-brick);
+}
+
+.area-tab.active .area-tab-name {
+    color: white;
+}
+
+/* サブナビゲーション */
+.sub-nav {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.sub-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border: none;
+    background: linear-gradient(135deg, var(--cream), var(--soft-pink));
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--deep-brick);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(185, 106, 85, 0.2);
+}
+
+.sub-nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(185, 106, 85, 0.2);
+}
+
+.sub-nav-btn.active {
+    background: var(--brick-onsen);
+    color: white;
+}
+
+/* エリアコンテンツ */
+.area-content {
+    display: none;
+}
+
+.area-content.active {
+    display: block;
+    -webkit-animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.3s ease;
+}
+
+@-webkit-keyframes fadeIn {
+    from { opacity: 0; -webkit-transform: translateY(10px); transform: translateY(10px); }
+    to { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 地図コンテナ */
+.area-map-container {
+    margin-bottom: 20px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.area-map {
+    height: 250px;
+    width: 100%;
+    background: var(--cream);
+}
+
+/* フィルタチップ */
+.filter-chips-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.filter-chips {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 8px 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex: 1;
+}
+
+.filter-chips::-webkit-scrollbar {
+    display: none;
+}
+
+.filter-chip {
+    padding: 8px 16px;
+    border: none;
+    background: white;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #666;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    border: 1px solid rgba(185, 106, 85, 0.15);
+    flex-shrink: 0;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter-chip:hover {
+    background: var(--steam-pink);
+    color: var(--deep-brick);
+}
+
+.filter-chip.active {
+    background: var(--brick-onsen);
+    color: white;
+    border-color: var(--brick-onsen);
+}
+
+.filter-scroll-hint {
+    font-size: 1.2rem;
+    color: #aaa;
+    flex-shrink: 0;
+    -webkit-animation: hint-pulse 1.5s ease-in-out infinite;
+    animation: hint-pulse 1.5s ease-in-out infinite;
+}
+
+@-webkit-keyframes hint-pulse {
+    0%, 100% { opacity: 0.5; -webkit-transform: translateX(0); transform: translateX(0); }
+    50% { opacity: 1; -webkit-transform: translateX(3px); transform: translateX(3px); }
+}
+
+@keyframes hint-pulse {
+    0%, 100% { opacity: 0.5; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(3px); }
+}
+
+/* スポットカードのイラスト版 */
+.spot-image-illust {
+    background: linear-gradient(135deg, var(--cream) 0%, var(--soft-pink) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.spot-image-illust img {
+    width: 60%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* スポットカードのハイライト */
+.spot-card.highlighted {
+    border: 3px solid var(--brick-onsen);
+    box-shadow: 0 8px 25px rgba(185, 106, 85, 0.3);
+}
+
+/* 開催時間表示 */
+.schedule-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    padding: 10px 18px;
+    border: none;
+    background: linear-gradient(135deg, var(--steam-pink), #ffe8e2);
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--deep-brick);
+    transition: all 0.3s ease;
+    min-height: 44px;
+}
+
+.schedule-toggle:hover {
+    background: linear-gradient(135deg, #ffe8e2, var(--steam-pink));
+    transform: translateY(-2px);
+}
+
+.schedule-toggle.open {
+    background: var(--brick-onsen);
+    color: white;
+}
+
+.schedule-info {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    background: linear-gradient(135deg, #fffaf5 0%, var(--cream) 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(185, 106, 85, 0.2);
+    -webkit-animation: slideDown 0.3s ease;
+    animation: slideDown 0.3s ease;
+}
+
+.schedule-info.open {
+    display: block;
+}
+
+@-webkit-keyframes slideDown {
+    from { opacity: 0; -webkit-transform: translateY(-10px); transform: translateY(-10px); }
+    to { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.schedule-header {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--deep-brick);
+    margin-bottom: 10px;
+}
+
+.schedule-times {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.schedule-time {
+    padding: 6px 14px;
+    background: white;
+    border-radius: 20px;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--brick-onsen);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.schedule-note {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.75rem;
+    color: #888;
+}
+
+/* ========== モデルコース ========== */
+.sub-section-title {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--deep-brick);
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.sub-section-desc {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.9rem;
+    color: #888;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.course-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.course-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid rgba(185, 106, 85, 0.1);
+    transition: all 0.3s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.course-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.course-icon {
+    font-size: 2rem;
+}
+
+.course-info {
+    flex: 1;
+}
+
+.course-name {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--deep-brick);
+    margin: 0;
+}
+
+.course-duration {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.course-desc {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.course-detail-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: linear-gradient(135deg, var(--brick-onsen), var(--deep-brick));
+    color: white;
+    border-radius: 12px;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 44px;
+}
+
+.course-detail-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(185, 106, 85, 0.4);
+}
+
+/* コース詳細 */
+.course-detail {
+    display: none;
+}
+
+.course-detail.active {
+    display: block;
+    -webkit-animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.3s ease;
+}
+
+.course-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border: none;
+    background: var(--cream);
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--deep-brick);
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
+    min-height: 44px;
+}
+
+.course-back-btn:hover {
+    background: var(--steam-pink);
+}
+
+.course-detail-title {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--deep-brick);
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.course-timeline {
+    position: relative;
+    padding-left: 20px;
+}
+
+.course-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    bottom: 10px;
+    width: 3px;
+    background: linear-gradient(180deg, var(--brick-onsen), var(--steam-pink));
+    border-radius: 2px;
+}
+
+.course-step {
+    display: flex;
+    gap: 15px;
+    padding: 15px 0;
+    position: relative;
+}
+
+.course-step::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 20px;
+    width: 12px;
+    height: 12px;
+    background: var(--brick-onsen);
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 2px 6px rgba(185, 106, 85, 0.3);
+}
+
+.step-time {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--brick-onsen);
+    min-width: 50px;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-title {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--deep-brick);
+    margin-bottom: 4px;
+}
+
+.step-desc {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.step-walk {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.8rem;
+    color: #999;
+}
+
+/* ========== 豆知識ページ ========== */
+.trivia-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.trivia-item {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border: 1px solid rgba(185, 106, 85, 0.1);
+}
+
+.trivia-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    min-height: 60px;
+}
+
+.trivia-header:hover {
+    background: var(--cream);
+}
+
+.trivia-icon {
+    font-size: 1.5rem;
+}
+
+.trivia-title {
+    flex: 1;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--deep-brick);
+}
+
+.trivia-toggle {
+    font-size: 1.2rem;
+    color: #aaa;
+    transition: transform 0.3s ease;
+}
+
+.trivia-item.open .trivia-toggle {
+    transform: rotate(180deg);
+}
+
+.trivia-content {
+    display: none;
+    padding: 0 20px 20px 52px;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+.trivia-item.open .trivia-content {
+    display: block;
+    -webkit-animation: slideDown 0.3s ease;
+    animation: slideDown 0.3s ease;
+}
+
 /* ========== 追加アニメーション ========== */
 @keyframes sparkle {
     0% {

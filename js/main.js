@@ -658,3 +658,300 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// ========== 観光セクション - エリア別タブ切替 ==========
+function setupSightseeingTabs() {
+    // エリアタブ
+    const areaTabs = document.querySelectorAll('.area-tab');
+    const areaContents = document.querySelectorAll('.area-content');
+
+    areaTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetArea = tab.dataset.area;
+
+            // タブのアクティブ状態を更新
+            areaTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            // コンテンツの表示切り替え
+            areaContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            const targetContent = document.getElementById(`area-${targetArea}`);
+            if (targetContent) {
+                targetContent.classList.add('active');
+
+                // 地図の初期化（表示時に行う）
+                initMapIfNeeded(targetArea);
+            }
+        });
+    });
+
+    // サブナビゲーション（モデルコース、豆知識）
+    const subNavBtns = document.querySelectorAll('.sub-nav-btn');
+    subNavBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetArea = btn.dataset.area;
+
+            // タブのアクティブ状態をクリア
+            areaTabs.forEach(t => t.classList.remove('active'));
+
+            // サブナビのアクティブ状態を更新
+            subNavBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // コンテンツの表示切り替え
+            areaContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            const targetContent = document.getElementById(`area-${targetArea}`);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        });
+    });
+
+    // デフォルトで湯畑エリアを表示
+    const defaultTab = document.querySelector('.area-tab[data-area="yubatake"]');
+    if (defaultTab) {
+        defaultTab.click();
+    }
+}
+
+// ========== フィルタチップ ==========
+function setupFilterChips() {
+    document.querySelectorAll('.filter-chips-container').forEach(container => {
+        const chips = container.querySelectorAll('.filter-chip');
+        const parentContent = container.closest('.area-content');
+        const spotCards = parentContent ? parentContent.querySelectorAll('.spot-card') : [];
+
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                const targetSpot = chip.dataset.spot;
+
+                // チップのアクティブ状態を更新
+                chips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+
+                // カードのフィルタリング
+                spotCards.forEach(card => {
+                    if (targetSpot === 'all') {
+                        card.style.display = 'block';
+                        card.classList.remove('highlighted');
+                    } else {
+                        if (card.dataset.spotId === targetSpot) {
+                            card.style.display = 'block';
+                            card.classList.add('highlighted');
+                            // カードまでスクロール
+                            setTimeout(() => {
+                                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }, 100);
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+    });
+}
+
+// ========== 開催時間トグル ==========
+function setupScheduleToggles() {
+    document.querySelectorAll('.schedule-toggle').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const scheduleInfo = toggle.nextElementSibling;
+
+            toggle.classList.toggle('open');
+            scheduleInfo.classList.toggle('open');
+
+            // ボタンテキストの切り替え
+            if (toggle.classList.contains('open')) {
+                toggle.textContent = '🕐 開催時間を閉じる';
+            } else {
+                toggle.textContent = '🕐 開催時間を見る';
+            }
+        });
+    });
+}
+
+// ========== モデルコース詳細表示 ==========
+function setupModelCourses() {
+    const courseCards = document.querySelectorAll('.course-cards');
+    const courseDetails = document.querySelectorAll('.course-detail');
+    const backBtns = document.querySelectorAll('.course-back-btn');
+
+    // 詳細を見るボタン
+    document.querySelectorAll('.course-detail-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const courseCard = btn.closest('.course-card');
+            const courseId = courseCard.dataset.course;
+
+            // カード一覧を非表示
+            courseCards.forEach(cards => {
+                cards.style.display = 'none';
+            });
+
+            // 該当コースの詳細を表示
+            const targetDetail = document.getElementById(`course-${courseId}`);
+            if (targetDetail) {
+                targetDetail.classList.add('active');
+            }
+        });
+    });
+
+    // 戻るボタン
+    backBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 詳細を非表示
+            courseDetails.forEach(detail => {
+                detail.classList.remove('active');
+            });
+
+            // カード一覧を表示
+            courseCards.forEach(cards => {
+                cards.style.display = 'flex';
+            });
+        });
+    });
+}
+
+// ========== 豆知識アコーディオン ==========
+function setupTriviaAccordion() {
+    document.querySelectorAll('.trivia-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const triviaItem = header.closest('.trivia-item');
+
+            // 他のアイテムを閉じる（オプション：1つだけ開く場合）
+            // document.querySelectorAll('.trivia-item').forEach(item => {
+            //     if (item !== triviaItem) {
+            //         item.classList.remove('open');
+            //     }
+            // });
+
+            triviaItem.classList.toggle('open');
+        });
+    });
+}
+
+// ========== Leaflet.js 地図初期化 ==========
+let maps = {};
+
+// 各エリアのスポット座標データ
+const spotCoordinates = {
+    yubatake: {
+        center: [36.6212, 138.5962],
+        zoom: 17,
+        spots: [
+            { id: 'yubatake-main', name: '湯畑', lat: 36.6212, lng: 138.5962 },
+            { id: 'yubatake-kumiwaku', name: '御汲み上げの湯枠', lat: 36.6214, lng: 138.5960 },
+            { id: 'yubatake-yutoi', name: '湯樋', lat: 36.6213, lng: 138.5963 },
+            { id: 'yubatake-yukemuri', name: '湯けむり亭', lat: 36.6210, lng: 138.5958 },
+            { id: 'yubatake-yutaki', name: '湯滝', lat: 36.6208, lng: 138.5965 },
+            { id: 'yubatake-tourou', name: '湯滝の灯篭', lat: 36.6207, lng: 138.5964 },
+            { id: 'yubatake-hi', name: '御汲上げの碑', lat: 36.6215, lng: 138.5961 },
+            { id: 'yubatake-yuji', name: '湯路広場', lat: 36.6209, lng: 138.5955 },
+            { id: 'yubatake-netsunoyu', name: '熱乃湯', lat: 36.6216, lng: 138.5957 },
+            { id: 'yubatake-mandarado', name: 'まんだら堂', lat: 36.6218, lng: 138.5954 },
+            { id: 'yubatake-tomoeya', name: 'ともえや', lat: 36.6217, lng: 138.5952 },
+            { id: 'yubatake-osayu', name: 'おさ湯', lat: 36.6220, lng: 138.5956 },
+            { id: 'yubatake-illumi', name: 'イルミネーション', lat: 36.6211, lng: 138.5960 },
+            { id: 'yubatake-onsenmon', name: '温泉門', lat: 36.6219, lng: 138.5948 },
+            { id: 'yubatake-ichii', name: '一井お土産センター', lat: 36.6214, lng: 138.5955 }
+        ]
+    },
+    sainokawara: {
+        center: [36.6235, 138.5920],
+        zoom: 16,
+        spots: [
+            { id: 'sainokawara-dori', name: '西の河原通り', lat: 36.6225, lng: 138.5945 },
+            { id: 'sainokawara-park', name: '西の河原公園', lat: 36.6240, lng: 138.5905 },
+            { id: 'sainokawara-glass', name: '草津ガラス蔵', lat: 36.6228, lng: 138.5942 }
+        ]
+    },
+    urakusatsu: {
+        center: [36.6200, 138.5950],
+        zoom: 17,
+        spots: [
+            { id: 'urakusatsu-jizo', name: '裏草津 地蔵', lat: 36.6198, lng: 138.5948 },
+            { id: 'urakusatsu-kaoyu', name: '顔湯', lat: 36.6199, lng: 138.5949 },
+            { id: 'urakusatsu-ashiyu', name: '足湯', lat: 36.6197, lng: 138.5947 },
+            { id: 'urakusatsu-tearai', name: '手洗乃湯', lat: 36.6200, lng: 138.5950 },
+            { id: 'urakusatsu-manga', name: '漫画堂', lat: 36.6195, lng: 138.5952 },
+            { id: 'urakusatsu-hyakunen', name: '百年石別邸', lat: 36.6193, lng: 138.5955 },
+            { id: 'urakusatsu-takadai', name: '高台広場', lat: 36.6192, lng: 138.5958 }
+        ]
+    },
+    shuhen: {
+        center: [36.5500, 138.8500],
+        zoom: 10,
+        spots: [
+            { id: 'shuhen-meiken', name: '世界の名犬牧場', lat: 36.4550, lng: 139.0920 }
+        ]
+    }
+};
+
+function initMapIfNeeded(areaId) {
+    const mapContainer = document.getElementById(`map-${areaId}`);
+    if (!mapContainer || maps[areaId]) return;
+
+    const areaData = spotCoordinates[areaId];
+    if (!areaData) return;
+
+    // Leaflet地図を初期化
+    const map = L.map(`map-${areaId}`).setView(areaData.center, areaData.zoom);
+
+    // OpenStreetMapタイル
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // カスタムアイコン
+    const customIcon = L.divIcon({
+        className: 'custom-marker',
+        html: '<div style="background: #B96A55; width: 32px; height: 32px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 3px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.3);"></div>',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32]
+    });
+
+    // スポットのピンを追加
+    areaData.spots.forEach(spot => {
+        const marker = L.marker([spot.lat, spot.lng], { icon: customIcon })
+            .addTo(map)
+            .bindPopup(`<b>${spot.name}</b>`)
+            .on('click', () => {
+                // 対応するカードまでスクロール
+                const card = document.querySelector(`[data-spot-id="${spot.id}"]`);
+                if (card) {
+                    card.classList.add('highlighted');
+                    setTimeout(() => {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+                    setTimeout(() => {
+                        card.classList.remove('highlighted');
+                    }, 2000);
+                }
+            });
+    });
+
+    maps[areaId] = map;
+
+    // 地図のサイズ調整（表示後に必要）
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 100);
+}
+
+// ========== 初期化処理を更新 ==========
+// DOMContentLoadedイベントリスナーに追加
+document.addEventListener('DOMContentLoaded', () => {
+    // 観光セクションの機能を初期化
+    setupSightseeingTabs();
+    setupFilterChips();
+    setupScheduleToggles();
+    setupModelCourses();
+    setupTriviaAccordion();
+});

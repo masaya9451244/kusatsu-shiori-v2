@@ -11,6 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <!-- Leaflet.js for maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <body>
     <!-- ========== 選択画面 ========== -->
@@ -315,26 +318,779 @@
                     <img src="images/shigureni/自撮りする女の子のイラスト.avif" alt="" class="sightseeing-illust-img">
                 </div>
 
-                <div class="spot-cards">
-                    <div class="spot-card">
-                        <div class="spot-image">
-                            <img src="images/photos/湯畑の写真.jpg" alt="湯畑">
+                <!-- エリア切替タブ -->
+                <div class="area-tabs">
+                    <button class="area-tab active" data-area="yubatake">
+                        <span class="area-tab-icon">♨️</span>
+                        <span class="area-tab-name">湯畑</span>
+                    </button>
+                    <button class="area-tab" data-area="sainokawara">
+                        <span class="area-tab-icon">🌿</span>
+                        <span class="area-tab-name">西の河原</span>
+                    </button>
+                    <button class="area-tab" data-area="urakusatsu">
+                        <span class="area-tab-icon">🏮</span>
+                        <span class="area-tab-name">裏草津</span>
+                    </button>
+                    <button class="area-tab" data-area="shuhen">
+                        <span class="area-tab-icon">🚗</span>
+                        <span class="area-tab-name">周辺</span>
+                    </button>
+                </div>
+
+                <!-- サブナビ（モデルコース・豆知識） -->
+                <div class="sightseeing-subnav">
+                    <button class="subnav-btn" data-target="model-course">
+                        <span class="subnav-icon">🗺️</span>
+                        モデルコース
+                    </button>
+                    <button class="subnav-btn" data-target="trivia">
+                        <span class="subnav-icon">💡</span>
+                        草津豆知識
+                    </button>
+                </div>
+
+                <!-- ========== 湯畑エリア ========== -->
+                <div class="area-content active" id="area-yubatake">
+                    <!-- 地図エリア -->
+                    <div class="area-map-container">
+                        <div id="map-yubatake" class="area-map"></div>
+                    </div>
+
+                    <!-- フィルタチップ -->
+                    <div class="filter-chips-container">
+                        <div class="filter-chips">
+                            <button class="filter-chip active" data-spot="all">すべて</button>
+                            <button class="filter-chip" data-spot="yubatake-main">湯畑</button>
+                            <button class="filter-chip" data-spot="yubatake-kumage">御汲み上げ</button>
+                            <button class="filter-chip" data-spot="yubatake-yudoi">湯樋</button>
+                            <button class="filter-chip" data-spot="yubatake-yukemuri">湯けむり亭</button>
+                            <button class="filter-chip" data-spot="yubatake-yutaki">湯滝</button>
+                            <button class="filter-chip" data-spot="yubatake-tourou">灯篭</button>
+                            <button class="filter-chip" data-spot="yubatake-hi">碑</button>
+                            <button class="filter-chip" data-spot="yubatake-yuji">湯路広場</button>
+                            <button class="filter-chip" data-spot="yubatake-netsunoyu">熱乃湯</button>
+                            <button class="filter-chip" data-spot="yubatake-mandarado">まんだら堂</button>
+                            <button class="filter-chip" data-spot="yubatake-tomoeya">ともえや</button>
+                            <button class="filter-chip" data-spot="yubatake-osayu">おさ湯</button>
+                            <button class="filter-chip" data-spot="yubatake-illumi">イルミ</button>
+                            <button class="filter-chip" data-spot="yubatake-onsenmon">温泉門</button>
+                            <button class="filter-chip" data-spot="yubatake-ichii">一井</button>
                         </div>
-                        <div class="spot-content">
-                            <h3 class="spot-name">♨️ 湯畑</h3>
-                            <p class="spot-desc">草津温泉のシンボル。毎分4,000リットルの温泉が湧き出す様子は圧巻。夜のライトアップも幻想的。</p>
-                            <p class="spot-meta">📍 草津温泉街の中心</p>
+                        <span class="filter-scroll-hint">→</span>
+                    </div>
+
+                    <!-- スポットカード一覧 -->
+                    <div class="spot-cards">
+                        <!-- 湯畑 -->
+                        <div class="spot-card" data-spot-id="yubatake-main">
+                            <div class="spot-image">
+                                <img src="images/観光/湯畑.jpg" alt="湯畑" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">♨️ 湯畑</h3>
+                                <p class="spot-desc">草津温泉のシンボル。毎分4000リットルの温泉が湧き出て常に湯けむりを舞い上げています。湯畑周辺は湯上がり散策を楽しめる公園になっています。</p>
+                                <p class="spot-meta">📍 草津温泉街の中心</p>
+                            </div>
+                        </div>
+
+                        <!-- 八代将軍御汲み上げの湯枠 -->
+                        <div class="spot-card" data-spot-id="yubatake-kumage">
+                            <div class="spot-image">
+                                <img src="images/観光/八代将軍御汲み上げの湯枠.jpg" alt="八代将軍御汲み上げの湯枠" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🏯 八代将軍御汲み上げの湯枠</h3>
+                                <p class="spot-desc">ここの枠の中の湯を汲んで江戸まで運ばせた八代将軍吉宗。町制100周年記念で、「御汲み上げの儀」を行いました。</p>
+                                <p class="spot-meta">📍 湯畑周辺</p>
+                            </div>
+                        </div>
+
+                        <!-- 湯樋 -->
+                        <div class="spot-card" data-spot-id="yubatake-yudoi">
+                            <div class="spot-image">
+                                <img src="images/観光/湯樋.jpg" alt="湯樋" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🪵 湯樋</h3>
+                                <p class="spot-desc">左手にはズラズラ〜っと並んだ木の樋。湯の花を沈殿させておく木の樋。後にお土産の「湯の花」が採れます。</p>
+                                <p class="spot-meta">📍 湯畑周辺</p>
+                            </div>
+                        </div>
+
+                        <!-- 湯けむり亭（足湯） -->
+                        <div class="spot-card" data-spot-id="yubatake-yukemuri">
+                            <div class="spot-image">
+                                <img src="images/観光/湯けむり亭(足湯).jpg" alt="湯けむり亭" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🦶 湯けむり亭（足湯）</h3>
+                                <p class="spot-desc">気軽に足だけ浸かれる足湯。知らない人ともいつの間にか会話が弾んで和気あいあい。素足触れ合うのも他生の縁？！</p>
+                                <p class="spot-meta">📍 湯畑横 | 💰 無料</p>
+                            </div>
+                        </div>
+
+                        <!-- 湯滝 -->
+                        <div class="spot-card" data-spot-id="yubatake-yutaki">
+                            <div class="spot-image">
+                                <img src="images/観光/湯滝.jpg" alt="湯滝" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">💧 湯滝</h3>
+                                <p class="spot-desc">自分に向かって落ちてくる湯滝に感動？！岩についている緑のモノは「イデユコゴメ」という藻。強酸性のところが好きな珍しい原始的藻類。「草津にきました」記念写真はやっぱ、ここかな。</p>
+                                <p class="spot-meta">📍 湯畑 | 📸 撮影スポット</p>
+                            </div>
+                        </div>
+
+                        <!-- 湯滝・湯滝の灯篭 -->
+                        <div class="spot-card" data-spot-id="yubatake-tourou">
+                            <div class="spot-image">
+                                <img src="images/観光/湯滝・湯滝の灯篭.jpg" alt="湯滝の灯篭" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🏮 湯滝・湯滝の灯篭</h3>
+                                <p class="spot-desc">昔は常夜灯としてちゃ〜んと機能していた灯篭。今では通常のライトアップや3月に行われる特別ライトアップでも存在感がある石造り。結構撮影スポットだったりする。</p>
+                                <p class="spot-meta">📍 湯畑 | 📸 撮影スポット</p>
+                            </div>
+                        </div>
+
+                        <!-- 八代将軍御汲上げの碑 -->
+                        <div class="spot-card" data-spot-id="yubatake-hi">
+                            <div class="spot-image">
+                                <img src="images/観光/八代将軍御汲上げの碑.jpg" alt="八代将軍御汲上げの碑" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🪨 八代将軍御汲上げの碑</h3>
+                                <p class="spot-desc">八代将軍吉宗入浴のいわれを記した碑。</p>
+                                <p class="spot-meta">📍 湯畑周辺</p>
+                            </div>
+                        </div>
+
+                        <!-- 湯路広場 -->
+                        <div class="spot-card" data-spot-id="yubatake-yuji">
+                            <div class="spot-image">
+                                <img src="images/観光/湯路広場.jpg" alt="湯路広場" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🎋 湯路広場</h3>
+                                <p class="spot-desc">昭和レトロの木回廊と、湯畑の"畑"に対し棚田をイメージした湯路広場。湯畑周辺で見つけたお気に入りの食べ物や飲み物を片手に、温泉情緒を感じながら一休み♪ここではイベントが行われていることも(*^^*)</p>
+                                <p class="spot-meta">📍 湯畑横</p>
+                            </div>
+                        </div>
+
+                        <!-- 熱乃湯「湯もみと踊り」 -->
+                        <div class="spot-card has-schedule" data-spot-id="yubatake-netsunoyu">
+                            <div class="spot-image">
+                                <img src="images/観光/熱乃湯の「湯もみと踊り」を見学.jpg" alt="熱乃湯" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🎭 熱乃湯「湯もみと踊り」</h3>
+                                <p class="spot-desc">草津節にあわせて湯もみのショーが見られるのはこちら。1回のショーで2回湯もみがあります！お客様体験コーナーも！</p>
+                                <p class="spot-meta">📍 湯畑前 | ⏱️ 約25分</p>
+                                <button class="schedule-toggle">🕐 開催時間を見る</button>
+                                <div class="schedule-info">
+                                    <div class="schedule-header">📅 開催時間</div>
+                                    <div class="schedule-times">
+                                        <span class="schedule-time">9:30</span>
+                                        <span class="schedule-time">10:00</span>
+                                        <span class="schedule-time">10:30</span>
+                                        <span class="schedule-time">15:30</span>
+                                        <span class="schedule-time">16:00</span>
+                                        <span class="schedule-time">16:30</span>
+                                    </div>
+                                    <p class="schedule-note">※時期により変動あり。公式サイトでご確認ください。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 射的本舗まんだら堂 -->
+                        <div class="spot-card" data-spot-id="yubatake-mandarado">
+                            <div class="spot-image">
+                                <img src="images/観光/まんだら堂射的.jpg" alt="まんだら堂" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🎯 射的本舗まんだら堂</h3>
+                                <p class="spot-desc">温泉娯楽の王道、射的。草津地ならではの雰囲気を大切にした本格的射的場です。誰が呼んだか「行列のできる射的場」。最大12名様が並んで、ご遊戯頂けます。協力プレイ、点数の合算など、なんでもアリのお店です。</p>
+                                <p class="spot-meta">📍 湯畑周辺 | 🎮 娯楽</p>
+                            </div>
+                        </div>
+
+                        <!-- ともえや -->
+                        <div class="spot-card" data-spot-id="yubatake-tomoeya">
+                            <div class="spot-image">
+                                <img src="images/観光/ともえや.jpg" alt="ともえや" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🎰 ともえや</h3>
+                                <p class="spot-desc">草津温泉 昭和 駄菓子とあそびの広場。草津で唯一のスマートボール（ビンゴ式）場です。子供から大人まで楽しめる娯楽施設です。ちょっとした休憩（無料）にぜひ立ち寄って下さい。</p>
+                                <p class="spot-meta">📍 湯畑周辺 | 🎮 娯楽</p>
+                            </div>
+                        </div>
+
+                        <!-- おさ湯 -->
+                        <div class="spot-card has-schedule" data-spot-id="yubatake-osayu">
+                            <div class="spot-image spot-image-illust">
+                                <img src="images/shigureni/旅行の準備をするイラスト.avif" alt="おさ湯" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🐵 おさ湯 ～草津温泉おさるの湯もみ処～</h3>
+                                <p class="spot-desc">とにかくかわいくて笑える！おさるによる湯もみショー。2階にはカピバラや子ざる、うさぎや猫に心癒やされる「かぴ湯」がある。</p>
+                                <p class="spot-meta">📍 湯畑周辺 | 🎭 ショー</p>
+                                <button class="schedule-toggle">🕐 開催時間を見る</button>
+                                <div class="schedule-info">
+                                    <div class="schedule-header">📅 おさるの湯もみショー</div>
+                                    <div class="schedule-times">
+                                        <span class="schedule-time">10:30</span>
+                                        <span class="schedule-time">11:30</span>
+                                        <span class="schedule-time">13:30</span>
+                                        <span class="schedule-time">14:30</span>
+                                        <span class="schedule-time">15:30</span>
+                                    </div>
+                                    <p class="schedule-note">※約20分間 / 入場料: 大人1,000円</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 湯畑ツリー＆イルミネーション -->
+                        <div class="spot-card" data-spot-id="yubatake-illumi">
+                            <div class="spot-image spot-image-illust">
+                                <img src="images/shigureni/雪遊びに全力を尽くす女の子のイラスト.avif" alt="湯畑イルミネーション" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🎄 湯畑ツリー＆イルミネーション</h3>
+                                <p class="spot-desc">通年行われている湯畑でのライトアップに加えて、このシーズンには高さ14mのライトアップされた巨大なもみの木も登場！</p>
+                                <p class="spot-meta">📍 湯路広場 | 🌙 冬季限定</p>
+                            </div>
+                        </div>
+
+                        <!-- 温泉門 -->
+                        <div class="spot-card" data-spot-id="yubatake-onsenmon">
+                            <div class="spot-image spot-image-illust">
+                                <img src="images/shigureni/マップを見ているときのイラスト.avif" alt="温泉門" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">⛩️ 温泉門</h3>
+                                <p class="spot-desc">足湯も楽しめる！草津温泉の新シンボル。2023年10月オープン。草津温泉の玄関口に誕生した新名所！3本の湯樋からは温泉が流れて湯だまりになっており、足湯が楽しめる。</p>
+                                <p class="spot-meta">📍 草津温泉入口 | 🦶 足湯あり | 🆕 2023年オープン</p>
+                            </div>
+                        </div>
+
+                        <!-- 一井お土産センター -->
+                        <div class="spot-card" data-spot-id="yubatake-ichii">
+                            <div class="spot-image spot-image-illust">
+                                <img src="images/shigureni/プレゼントを早く渡したくてウズウズしている女の子のイラスト.avif" alt="一井お土産センター" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🎁 一井お土産センター</h3>
+                                <p class="spot-desc">お土産がたくさん売っている場所。入浴剤づくり体験もできて、うるうる、シュワシュワなどどんなお湯にするかとか、香り、色をブレンドできる！</p>
+                                <p class="spot-meta">📍 湯畑前 | 🎨 体験あり</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 西の河原エリア ========== -->
+                <div class="area-content" id="area-sainokawara">
+                    <!-- 地図エリア -->
+                    <div class="area-map-container">
+                        <div id="map-sainokawara" class="area-map"></div>
+                    </div>
+
+                    <!-- フィルタチップ -->
+                    <div class="filter-chips-container">
+                        <div class="filter-chips">
+                            <button class="filter-chip active" data-spot="all">すべて</button>
+                            <button class="filter-chip" data-spot="sainokawara-dori">西の河原通り</button>
+                            <button class="filter-chip" data-spot="sainokawara-park">西の河原公園</button>
+                            <button class="filter-chip" data-spot="sainokawara-glass">ガラス蔵</button>
                         </div>
                     </div>
 
-                    <div class="spot-card">
-                        <div class="spot-image">
-                            <img src="images/photos/湯畑の写真2.jpg" alt="湯畑夜景">
+                    <!-- スポットカード一覧 -->
+                    <div class="spot-cards">
+                        <!-- 西の河原通り -->
+                        <div class="spot-card" data-spot-id="sainokawara-dori">
+                            <div class="spot-image spot-image-illust">
+                                <img src="images/shigureni/旅行の準備をするイラスト.avif" alt="西の河原通り" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🛍️ 西の河原通り</h3>
+                                <p class="spot-desc">両脇にお饅頭やさん・お土産やさん・お食事処が勢ぞろいのメインストリート。色んなものに目移りしてまっすぐ歩けないかも？！</p>
+                                <p class="spot-meta">📍 湯畑〜西の河原公園</p>
+                                <a href="#gourmet" class="spot-link">→ グルメ情報を見る</a>
+                            </div>
                         </div>
-                        <div class="spot-content">
-                            <h3 class="spot-name">🌙 湯畑ライトアップ</h3>
-                            <p class="spot-desc">夜の湯畑は幻想的な雰囲気に包まれます。湯けむりがライトに照らされてとても綺麗！</p>
-                            <p class="spot-meta">📍 日没後〜</p>
+
+                        <!-- 西の河原公園入り口 -->
+                        <div class="spot-card" data-spot-id="sainokawara-park">
+                            <div class="spot-image">
+                                <img src="images/観光/西の河原公園.jpg" alt="西の河原公園" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🌲 西の河原公園入り口</h3>
+                                <p class="spot-desc">湯畑から通常約10分で到着、右手前方には鶴太郎美術館の土壁が。その前の空間には時期が来るとつつじが咲いていて綺麗。そのちょっと上に目を向けると、草津ホテルさんのお庭から桜の花がのぞいています。</p>
+                                <p class="spot-meta">📍 徒歩約10分 | 🌸 つつじ・桜</p>
+                            </div>
+                        </div>
+
+                        <!-- 草津ガラス蔵 -->
+                        <div class="spot-card" data-spot-id="sainokawara-glass">
+                            <div class="spot-image spot-image-illust">
+                                <img src="images/shigureni/自撮りする女の子のイラスト.avif" alt="草津ガラス蔵" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">✨ 草津ガラス蔵</h3>
+                                <p class="spot-desc">草津温泉ガラスをはじめ、美しいガラス製置物がずらり。また、草津名物温泉たまごもこちらでお買い求めいただけます。</p>
+                                <p class="spot-meta">📍 西の河原通り | 🥚 温泉たまご</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 裏草津エリア ========== -->
+                <div class="area-content" id="area-urakusatsu">
+                    <!-- 地図エリア -->
+                    <div class="area-map-container">
+                        <div id="map-urakusatsu" class="area-map"></div>
+                    </div>
+
+                    <!-- フィルタチップ -->
+                    <div class="filter-chips-container">
+                        <div class="filter-chips">
+                            <button class="filter-chip active" data-spot="all">すべて</button>
+                            <button class="filter-chip" data-spot="urakusatsu-jizo">裏草津 地蔵</button>
+                            <button class="filter-chip" data-spot="urakusatsu-kaoyu">顔湯</button>
+                            <button class="filter-chip" data-spot="urakusatsu-ashiyu">足湯</button>
+                            <button class="filter-chip" data-spot="urakusatsu-tearai">手洗乃湯</button>
+                            <button class="filter-chip" data-spot="urakusatsu-manga">漫画堂</button>
+                            <button class="filter-chip" data-spot="urakusatsu-hyakunen">百年石</button>
+                            <button class="filter-chip" data-spot="urakusatsu-takadai">高台広場</button>
+                        </div>
+                        <span class="filter-scroll-hint">→</span>
+                    </div>
+
+                    <!-- スポットカード一覧 -->
+                    <div class="spot-cards">
+                        <!-- 裏草津 地蔵 -->
+                        <div class="spot-card" data-spot-id="urakusatsu-jizo">
+                            <div class="spot-image">
+                                <img src="images/観光/裏草津　地蔵.jpg" alt="裏草津 地蔵" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🏮 裏草津 地蔵</h3>
+                                <p class="spot-desc">2022年4月にリニューアルした地蔵エリア一体には足湯、手湯、顔湯、と温泉を体感できるポイントが勢ぞろい♪湯畑とはまた一味違った雰囲気を楽しんでみて下さい(*^^)v</p>
+                                <p class="spot-meta">📍 裏草津エリア</p>
+                            </div>
+                        </div>
+
+                        <!-- 顔湯 -->
+                        <div class="spot-card" data-spot-id="urakusatsu-kaoyu">
+                            <div class="spot-image">
+                                <img src="images/観光/顔湯.jpg" alt="顔湯" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">😊 顔湯</h3>
+                                <p class="spot-desc">地蔵源泉の脇にある顔湯。24時間、無料で気軽に温泉を楽しむことができます。</p>
+                                <p class="spot-meta">📍 地蔵源泉脇 | 💰 無料 | 🕐 24時間</p>
+                            </div>
+                        </div>
+
+                        <!-- 足湯（裏草津） -->
+                        <div class="spot-card" data-spot-id="urakusatsu-ashiyu">
+                            <div class="spot-image">
+                                <img src="images/観光/足湯（裏草津）.jpg" alt="足湯" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🦶 足湯（裏草津）</h3>
+                                <p class="spot-desc">地蔵源泉の脇にある足湯。24時間、無料で気軽に温泉を楽しむことができます。</p>
+                                <p class="spot-meta">📍 地蔵源泉脇 | 💰 無料 | 🕐 24時間</p>
+                            </div>
+                        </div>
+
+                        <!-- 手洗乃湯 -->
+                        <div class="spot-card" data-spot-id="urakusatsu-tearai">
+                            <div class="spot-image">
+                                <img src="images/観光/手洗乃湯.jpg" alt="手洗乃湯" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🖐️ 手洗乃湯</h3>
+                                <p class="spot-desc">地蔵源泉の脇にある手洗い湯。24時間、無料で気軽に温泉を楽しむことができます。</p>
+                                <p class="spot-meta">📍 地蔵源泉脇 | 💰 無料 | 🕐 24時間</p>
+                            </div>
+                        </div>
+
+                        <!-- 漫画堂 -->
+                        <div class="spot-card" data-spot-id="urakusatsu-manga">
+                            <div class="spot-image">
+                                <img src="images/観光/漫画道堂.jpg" alt="漫画堂" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">📚 漫画堂</h3>
+                                <p class="spot-desc">草津温泉にゆかりのある有名漫画家の作品から話題のあの作品まで１万冊以上の漫画がずらり！草津に来た様々な漫画家の直筆イラスト＆サインも並んでいます♪みんなも知っているあの有名キャラクターが描かれているかも…？</p>
+                                <p class="spot-meta">📍 裏草津エリア | 📖 1万冊以上</p>
+                            </div>
+                        </div>
+
+                        <!-- 百年石別邸 -->
+                        <div class="spot-card" data-spot-id="urakusatsu-hyakunen">
+                            <div class="spot-image">
+                                <img src="images/観光/百年石別邸.jpg" alt="百年石別邸" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🎨 百年石別邸</h3>
+                                <p class="spot-desc">百年石制作体験とは、石灰石にペンキで好きな絵や文字を書く、体験です。その後は、職人により、温泉につけ磨き上げます。草津の温泉は酸性であるため、石自体が溶け、絵や文字の部分が浮かび上がる、草津温泉ならではの手法で作られるものです。世界に一つ、あなただけのオリジナルのお土産を、作ってみませんか？</p>
+                                <p class="spot-meta">📍 裏草津エリア | 🎨 体験</p>
+                            </div>
+                        </div>
+
+                        <!-- 高台広場 -->
+                        <div class="spot-card" data-spot-id="urakusatsu-takadai">
+                            <div class="spot-image">
+                                <img src="images/観光/高台公園.jpg" alt="高台広場" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🌄 高台広場</h3>
+                                <p class="spot-desc">漫画堂や月の貌と同じ高台にあり、緑の植栽をした、段々畑のような高台広場。観光客が集中する湯畑周辺と違い「のんびり過ごす」をテーマに作られた空間は新たな名所として注目を集めています。夜間にはライトアップもされ、昼夜問わず楽しめる空間となっています。</p>
+                                <p class="spot-meta">📍 裏草津高台 | 🌙 夜間ライトアップ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 周辺エリア ========== -->
+                <div class="area-content" id="area-shuhen">
+                    <div class="area-map-container">
+                        <div id="map-shuhen" class="area-map"></div>
+                    </div>
+
+                    <!-- フィルタチップ -->
+                    <div class="filter-chips-container">
+                        <div class="filter-chips">
+                            <button class="filter-chip active" data-spot="all">すべて</button>
+                            <button class="filter-chip" data-spot="shuhen-meiken">名犬牧場</button>
+                        </div>
+                        <span class="filter-scroll-hint">→</span>
+                    </div>
+
+                    <!-- スポット一覧 -->
+                    <div class="spot-cards">
+                        <!-- 世界の名犬牧場 -->
+                        <div class="spot-card" data-spot-id="shuhen-meiken">
+                            <div class="spot-image spot-image-illust">
+                                <img src="images/shigureni/旅行の準備をするイラスト.avif" alt="世界の名犬牧場" loading="lazy">
+                            </div>
+                            <div class="spot-content">
+                                <h3 class="spot-name">🐕 世界の名犬牧場</h3>
+                                <p class="spot-desc">ワンちゃん好きにはたまらない！さまざまな犬種と触れ合えるドッグパーク。アルパカなどの動物もいて、癒しのひととき。草津温泉から車で約15分の場所にあります。</p>
+                                <p class="spot-meta">📍 群馬県前橋市（車で約15分） | 🐾 ふれあい</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== モデルコースページ ========== -->
+                <div class="area-content" id="area-model-course">
+                    <h3 class="sub-section-title">🗺️ モデルコース</h3>
+                    <p class="sub-section-desc">おすすめの観光ルートをご紹介</p>
+
+                    <!-- コース選択カード -->
+                    <div class="course-cards">
+                        <!-- 半日コース -->
+                        <div class="course-card" data-course="half-day">
+                            <div class="course-header">
+                                <span class="course-icon">☀️</span>
+                                <div class="course-info">
+                                    <h4 class="course-name">半日コース</h4>
+                                    <span class="course-duration">午後から約2.5時間</span>
+                                </div>
+                            </div>
+                            <p class="course-desc">チェックイン後にさくっと回れる定番コース</p>
+                            <button class="course-detail-btn">詳細を見る</button>
+                        </div>
+
+                        <!-- 1日満喫コース -->
+                        <div class="course-card" data-course="full-day">
+                            <div class="course-header">
+                                <span class="course-icon">🌟</span>
+                                <div class="course-info">
+                                    <h4 class="course-name">1日満喫コース</h4>
+                                    <span class="course-duration">朝から夕方まで</span>
+                                </div>
+                            </div>
+                            <p class="course-desc">草津を隅々まで楽しむ充実コース</p>
+                            <button class="course-detail-btn">詳細を見る</button>
+                        </div>
+
+                        <!-- 夜の湯畑散歩 -->
+                        <div class="course-card" data-course="night">
+                            <div class="course-header">
+                                <span class="course-icon">🌙</span>
+                                <div class="course-info">
+                                    <h4 class="course-name">夜の湯畑散歩</h4>
+                                    <span class="course-duration">夕食後約1.5時間</span>
+                                </div>
+                            </div>
+                            <p class="course-desc">ライトアップされた幻想的な湯畑へ</p>
+                            <button class="course-detail-btn">詳細を見る</button>
+                        </div>
+                    </div>
+
+                    <!-- コース詳細（半日） -->
+                    <div class="course-detail" id="course-half-day">
+                        <button class="course-back-btn">← コース一覧に戻る</button>
+                        <h4 class="course-detail-title">☀️ 半日コース（午後から）</h4>
+                        <div class="course-timeline">
+                            <div class="course-step">
+                                <div class="step-time">13:00</div>
+                                <div class="step-content">
+                                    <div class="step-title">湯畑到着・散策</div>
+                                    <div class="step-desc">まずは草津のシンボル湯畑へ！</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">13:30</div>
+                                <div class="step-content">
+                                    <div class="step-title">湯滝で記念撮影</div>
+                                    <div class="step-walk">↓ 徒歩5分</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">14:00</div>
+                                <div class="step-content">
+                                    <div class="step-title">湯もみショー見学（熱乃湯）</div>
+                                    <div class="step-desc">約25分のショー</div>
+                                    <div class="step-walk">↓ 徒歩3分</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">14:30</div>
+                                <div class="step-content">
+                                    <div class="step-title">西の河原通りで食べ歩き</div>
+                                    <div class="step-walk">↓ 徒歩10分</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">15:00</div>
+                                <div class="step-content">
+                                    <div class="step-title">西の河原公園散策</div>
+                                    <div class="step-walk">↓ 徒歩5分</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">15:30</div>
+                                <div class="step-content">
+                                    <div class="step-title">ホテルへ</div>
+                                    <div class="step-desc">お疲れさまでした！</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- コース詳細（1日） -->
+                    <div class="course-detail" id="course-full-day">
+                        <button class="course-back-btn">← コース一覧に戻る</button>
+                        <h4 class="course-detail-title">🌟 1日満喫コース</h4>
+                        <div class="course-timeline">
+                            <div class="course-step">
+                                <div class="step-time">10:00</div>
+                                <div class="step-content">
+                                    <div class="step-title">裏草津エリア（足湯・顔湯体験）</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">11:00</div>
+                                <div class="step-content">
+                                    <div class="step-title">百年石体験</div>
+                                    <div class="step-desc">オリジナルお土産を作ろう</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">12:00</div>
+                                <div class="step-content">
+                                    <div class="step-title">西の河原通りでランチ</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">13:30</div>
+                                <div class="step-content">
+                                    <div class="step-title">湯畑散策</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">14:30</div>
+                                <div class="step-content">
+                                    <div class="step-title">湯もみショー</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">15:30</div>
+                                <div class="step-content">
+                                    <div class="step-title">射的・スマートボール</div>
+                                    <div class="step-desc">温泉街で遊ぼう</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">17:00</div>
+                                <div class="step-content">
+                                    <div class="step-title">ホテルへ</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- コース詳細（夜） -->
+                    <div class="course-detail" id="course-night">
+                        <button class="course-back-btn">← コース一覧に戻る</button>
+                        <h4 class="course-detail-title">🌙 夜の湯畑散歩</h4>
+                        <div class="course-timeline">
+                            <div class="course-step">
+                                <div class="step-time">19:00</div>
+                                <div class="step-content">
+                                    <div class="step-title">夕食後、ホテル出発</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">19:15</div>
+                                <div class="step-content">
+                                    <div class="step-title">湯畑ライトアップ鑑賞</div>
+                                    <div class="step-desc">幻想的な湯けむり</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">19:45</div>
+                                <div class="step-content">
+                                    <div class="step-title">湯路広場でのんびり</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">20:15</div>
+                                <div class="step-content">
+                                    <div class="step-title">湯けむり亭（足湯）</div>
+                                    <div class="step-desc">夜の足湯も格別</div>
+                                </div>
+                            </div>
+                            <div class="course-step">
+                                <div class="step-time">20:45</div>
+                                <div class="step-content">
+                                    <div class="step-title">ホテルへ</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 草津豆知識ページ ========== -->
+                <div class="area-content" id="area-trivia">
+                    <h3 class="sub-section-title">💡 草津豆知識</h3>
+                    <p class="sub-section-desc">知っておくと旅がもっと楽しくなる！</p>
+
+                    <!-- アコーディオン形式 -->
+                    <div class="trivia-list">
+                        <div class="trivia-item">
+                            <button class="trivia-header">
+                                <span class="trivia-icon">🏛️</span>
+                                <span class="trivia-title">草津温泉の歴史</span>
+                                <span class="trivia-toggle">+</span>
+                            </button>
+                            <div class="trivia-content">
+                                <p>草津温泉は日本三名泉のひとつ。源頼朝や木曽義仲が発見したという伝説があり、江戸時代には「湯治場」として栄えました。八代将軍吉宗が草津の湯を江戸城まで運ばせたことでも有名です。</p>
+                            </div>
+                        </div>
+
+                        <div class="trivia-item">
+                            <button class="trivia-header">
+                                <span class="trivia-icon">♨️</span>
+                                <span class="trivia-title">3つの源泉の違い</span>
+                                <span class="trivia-toggle">+</span>
+                            </button>
+                            <div class="trivia-content">
+                                <p><strong>湯畑源泉</strong>：草津を代表する源泉。pH2.0前後の強酸性で殺菌力が高い。<br>
+                                <strong>万代鉱源泉</strong>：湯畑より温度が高く、さっぱりとした肌触り。<br>
+                                <strong>西の河原源泉</strong>：比較的まろやかな泉質。西の河原露天風呂で楽しめます。</p>
+                            </div>
+                        </div>
+
+                        <div class="trivia-item">
+                            <button class="trivia-header">
+                                <span class="trivia-icon">🪵</span>
+                                <span class="trivia-title">湯畑の仕組み</span>
+                                <span class="trivia-toggle">+</span>
+                            </button>
+                            <div class="trivia-content">
+                                <p>湯畑に並ぶ木の樋（湯樋）は、源泉を冷ますと同時に「湯の花」を採取するためのもの。温泉の成分が沈殿してできる湯の花は、入浴剤としてお土産にも人気です。</p>
+                            </div>
+                        </div>
+
+                        <div class="trivia-item">
+                            <button class="trivia-header">
+                                <span class="trivia-icon">🛁</span>
+                                <span class="trivia-title">共同浴場の作法</span>
+                                <span class="trivia-toggle">+</span>
+                            </button>
+                            <div class="trivia-content">
+                                <p>草津には無料の共同浴場がいくつかあります。地元の方も利用するので、マナーを守りましょう。<br>
+                                ・体を洗ってから入る<br>
+                                ・タオルを湯船に入れない<br>
+                                ・大声で騒がない<br>
+                                ・長時間の独占を避ける</p>
+                            </div>
+                        </div>
+
+                        <div class="trivia-item">
+                            <button class="trivia-header">
+                                <span class="trivia-icon">🥟</span>
+                                <span class="trivia-title">温泉まんじゅう文化</span>
+                                <span class="trivia-toggle">+</span>
+                            </button>
+                            <div class="trivia-content">
+                                <p>草津は温泉まんじゅう発祥の地とも言われています。湯畑の蒸気で蒸した「ゆもみちゃん焼」や、できたてホカホカの温泉まんじゅうが名物。西の河原通りにはたくさんのお店が並んでいます。</p>
+                            </div>
+                        </div>
+
+                        <div class="trivia-item">
+                            <button class="trivia-header">
+                                <span class="trivia-icon">🌅</span>
+                                <span class="trivia-title">おすすめの時間帯</span>
+                                <span class="trivia-toggle">+</span>
+                            </button>
+                            <div class="trivia-content">
+                                <p><strong>朝</strong>：人が少なく静かな湯畑を散策。朝市が開催されることも。<br>
+                                <strong>昼</strong>：西の河原通りで食べ歩き。お店が活気づく時間帯。<br>
+                                <strong>夜</strong>：ライトアップされた湯畑は必見！湯けむりが幻想的に輝きます。</p>
+                            </div>
+                        </div>
+
+                        <div class="trivia-item">
+                            <button class="trivia-header">
+                                <span class="trivia-icon">🧹</span>
+                                <span class="trivia-title">湯もみの意味</span>
+                                <span class="trivia-toggle">+</span>
+                            </button>
+                            <div class="trivia-content">
+                                <p>草津の源泉は約50〜90℃と非常に高温。水で薄めると効能が落ちるため、大きな板で湯をかき混ぜて温度を下げる「湯もみ」が考案されました。草津節を歌いながらの湯もみは、今では観光名物となっています。</p>
+                            </div>
+                        </div>
+
+                        <div class="trivia-item">
+                            <button class="trivia-header">
+                                <span class="trivia-icon">⚡</span>
+                                <span class="trivia-title">電化製品が壊れやすい！？</span>
+                                <span class="trivia-toggle">+</span>
+                            </button>
+                            <div class="trivia-content">
+                                <p>草津温泉などの酸性泉の温泉地ではよくある話で、配管や金属部品が劣化しやすいんです。さらに酸性の湯けむりが電子機器の配線の露出部分や基盤に付着し、ゆっくり化学反応を起こして錆や腐食を生むことも。草津温泉が他の温泉地に比べて「割高」なのもそのせいらしいです。</p>
+                            </div>
+                        </div>
+
+                        <div class="trivia-item">
+                            <button class="trivia-header">
+                                <span class="trivia-icon">✨</span>
+                                <span class="trivia-title">草津温泉の湯治効果</span>
+                                <span class="trivia-toggle">+</span>
+                            </button>
+                            <div class="trivia-content">
+                                <p>「酸性泉＝ピリピリして肌によくない」というイメージがあるかもしれませんが、実はそんなことはありません！草津の湯は肌がツルツルになって白くなる効果が期待できます。奇跡的にアトピーが良くなったという体験談も。強酸性の殺菌力が肌のトラブルに効くのかもしれませんね。</p>
+                            </div>
                         </div>
                     </div>
                 </div>
