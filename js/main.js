@@ -972,16 +972,19 @@ function initMapIfNeeded(areaId) {
 
     maps[areaId] = map;
 
+    // 全ピンが収まる範囲を計算
+    const bounds = L.latLngBounds(areaData.spots.map(spot => [spot.lat, spot.lng]));
+
     // 地図のサイズ調整を複数回実行
     const refreshMap = () => {
         map.invalidateSize();
-        map.setView(areaData.center, areaData.zoom);
+        // 全ピンが収まるようにフィット（パディング付き）
+        map.fitBounds(bounds, { padding: [30, 30] });
     };
 
     setTimeout(refreshMap, 100);
     setTimeout(refreshMap, 300);
     setTimeout(refreshMap, 600);
-    setTimeout(refreshMap, 1000);
 
     // ResizeObserverでコンテナサイズ変更を監視
     const resizeObserver = new ResizeObserver(() => {
@@ -995,8 +998,9 @@ function refreshMapSize(areaId) {
     if (maps[areaId]) {
         const areaData = spotCoordinates[areaId];
         maps[areaId].invalidateSize();
-        if (areaData) {
-            maps[areaId].setView(areaData.center, areaData.zoom);
+        if (areaData && areaData.spots.length > 0) {
+            const bounds = L.latLngBounds(areaData.spots.map(spot => [spot.lat, spot.lng]));
+            maps[areaId].fitBounds(bounds, { padding: [30, 30] });
         }
     }
 }
