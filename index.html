@@ -1026,7 +1026,10 @@
 
                 <!-- エリアタブ -->
                 <div class="gourmet-area-tabs">
-                    <button class="gourmet-area-tab active" data-area="yubatake">
+                    <button class="gourmet-area-tab active" data-area="all">
+                        <span class="tab-icon">📍</span>すべて
+                    </button>
+                    <button class="gourmet-area-tab" data-area="yubatake">
                         <span class="tab-icon">♨️</span>湯畑
                     </button>
                     <button class="gourmet-area-tab" data-area="jizo">
@@ -1062,8 +1065,13 @@
                     </button>
                 </div>
 
+                <!-- すべてエリア（全店舗表示用） -->
+                <div class="gourmet-area-content active" data-area="all" id="gourmet-all-area">
+                    <!-- JavaScriptで全店舗を動的に複製表示 -->
+                </div>
+
                 <!-- 湯畑エリア -->
-                <div class="gourmet-area-content active" data-area="yubatake">
+                <div class="gourmet-area-content" data-area="yubatake">
                     <!-- 森田コーヒー -->
                     <div class="gourmet-card" data-genre="cafe">
                         <div class="gourmet-card-slider">

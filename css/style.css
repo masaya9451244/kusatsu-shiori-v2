@@ -2731,6 +2731,16 @@ body.shiori-active .header {
     padding: 16px;
 }
 
+.gourmet-area-tag {
+    display: inline-block;
+    font-size: 11px;
+    color: white;
+    background: var(--wood-brown);
+    padding: 4px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
 .gourmet-genre-tag {
     display: inline-block;
     font-size: 12px;

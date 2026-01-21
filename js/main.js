@@ -820,6 +820,44 @@ function setupTriviaAccordion() {
 
 // ========== グルメセクション機能 ==========
 
+// 「すべて」エリアに全店舗を複製
+function populateAllGourmetArea() {
+    const allAreaContainer = document.getElementById('gourmet-all-area');
+    if (!allAreaContainer) return;
+
+    // 各エリアからカードを取得して複製
+    const areas = ['yubatake', 'jizo', 'nishinokawara', 'other'];
+    const areaNames = {
+        'yubatake': '湯畑',
+        'jizo': '地蔵',
+        'nishinokawara': '西の河原',
+        'other': 'その他'
+    };
+
+    areas.forEach(areaId => {
+        const areaContent = document.querySelector(`.gourmet-area-content[data-area="${areaId}"]`);
+        if (!areaContent) return;
+
+        const cards = areaContent.querySelectorAll('.gourmet-card');
+        cards.forEach(card => {
+            const clonedCard = card.cloneNode(true);
+            // エリア情報を追加
+            clonedCard.dataset.sourceArea = areaId;
+
+            // エリアタグを追加
+            const cardInfo = clonedCard.querySelector('.gourmet-card-info');
+            if (cardInfo) {
+                const areaTag = document.createElement('div');
+                areaTag.className = 'gourmet-area-tag';
+                areaTag.textContent = `📍 ${areaNames[areaId]}`;
+                cardInfo.insertBefore(areaTag, cardInfo.firstChild);
+            }
+
+            allAreaContainer.appendChild(clonedCard);
+        });
+    });
+}
+
 // グルメエリアタブ切り替え
 function setupGourmetTabs() {
     const tabs = document.querySelectorAll('.gourmet-area-tab');
@@ -855,6 +893,16 @@ function setupGourmetTabs() {
                 activeContent.querySelectorAll('.gourmet-card').forEach(card => {
                     card.classList.remove('hidden');
                 });
+                // 該当なしメッセージを非表示
+                const noResultsMsg = activeContent.querySelector('.no-results-message');
+                if (noResultsMsg) {
+                    noResultsMsg.style.display = 'none';
+                }
+            }
+
+            // 「すべて」タブ選択時はスライダーを再初期化
+            if (targetArea === 'all') {
+                setupGourmetSliders();
             }
         });
     });
@@ -1009,6 +1057,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupTriviaAccordion();
 
     // グルメセクションの機能を初期化
+    populateAllGourmetArea(); // 「すべて」エリアに全店舗を複製
     setupGourmetTabs();
     setupGourmetFilters();
     setupGourmetSliders();
