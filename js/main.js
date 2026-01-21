@@ -862,38 +862,38 @@ let maps = {};
 // 各エリアのスポット座標データ
 const spotCoordinates = {
     yubatake: {
-        center: [36.6218, 138.5959],
-        zoom: 18,
+        center: [36.62175, 138.59585],
+        zoom: 17,
         spots: [
-            { id: 'yubatake-main', name: '湯畑', lat: 36.6218, lng: 138.5959 },
-            { id: 'yubatake-kumiwaku', name: '御汲み上げの湯枠', lat: 36.6221, lng: 138.5957 },
-            { id: 'yubatake-yutoi', name: '湯樋', lat: 36.6219, lng: 138.5961 },
-            { id: 'yubatake-yukemuri', name: '湯けむり亭', lat: 36.6215, lng: 138.5955 },
-            { id: 'yubatake-yutaki', name: '湯滝', lat: 36.6213, lng: 138.5963 },
-            { id: 'yubatake-tourou', name: '湯滝の灯篭', lat: 36.6212, lng: 138.5962 },
-            { id: 'yubatake-hi', name: '御汲上げの碑', lat: 36.6222, lng: 138.5958 },
-            { id: 'yubatake-yuji', name: '湯路広場', lat: 36.6214, lng: 138.5952 },
-            { id: 'yubatake-netsunoyu', name: '熱乃湯', lat: 36.6223, lng: 138.5954 },
-            { id: 'yubatake-mandarado', name: 'まんだら堂', lat: 36.6225, lng: 138.5951 },
-            { id: 'yubatake-tomoeya', name: 'ともえや', lat: 36.6224, lng: 138.5949 },
-            { id: 'yubatake-osayu', name: 'おさ湯', lat: 36.6227, lng: 138.5953 },
-            { id: 'yubatake-illumi', name: 'イルミネーション', lat: 36.6217, lng: 138.5958 },
-            { id: 'yubatake-onsenmon', name: '温泉門', lat: 36.6226, lng: 138.5945 },
-            { id: 'yubatake-ichii', name: '一井お土産センター', lat: 36.6221, lng: 138.5952 }
+            { id: 'yubatake-main', name: '湯畑', lat: 36.62175, lng: 138.59585 },
+            { id: 'yubatake-kumiwaku', name: '御汲み上げの湯枠', lat: 36.62195, lng: 138.59565 },
+            { id: 'yubatake-yutoi', name: '湯樋', lat: 36.62185, lng: 138.59605 },
+            { id: 'yubatake-yukemuri', name: '湯けむり亭', lat: 36.62145, lng: 138.59545 },
+            { id: 'yubatake-yutaki', name: '湯滝', lat: 36.62125, lng: 138.59625 },
+            { id: 'yubatake-tourou', name: '湯滝の灯篭', lat: 36.62115, lng: 138.59615 },
+            { id: 'yubatake-hi', name: '御汲上げの碑', lat: 36.62215, lng: 138.59575 },
+            { id: 'yubatake-yuji', name: '湯路広場', lat: 36.62135, lng: 138.59515 },
+            { id: 'yubatake-netsunoyu', name: '熱乃湯', lat: 36.62225, lng: 138.59535 },
+            { id: 'yubatake-mandarado', name: 'まんだら堂', lat: 36.62245, lng: 138.59505 },
+            { id: 'yubatake-tomoeya', name: 'ともえや', lat: 36.62235, lng: 138.59485 },
+            { id: 'yubatake-osayu', name: 'おさ湯', lat: 36.62265, lng: 138.59525 },
+            { id: 'yubatake-illumi', name: 'イルミネーション', lat: 36.62165, lng: 138.59575 },
+            { id: 'yubatake-onsenmon', name: '温泉門', lat: 36.62255, lng: 138.59445 },
+            { id: 'yubatake-ichii', name: '一井お土産センター', lat: 36.62205, lng: 138.59515 }
         ]
     },
     sainokawara: {
-        center: [36.6238, 138.5918],
-        zoom: 17,
+        center: [36.6235, 138.5915],
+        zoom: 16,
         spots: [
-            { id: 'sainokawara-dori', name: '西の河原通り', lat: 36.6228, lng: 138.5942 },
-            { id: 'sainokawara-park', name: '西の河原公園', lat: 36.6248, lng: 138.5893 },
-            { id: 'sainokawara-glass', name: '草津ガラス蔵', lat: 36.6231, lng: 138.5939 }
+            { id: 'sainokawara-dori', name: '西の河原通り', lat: 36.6225, lng: 138.5940 },
+            { id: 'sainokawara-park', name: '西の河原公園', lat: 36.6245, lng: 138.5890 },
+            { id: 'sainokawara-glass', name: '草津ガラス蔵', lat: 36.6228, lng: 138.5937 }
         ]
     },
     urakusatsu: {
-        center: [36.6205, 138.5965],
-        zoom: 18,
+        center: [36.6200, 138.5970],
+        zoom: 17,
         spots: [
             { id: 'urakusatsu-jizo', name: '裏草津 地蔵', lat: 36.6198, lng: 138.5948 },
             { id: 'urakusatsu-kaoyu', name: '顔湯', lat: 36.6199, lng: 138.5949 },
@@ -920,8 +920,19 @@ function initMapIfNeeded(areaId) {
     const areaData = spotCoordinates[areaId];
     if (!areaData) return;
 
+    // コンテナサイズが確定するまで待機
+    if (mapContainer.offsetWidth === 0 || mapContainer.offsetHeight === 0) {
+        setTimeout(() => initMapIfNeeded(areaId), 100);
+        return;
+    }
+
     // Leaflet地図を初期化
-    const map = L.map(`map-${areaId}`).setView(areaData.center, areaData.zoom);
+    const map = L.map(`map-${areaId}`, {
+        center: areaData.center,
+        zoom: areaData.zoom,
+        scrollWheelZoom: true,
+        zoomControl: true
+    });
 
     // CartoDB Voyagerタイル（シンプルでモダンな地図）
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -961,24 +972,32 @@ function initMapIfNeeded(areaId) {
 
     maps[areaId] = map;
 
-    // 地図のサイズ調整（表示後に必要・複数回実行で確実に）
-    setTimeout(() => {
+    // 地図のサイズ調整を複数回実行
+    const refreshMap = () => {
         map.invalidateSize();
-    }, 100);
-    setTimeout(() => {
+        map.setView(areaData.center, areaData.zoom);
+    };
+
+    setTimeout(refreshMap, 100);
+    setTimeout(refreshMap, 300);
+    setTimeout(refreshMap, 600);
+    setTimeout(refreshMap, 1000);
+
+    // ResizeObserverでコンテナサイズ変更を監視
+    const resizeObserver = new ResizeObserver(() => {
         map.invalidateSize();
-    }, 300);
-    setTimeout(() => {
-        map.invalidateSize();
-    }, 500);
+    });
+    resizeObserver.observe(mapContainer);
 }
 
 // 既存の地図のサイズを再調整
 function refreshMapSize(areaId) {
     if (maps[areaId]) {
-        setTimeout(() => {
-            maps[areaId].invalidateSize();
-        }, 100);
+        const areaData = spotCoordinates[areaId];
+        maps[areaId].invalidateSize();
+        if (areaData) {
+            maps[areaId].setView(areaData.center, areaData.zoom);
+        }
     }
 }
 
