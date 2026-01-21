@@ -11,8 +11,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <!-- Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBh7-iJrUC1UWl2OX-9VKxvc6XJMLHi07M" async defer></script>
 </head>
 <body>
     <!-- ========== 選択画面 ========== -->
@@ -351,34 +349,6 @@
 
                 <!-- ========== 湯畑エリア ========== -->
                 <div class="area-content active" id="area-yubatake">
-                    <!-- 地図エリア -->
-                    <div class="area-map-container">
-                        <div id="map-yubatake" class="area-map"></div>
-                    </div>
-
-                    <!-- フィルタチップ -->
-                    <div class="filter-chips-container">
-                        <div class="filter-chips">
-                            <button class="filter-chip active" data-spot="all">すべて</button>
-                            <button class="filter-chip" data-spot="yubatake-main">湯畑</button>
-                            <button class="filter-chip" data-spot="yubatake-kumage">御汲み上げ</button>
-                            <button class="filter-chip" data-spot="yubatake-yudoi">湯樋</button>
-                            <button class="filter-chip" data-spot="yubatake-yukemuri">湯けむり亭</button>
-                            <button class="filter-chip" data-spot="yubatake-yutaki">湯滝</button>
-                            <button class="filter-chip" data-spot="yubatake-tourou">灯篭</button>
-                            <button class="filter-chip" data-spot="yubatake-hi">碑</button>
-                            <button class="filter-chip" data-spot="yubatake-yuji">湯路広場</button>
-                            <button class="filter-chip" data-spot="yubatake-netsunoyu">熱乃湯</button>
-                            <button class="filter-chip" data-spot="yubatake-mandarado">まんだら堂</button>
-                            <button class="filter-chip" data-spot="yubatake-tomoeya">ともえや</button>
-                            <button class="filter-chip" data-spot="yubatake-osayu">おさ湯</button>
-                            <button class="filter-chip" data-spot="yubatake-illumi">イルミ</button>
-                            <button class="filter-chip" data-spot="yubatake-onsenmon">温泉門</button>
-                            <button class="filter-chip" data-spot="yubatake-ichii">一井</button>
-                        </div>
-                        <span class="filter-scroll-hint">→</span>
-                    </div>
-
                     <!-- スポットカード一覧 -->
                     <div class="spot-cards">
                         <!-- 湯畑 -->
@@ -590,21 +560,6 @@
 
                 <!-- ========== 西の河原エリア ========== -->
                 <div class="area-content" id="area-sainokawara">
-                    <!-- 地図エリア -->
-                    <div class="area-map-container">
-                        <div id="map-sainokawara" class="area-map"></div>
-                    </div>
-
-                    <!-- フィルタチップ -->
-                    <div class="filter-chips-container">
-                        <div class="filter-chips">
-                            <button class="filter-chip active" data-spot="all">すべて</button>
-                            <button class="filter-chip" data-spot="sainokawara-dori">西の河原通り</button>
-                            <button class="filter-chip" data-spot="sainokawara-park">西の河原公園</button>
-                            <button class="filter-chip" data-spot="sainokawara-glass">ガラス蔵</button>
-                        </div>
-                    </div>
-
                     <!-- スポットカード一覧 -->
                     <div class="spot-cards">
                         <!-- 西の河原通り -->
@@ -648,26 +603,6 @@
 
                 <!-- ========== 裏草津エリア ========== -->
                 <div class="area-content" id="area-urakusatsu">
-                    <!-- 地図エリア -->
-                    <div class="area-map-container">
-                        <div id="map-urakusatsu" class="area-map"></div>
-                    </div>
-
-                    <!-- フィルタチップ -->
-                    <div class="filter-chips-container">
-                        <div class="filter-chips">
-                            <button class="filter-chip active" data-spot="all">すべて</button>
-                            <button class="filter-chip" data-spot="urakusatsu-jizo">裏草津 地蔵</button>
-                            <button class="filter-chip" data-spot="urakusatsu-kaoyu">顔湯</button>
-                            <button class="filter-chip" data-spot="urakusatsu-ashiyu">足湯</button>
-                            <button class="filter-chip" data-spot="urakusatsu-tearai">手洗乃湯</button>
-                            <button class="filter-chip" data-spot="urakusatsu-manga">漫画堂</button>
-                            <button class="filter-chip" data-spot="urakusatsu-hyakunen">百年石</button>
-                            <button class="filter-chip" data-spot="urakusatsu-takadai">高台広場</button>
-                        </div>
-                        <span class="filter-scroll-hint">→</span>
-                    </div>
-
                     <!-- スポットカード一覧 -->
                     <div class="spot-cards">
                         <!-- 裏草津 地蔵 -->
@@ -758,19 +693,6 @@
 
                 <!-- ========== 周辺エリア ========== -->
                 <div class="area-content" id="area-shuhen">
-                    <div class="area-map-container">
-                        <div id="map-shuhen" class="area-map"></div>
-                    </div>
-
-                    <!-- フィルタチップ -->
-                    <div class="filter-chips-container">
-                        <div class="filter-chips">
-                            <button class="filter-chip active" data-spot="all">すべて</button>
-                            <button class="filter-chip" data-spot="shuhen-meiken">名犬牧場</button>
-                        </div>
-                        <span class="filter-scroll-hint">→</span>
-                    </div>
-
                     <!-- スポット一覧 -->
                     <div class="spot-cards">
                         <!-- 世界の名犬牧場 -->
