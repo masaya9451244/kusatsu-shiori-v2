@@ -863,43 +863,43 @@ let maps = {};
 // 座標はGoogle Mapsで確認した実際の位置
 const spotCoordinates = {
     yubatake: {
-        // 右上（北東）方向に大幅移動: +0.005緯度, +0.005経度
+        // さらに右上（北東）方向に移動: +0.003緯度, +0.003経度
         spots: [
-            { id: 'yubatake-main', name: '湯畑', lat: 36.6238, lng: 138.6017 },
-            { id: 'yubatake-kumiwaku', name: '御汲み上げの湯枠', lat: 36.6240, lng: 138.6015 },
-            { id: 'yubatake-yutoi', name: '湯樋', lat: 36.6239, lng: 138.6019 },
-            { id: 'yubatake-yukemuri', name: '湯けむり亭', lat: 36.6235, lng: 138.6013 },
-            { id: 'yubatake-yutaki', name: '湯滝', lat: 36.6233, lng: 138.6021 },
-            { id: 'yubatake-tourou', name: '湯滝の灯篭', lat: 36.6232, lng: 138.6020 },
-            { id: 'yubatake-hi', name: '御汲上げの碑', lat: 36.6241, lng: 138.6016 },
-            { id: 'yubatake-yuji', name: '湯路広場', lat: 36.6234, lng: 138.6010 },
-            { id: 'yubatake-netsunoyu', name: '熱乃湯', lat: 36.6243, lng: 138.6012 },
-            { id: 'yubatake-mandarado', name: 'まんだら堂', lat: 36.6245, lng: 138.6009 },
-            { id: 'yubatake-tomoeya', name: 'ともえや', lat: 36.6244, lng: 138.6007 },
-            { id: 'yubatake-osayu', name: 'おさ湯', lat: 36.6247, lng: 138.6011 },
-            { id: 'yubatake-illumi', name: 'イルミネーション', lat: 36.6237, lng: 138.6016 },
-            { id: 'yubatake-onsenmon', name: '温泉門', lat: 36.6246, lng: 138.6003 },
-            { id: 'yubatake-ichii', name: '一井お土産センター', lat: 36.6241, lng: 138.6010 }
+            { id: 'yubatake-main', name: '湯畑', lat: 36.6268, lng: 138.6047 },
+            { id: 'yubatake-kumiwaku', name: '御汲み上げの湯枠', lat: 36.6270, lng: 138.6045 },
+            { id: 'yubatake-yutoi', name: '湯樋', lat: 36.6269, lng: 138.6049 },
+            { id: 'yubatake-yukemuri', name: '湯けむり亭', lat: 36.6265, lng: 138.6043 },
+            { id: 'yubatake-yutaki', name: '湯滝', lat: 36.6263, lng: 138.6051 },
+            { id: 'yubatake-tourou', name: '湯滝の灯篭', lat: 36.6262, lng: 138.6050 },
+            { id: 'yubatake-hi', name: '御汲上げの碑', lat: 36.6271, lng: 138.6046 },
+            { id: 'yubatake-yuji', name: '湯路広場', lat: 36.6264, lng: 138.6040 },
+            { id: 'yubatake-netsunoyu', name: '熱乃湯', lat: 36.6273, lng: 138.6042 },
+            { id: 'yubatake-mandarado', name: 'まんだら堂', lat: 36.6275, lng: 138.6039 },
+            { id: 'yubatake-tomoeya', name: 'ともえや', lat: 36.6274, lng: 138.6037 },
+            { id: 'yubatake-osayu', name: 'おさ湯', lat: 36.6277, lng: 138.6041 },
+            { id: 'yubatake-illumi', name: 'イルミネーション', lat: 36.6267, lng: 138.6046 },
+            { id: 'yubatake-onsenmon', name: '温泉門', lat: 36.6276, lng: 138.6033 },
+            { id: 'yubatake-ichii', name: '一井お土産センター', lat: 36.6271, lng: 138.6040 }
         ]
     },
     sainokawara: {
-        // 右上方向に移動
+        // さらに右上方向に移動
         spots: [
-            { id: 'sainokawara-dori', name: '西の河原通り', lat: 36.6245, lng: 138.6000 },
-            { id: 'sainokawara-park', name: '西の河原公園', lat: 36.6270, lng: 138.5950 },
-            { id: 'sainokawara-glass', name: '草津ガラス蔵', lat: 36.6248, lng: 138.5995 }
+            { id: 'sainokawara-dori', name: '西の河原通り', lat: 36.6275, lng: 138.6030 },
+            { id: 'sainokawara-park', name: '西の河原公園', lat: 36.6300, lng: 138.5980 },
+            { id: 'sainokawara-glass', name: '草津ガラス蔵', lat: 36.6278, lng: 138.6025 }
         ]
     },
     urakusatsu: {
-        // 右上方向に移動
+        // さらに右上方向に移動
         spots: [
-            { id: 'urakusatsu-jizo', name: '裏草津 地蔵', lat: 36.6225, lng: 138.6025 },
-            { id: 'urakusatsu-kaoyu', name: '顔湯', lat: 36.6226, lng: 138.6026 },
-            { id: 'urakusatsu-ashiyu', name: '足湯', lat: 36.6224, lng: 138.6024 },
-            { id: 'urakusatsu-tearai', name: '手洗乃湯', lat: 36.6227, lng: 138.6027 },
-            { id: 'urakusatsu-manga', name: '漫画堂', lat: 36.6222, lng: 138.6029 },
-            { id: 'urakusatsu-hyakunen', name: '百年石別邸', lat: 36.6220, lng: 138.6032 },
-            { id: 'urakusatsu-takadai', name: '高台広場', lat: 36.6219, lng: 138.6035 }
+            { id: 'urakusatsu-jizo', name: '裏草津 地蔵', lat: 36.6255, lng: 138.6055 },
+            { id: 'urakusatsu-kaoyu', name: '顔湯', lat: 36.6256, lng: 138.6056 },
+            { id: 'urakusatsu-ashiyu', name: '足湯', lat: 36.6254, lng: 138.6054 },
+            { id: 'urakusatsu-tearai', name: '手洗乃湯', lat: 36.6257, lng: 138.6057 },
+            { id: 'urakusatsu-manga', name: '漫画堂', lat: 36.6252, lng: 138.6059 },
+            { id: 'urakusatsu-hyakunen', name: '百年石別邸', lat: 36.6250, lng: 138.6062 },
+            { id: 'urakusatsu-takadai', name: '高台広場', lat: 36.6249, lng: 138.6065 }
         ]
     },
     shuhen: {
