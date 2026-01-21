@@ -878,7 +878,7 @@ const spotCoordinates = {
             { id: 'yubatake-tomoeya', name: 'ともえや', lat: 36.6234, lng: 138.5957 },
             { id: 'yubatake-osayu', name: 'おさ湯', lat: 36.6237, lng: 138.5961 },
             { id: 'yubatake-illumi', name: 'イルミネーション', lat: 36.6227, lng: 138.5966 },
-            { id: 'yubatake-onsenmon', name: '温泉門', lat: 36.6236, lng: 138.5953 },
+            { id: 'yubatake-onsenmon', name: '温泉門', lat: 36.6220, lng: 138.5960 },
             { id: 'yubatake-ichii', name: '一井お土産センター', lat: 36.6231, lng: 138.5960 }
         ]
     },
