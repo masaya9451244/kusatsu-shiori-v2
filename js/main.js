@@ -689,10 +689,10 @@ function setupSightseeingTabs() {
     });
 
     // サブナビゲーション（モデルコース、豆知識）
-    const subNavBtns = document.querySelectorAll('.sub-nav-btn');
+    const subNavBtns = document.querySelectorAll('.subnav-btn');
     subNavBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            const targetArea = btn.dataset.area;
+            const targetArea = btn.dataset.target;
 
             // タブのアクティブ状態をクリア
             areaTabs.forEach(t => t.classList.remove('active'));
