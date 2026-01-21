@@ -864,28 +864,28 @@ let maps = {};
 const spotCoordinates = {
     yubatake: {
         spots: [
-            { id: 'yubatake-main', name: '湯畑', lat: 36.6217, lng: 138.5960 },
-            { id: 'yubatake-kumiwaku', name: '御汲み上げの湯枠', lat: 36.6219, lng: 138.5958 },
-            { id: 'yubatake-yutoi', name: '湯樋', lat: 36.6218, lng: 138.5962 },
-            { id: 'yubatake-yukemuri', name: '湯けむり亭', lat: 36.6214, lng: 138.5956 },
-            { id: 'yubatake-yutaki', name: '湯滝', lat: 36.6212, lng: 138.5964 },
-            { id: 'yubatake-tourou', name: '湯滝の灯篭', lat: 36.6211, lng: 138.5963 },
-            { id: 'yubatake-hi', name: '御汲上げの碑', lat: 36.6220, lng: 138.5959 },
-            { id: 'yubatake-yuji', name: '湯路広場', lat: 36.6213, lng: 138.5953 },
-            { id: 'yubatake-netsunoyu', name: '熱乃湯', lat: 36.6222, lng: 138.5955 },
-            { id: 'yubatake-mandarado', name: 'まんだら堂', lat: 36.6224, lng: 138.5952 },
-            { id: 'yubatake-tomoeya', name: 'ともえや', lat: 36.6223, lng: 138.5950 },
-            { id: 'yubatake-osayu', name: 'おさ湯', lat: 36.6226, lng: 138.5954 },
-            { id: 'yubatake-illumi', name: 'イルミネーション', lat: 36.6216, lng: 138.5959 },
-            { id: 'yubatake-onsenmon', name: '温泉門', lat: 36.6225, lng: 138.5946 },
-            { id: 'yubatake-ichii', name: '一井お土産センター', lat: 36.6220, lng: 138.5953 }
+            { id: 'yubatake-main', name: '湯畑', lat: 36.6219, lng: 138.5962 },
+            { id: 'yubatake-kumiwaku', name: '御汲み上げの湯枠', lat: 36.6221, lng: 138.5960 },
+            { id: 'yubatake-yutoi', name: '湯樋', lat: 36.6220, lng: 138.5964 },
+            { id: 'yubatake-yukemuri', name: '湯けむり亭', lat: 36.6216, lng: 138.5958 },
+            { id: 'yubatake-yutaki', name: '湯滝', lat: 36.6214, lng: 138.5966 },
+            { id: 'yubatake-tourou', name: '湯滝の灯篭', lat: 36.6213, lng: 138.5965 },
+            { id: 'yubatake-hi', name: '御汲上げの碑', lat: 36.6222, lng: 138.5961 },
+            { id: 'yubatake-yuji', name: '湯路広場', lat: 36.6215, lng: 138.5955 },
+            { id: 'yubatake-netsunoyu', name: '熱乃湯', lat: 36.6224, lng: 138.5957 },
+            { id: 'yubatake-mandarado', name: 'まんだら堂', lat: 36.6226, lng: 138.5954 },
+            { id: 'yubatake-tomoeya', name: 'ともえや', lat: 36.6225, lng: 138.5952 },
+            { id: 'yubatake-osayu', name: 'おさ湯', lat: 36.6228, lng: 138.5956 },
+            { id: 'yubatake-illumi', name: 'イルミネーション', lat: 36.6218, lng: 138.5961 },
+            { id: 'yubatake-onsenmon', name: '温泉門', lat: 36.6227, lng: 138.5948 },
+            { id: 'yubatake-ichii', name: '一井お土産センター', lat: 36.6222, lng: 138.5955 }
         ]
     },
     sainokawara: {
         spots: [
-            { id: 'sainokawara-dori', name: '西の河原通り', lat: 36.6223, lng: 138.5942 },
-            { id: 'sainokawara-park', name: '西の河原公園', lat: 36.6248, lng: 138.5893 },
-            { id: 'sainokawara-glass', name: '草津ガラス蔵', lat: 36.6228, lng: 138.5937 }
+            { id: 'sainokawara-dori', name: '西の河原通り', lat: 36.6225, lng: 138.5944 },
+            { id: 'sainokawara-park', name: '西の河原公園', lat: 36.6250, lng: 138.5895 },
+            { id: 'sainokawara-glass', name: '草津ガラス蔵', lat: 36.6230, lng: 138.5939 }
         ]
     },
     urakusatsu: {
