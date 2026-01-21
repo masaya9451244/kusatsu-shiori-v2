@@ -859,11 +859,9 @@ function setupTriviaAccordion() {
 // ========== Leaflet.js 地図初期化 ==========
 let maps = {};
 
-// 各エリアのスポット座標データ
+// 各エリアのスポット座標データ（fitBoundsで自動調整するためcenter/zoomは不要）
 const spotCoordinates = {
     yubatake: {
-        center: [36.62175, 138.59585],
-        zoom: 17,
         spots: [
             { id: 'yubatake-main', name: '湯畑', lat: 36.62175, lng: 138.59585 },
             { id: 'yubatake-kumiwaku', name: '御汲み上げの湯枠', lat: 36.62195, lng: 138.59565 },
@@ -883,8 +881,6 @@ const spotCoordinates = {
         ]
     },
     sainokawara: {
-        center: [36.6235, 138.5915],
-        zoom: 16,
         spots: [
             { id: 'sainokawara-dori', name: '西の河原通り', lat: 36.6225, lng: 138.5940 },
             { id: 'sainokawara-park', name: '西の河原公園', lat: 36.6245, lng: 138.5890 },
@@ -892,8 +888,6 @@ const spotCoordinates = {
         ]
     },
     urakusatsu: {
-        center: [36.6200, 138.5970],
-        zoom: 17,
         spots: [
             { id: 'urakusatsu-jizo', name: '裏草津 地蔵', lat: 36.6198, lng: 138.5948 },
             { id: 'urakusatsu-kaoyu', name: '顔湯', lat: 36.6199, lng: 138.5949 },
@@ -905,8 +899,6 @@ const spotCoordinates = {
         ]
     },
     shuhen: {
-        center: [36.5500, 138.8500],
-        zoom: 10,
         spots: [
             { id: 'shuhen-meiken', name: '世界の名犬牧場', lat: 36.4550, lng: 139.0920 }
         ]
@@ -926,10 +918,8 @@ function initMapIfNeeded(areaId) {
         return;
     }
 
-    // Leaflet地図を初期化
+    // Leaflet地図を初期化（center/zoomは後でfitBoundsで設定）
     const map = L.map(`map-${areaId}`, {
-        center: areaData.center,
-        zoom: areaData.zoom,
         scrollWheelZoom: true,
         zoomControl: true
     });
@@ -972,19 +962,15 @@ function initMapIfNeeded(areaId) {
 
     maps[areaId] = map;
 
-    // 全ピンが収まる範囲を計算
+    // 全ピンが収まる範囲を計算して即座に適用
     const bounds = L.latLngBounds(areaData.spots.map(spot => [spot.lat, spot.lng]));
+    map.fitBounds(bounds, { padding: [30, 30] });
 
-    // 地図のサイズ調整を複数回実行
-    const refreshMap = () => {
+    // サイズ確定後に再フィット（1回のみ）
+    setTimeout(() => {
         map.invalidateSize();
-        // 全ピンが収まるようにフィット（パディング付き）
         map.fitBounds(bounds, { padding: [30, 30] });
-    };
-
-    setTimeout(refreshMap, 100);
-    setTimeout(refreshMap, 300);
-    setTimeout(refreshMap, 600);
+    }, 300);
 
     // ResizeObserverでコンテナサイズ変更を監視
     const resizeObserver = new ResizeObserver(() => {
