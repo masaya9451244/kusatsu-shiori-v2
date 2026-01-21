@@ -516,6 +516,18 @@ function switchTab(tabId) {
         targetTab.classList.add('active');
         // ページトップにスクロール
         window.scrollTo({ top: 0, behavior: 'instant' });
+
+        // 観光タブの場合、地図を再調整
+        if (tabId === 'sightseeing') {
+            setTimeout(() => {
+                // 現在アクティブなエリアの地図を再調整
+                const activeArea = document.querySelector('.area-content.active');
+                if (activeArea) {
+                    const areaId = activeArea.id.replace('area-', '');
+                    refreshMapSize(areaId);
+                }
+            }, 200);
+        }
     }
 }
 
@@ -715,11 +727,17 @@ function setupSightseeingTabs() {
         });
     });
 
-    // デフォルトで湯畑エリアを表示
-    const defaultTab = document.querySelector('.area-tab[data-area="yubatake"]');
-    if (defaultTab) {
-        defaultTab.click();
-    }
+    // デフォルトで湯畑エリアを表示（遅延して確実に初期化）
+    setTimeout(() => {
+        const defaultTab = document.querySelector('.area-tab[data-area="yubatake"]');
+        if (defaultTab) {
+            defaultTab.click();
+            // 湯畑の地図を追加で再調整
+            setTimeout(() => refreshMapSize('yubatake'), 200);
+            setTimeout(() => refreshMapSize('yubatake'), 500);
+            setTimeout(() => refreshMapSize('yubatake'), 1000);
+        }
+    }, 100);
 }
 
 // ========== フィルタチップ ==========
@@ -844,38 +862,38 @@ let maps = {};
 // 各エリアのスポット座標データ
 const spotCoordinates = {
     yubatake: {
-        center: [36.6212, 138.5962],
-        zoom: 17,
+        center: [36.6218, 138.5959],
+        zoom: 18,
         spots: [
-            { id: 'yubatake-main', name: '湯畑', lat: 36.6212, lng: 138.5962 },
-            { id: 'yubatake-kumiwaku', name: '御汲み上げの湯枠', lat: 36.6214, lng: 138.5960 },
-            { id: 'yubatake-yutoi', name: '湯樋', lat: 36.6213, lng: 138.5963 },
-            { id: 'yubatake-yukemuri', name: '湯けむり亭', lat: 36.6210, lng: 138.5958 },
-            { id: 'yubatake-yutaki', name: '湯滝', lat: 36.6208, lng: 138.5965 },
-            { id: 'yubatake-tourou', name: '湯滝の灯篭', lat: 36.6207, lng: 138.5964 },
-            { id: 'yubatake-hi', name: '御汲上げの碑', lat: 36.6215, lng: 138.5961 },
-            { id: 'yubatake-yuji', name: '湯路広場', lat: 36.6209, lng: 138.5955 },
-            { id: 'yubatake-netsunoyu', name: '熱乃湯', lat: 36.6216, lng: 138.5957 },
-            { id: 'yubatake-mandarado', name: 'まんだら堂', lat: 36.6218, lng: 138.5954 },
-            { id: 'yubatake-tomoeya', name: 'ともえや', lat: 36.6217, lng: 138.5952 },
-            { id: 'yubatake-osayu', name: 'おさ湯', lat: 36.6220, lng: 138.5956 },
-            { id: 'yubatake-illumi', name: 'イルミネーション', lat: 36.6211, lng: 138.5960 },
-            { id: 'yubatake-onsenmon', name: '温泉門', lat: 36.6219, lng: 138.5948 },
-            { id: 'yubatake-ichii', name: '一井お土産センター', lat: 36.6214, lng: 138.5955 }
+            { id: 'yubatake-main', name: '湯畑', lat: 36.6218, lng: 138.5959 },
+            { id: 'yubatake-kumiwaku', name: '御汲み上げの湯枠', lat: 36.6221, lng: 138.5957 },
+            { id: 'yubatake-yutoi', name: '湯樋', lat: 36.6219, lng: 138.5961 },
+            { id: 'yubatake-yukemuri', name: '湯けむり亭', lat: 36.6215, lng: 138.5955 },
+            { id: 'yubatake-yutaki', name: '湯滝', lat: 36.6213, lng: 138.5963 },
+            { id: 'yubatake-tourou', name: '湯滝の灯篭', lat: 36.6212, lng: 138.5962 },
+            { id: 'yubatake-hi', name: '御汲上げの碑', lat: 36.6222, lng: 138.5958 },
+            { id: 'yubatake-yuji', name: '湯路広場', lat: 36.6214, lng: 138.5952 },
+            { id: 'yubatake-netsunoyu', name: '熱乃湯', lat: 36.6223, lng: 138.5954 },
+            { id: 'yubatake-mandarado', name: 'まんだら堂', lat: 36.6225, lng: 138.5951 },
+            { id: 'yubatake-tomoeya', name: 'ともえや', lat: 36.6224, lng: 138.5949 },
+            { id: 'yubatake-osayu', name: 'おさ湯', lat: 36.6227, lng: 138.5953 },
+            { id: 'yubatake-illumi', name: 'イルミネーション', lat: 36.6217, lng: 138.5958 },
+            { id: 'yubatake-onsenmon', name: '温泉門', lat: 36.6226, lng: 138.5945 },
+            { id: 'yubatake-ichii', name: '一井お土産センター', lat: 36.6221, lng: 138.5952 }
         ]
     },
     sainokawara: {
-        center: [36.6235, 138.5920],
-        zoom: 16,
+        center: [36.6238, 138.5918],
+        zoom: 17,
         spots: [
-            { id: 'sainokawara-dori', name: '西の河原通り', lat: 36.6225, lng: 138.5945 },
-            { id: 'sainokawara-park', name: '西の河原公園', lat: 36.6240, lng: 138.5905 },
-            { id: 'sainokawara-glass', name: '草津ガラス蔵', lat: 36.6228, lng: 138.5942 }
+            { id: 'sainokawara-dori', name: '西の河原通り', lat: 36.6228, lng: 138.5942 },
+            { id: 'sainokawara-park', name: '西の河原公園', lat: 36.6248, lng: 138.5893 },
+            { id: 'sainokawara-glass', name: '草津ガラス蔵', lat: 36.6231, lng: 138.5939 }
         ]
     },
     urakusatsu: {
-        center: [36.6200, 138.5950],
-        zoom: 17,
+        center: [36.6205, 138.5965],
+        zoom: 18,
         spots: [
             { id: 'urakusatsu-jizo', name: '裏草津 地蔵', lat: 36.6198, lng: 138.5948 },
             { id: 'urakusatsu-kaoyu', name: '顔湯', lat: 36.6199, lng: 138.5949 },
