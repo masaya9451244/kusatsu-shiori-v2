@@ -818,6 +818,187 @@ function setupTriviaAccordion() {
     });
 }
 
+// ========== グルメセクション機能 ==========
+
+// グルメエリアタブ切り替え
+function setupGourmetTabs() {
+    const tabs = document.querySelectorAll('.gourmet-area-tab');
+    const contents = document.querySelectorAll('.gourmet-area-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetArea = tab.dataset.area;
+
+            // タブのアクティブ状態を更新
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            // コンテンツの表示を切り替え
+            contents.forEach(content => {
+                if (content.dataset.area === targetArea) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+
+            // ジャンルフィルターを「すべて」にリセット
+            const allFilter = document.querySelector('.gourmet-genre-filter[data-genre="all"]');
+            if (allFilter) {
+                document.querySelectorAll('.gourmet-genre-filter').forEach(f => f.classList.remove('active'));
+                allFilter.classList.add('active');
+            }
+
+            // 現在のエリアの全カードを表示
+            const activeContent = document.querySelector('.gourmet-area-content.active');
+            if (activeContent) {
+                activeContent.querySelectorAll('.gourmet-card').forEach(card => {
+                    card.classList.remove('hidden');
+                });
+            }
+        });
+    });
+}
+
+// グルメジャンルフィルター
+function setupGourmetFilters() {
+    const filters = document.querySelectorAll('.gourmet-genre-filter');
+
+    filters.forEach(filter => {
+        filter.addEventListener('click', () => {
+            const targetGenre = filter.dataset.genre;
+
+            // フィルターのアクティブ状態を更新
+            filters.forEach(f => f.classList.remove('active'));
+            filter.classList.add('active');
+
+            // 現在のエリアのカードをフィルタリング
+            const activeContent = document.querySelector('.gourmet-area-content.active');
+            if (!activeContent) return;
+
+            const cards = activeContent.querySelectorAll('.gourmet-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const cardGenres = card.dataset.genre.split(' ');
+
+                if (targetGenre === 'all' || cardGenres.includes(targetGenre)) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // 該当なしメッセージの表示
+            let noResultsMsg = activeContent.querySelector('.no-results-message');
+            if (visibleCount === 0) {
+                if (!noResultsMsg) {
+                    noResultsMsg = document.createElement('div');
+                    noResultsMsg.className = 'no-results-message';
+                    noResultsMsg.innerHTML = `
+                        <div class="no-results-icon">🍽️</div>
+                        <p class="no-results-text">該当するお店がありません</p>
+                    `;
+                    activeContent.appendChild(noResultsMsg);
+                }
+                noResultsMsg.style.display = 'block';
+            } else if (noResultsMsg) {
+                noResultsMsg.style.display = 'none';
+            }
+        });
+    });
+}
+
+// グルメ写真スライダー
+function setupGourmetSliders() {
+    const sliders = document.querySelectorAll('.gourmet-card-slider');
+
+    sliders.forEach(slider => {
+        const images = slider.querySelectorAll('.slider-img');
+        const dots = slider.querySelectorAll('.slider-dots .dot');
+        let currentIndex = 0;
+        let startX = 0;
+        let isDragging = false;
+
+        // ドットクリックで切り替え
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // タッチ操作でスワイプ
+        slider.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        }, { passive: true });
+
+        slider.addEventListener('touchend', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && currentIndex < images.length - 1) {
+                    // 左スワイプ - 次へ
+                    showSlide(currentIndex + 1);
+                } else if (diff < 0 && currentIndex > 0) {
+                    // 右スワイプ - 前へ
+                    showSlide(currentIndex - 1);
+                }
+            }
+        }, { passive: true });
+
+        // マウス操作（PC用）
+        slider.addEventListener('mousedown', (e) => {
+            startX = e.clientX;
+            isDragging = true;
+        });
+
+        slider.addEventListener('mouseup', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+
+            const diff = startX - e.clientX;
+
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && currentIndex < images.length - 1) {
+                    showSlide(currentIndex + 1);
+                } else if (diff < 0 && currentIndex > 0) {
+                    showSlide(currentIndex - 1);
+                }
+            }
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isDragging = false;
+        });
+
+        function showSlide(index) {
+            currentIndex = index;
+
+            images.forEach((img, i) => {
+                if (i === index) {
+                    img.classList.add('active');
+                } else {
+                    img.classList.remove('active');
+                }
+            });
+
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+    });
+}
+
 // ========== 初期化処理 ==========
 // DOMContentLoadedイベントリスナーに追加
 document.addEventListener('DOMContentLoaded', () => {
@@ -826,4 +1007,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupScheduleToggles();
     setupModelCourses();
     setupTriviaAccordion();
+
+    // グルメセクションの機能を初期化
+    setupGourmetTabs();
+    setupGourmetFilters();
+    setupGourmetSliders();
 });

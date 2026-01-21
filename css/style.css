@@ -2545,3 +2545,261 @@ body.shiori-active .header {
         transform: scale(2.5);
     }
 }
+
+/* ========== グルメセクション ========== */
+
+/* エリアタブ */
+.gourmet-area-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 0 16px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.gourmet-area-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.gourmet-area-tab {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 16px;
+    border: 2px solid var(--brick-onsen);
+    border-radius: 25px;
+    background: var(--onsen-white);
+    color: var(--brick-onsen);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.gourmet-area-tab .tab-icon {
+    font-size: 16px;
+}
+
+.gourmet-area-tab:hover {
+    background: var(--steam-pink);
+}
+
+.gourmet-area-tab.active {
+    background: var(--brick-onsen);
+    color: white;
+}
+
+/* ジャンルフィルター */
+.gourmet-genre-filters {
+    display: flex;
+    gap: 8px;
+    padding: 0 16px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.gourmet-genre-filters::-webkit-scrollbar {
+    display: none;
+}
+
+.gourmet-genre-filter {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 12px;
+    border: 1px solid var(--wood-brown);
+    border-radius: 20px;
+    background: var(--onsen-white);
+    color: var(--deep-brick);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.gourmet-genre-filter .filter-icon {
+    font-size: 14px;
+}
+
+.gourmet-genre-filter:hover {
+    background: var(--warm-beige);
+}
+
+.gourmet-genre-filter.active {
+    background: var(--wood-brown);
+    color: white;
+    border-color: var(--wood-brown);
+}
+
+/* エリアコンテンツ */
+.gourmet-area-content {
+    display: none;
+    padding: 0 16px;
+}
+
+.gourmet-area-content.active {
+    display: block;
+}
+
+/* グルメカード */
+.gourmet-card {
+    background: var(--onsen-white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(185, 106, 85, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gourmet-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(185, 106, 85, 0.15);
+}
+
+.gourmet-card.hidden {
+    display: none;
+}
+
+/* 写真スライダー */
+.gourmet-card-slider {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--warm-beige);
+}
+
+.slider-images {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slider-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.slider-img.active {
+    opacity: 1;
+}
+
+.slider-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.slider-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.slider-dots .dot.active {
+    background: white;
+    transform: scale(1.2);
+}
+
+.slider-dots .dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* カード情報 */
+.gourmet-card-info {
+    padding: 16px;
+}
+
+.gourmet-genre-tag {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--brick-onsen);
+    margin-bottom: 8px;
+}
+
+.gourmet-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--deep-brick);
+    margin-bottom: 10px;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+.gourmet-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #5a4a42;
+}
+
+/* 該当店舗なしメッセージ */
+.no-results-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--brick-onsen);
+}
+
+.no-results-message .no-results-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.no-results-message .no-results-text {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* レスポンシブ調整 */
+@media (min-width: 768px) {
+    .gourmet-area-tabs {
+        justify-content: center;
+        padding: 0 20px;
+    }
+
+    .gourmet-genre-filters {
+        justify-content: center;
+        padding: 0 20px;
+    }
+
+    .gourmet-area-content {
+        display: none;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .gourmet-area-content.active {
+        display: block;
+    }
+
+    .gourmet-card-slider {
+        aspect-ratio: 16 / 9;
+    }
+
+    .gourmet-name {
+        font-size: 20px;
+    }
+
+    .gourmet-desc {
+        font-size: 15px;
+    }
+}

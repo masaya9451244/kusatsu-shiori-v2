@@ -1023,10 +1023,568 @@
                     <span class="title-icon">🍽️</span>
                     グルメ
                 </h2>
-                <div class="preparing-message">
-                    <div class="preparing-icon">🍜</div>
-                    <p class="preparing-text">準備中...</p>
-                    <p class="preparing-sub">美味しいお店を探しています</p>
+
+                <!-- エリアタブ -->
+                <div class="gourmet-area-tabs">
+                    <button class="gourmet-area-tab active" data-area="yubatake">
+                        <span class="tab-icon">♨️</span>湯畑
+                    </button>
+                    <button class="gourmet-area-tab" data-area="jizo">
+                        <span class="tab-icon">🏮</span>地蔵
+                    </button>
+                    <button class="gourmet-area-tab" data-area="nishinokawara">
+                        <span class="tab-icon">🌲</span>西の河原
+                    </button>
+                    <button class="gourmet-area-tab" data-area="other">
+                        <span class="tab-icon">🚗</span>その他
+                    </button>
+                </div>
+
+                <!-- ジャンルフィルター -->
+                <div class="gourmet-genre-filters">
+                    <button class="gourmet-genre-filter active" data-genre="all">
+                        <span class="filter-icon">🍽️</span>すべて
+                    </button>
+                    <button class="gourmet-genre-filter" data-genre="cafe">
+                        <span class="filter-icon">☕</span>カフェ
+                    </button>
+                    <button class="gourmet-genre-filter" data-genre="lunch">
+                        <span class="filter-icon">🍚</span>ランチ
+                    </button>
+                    <button class="gourmet-genre-filter" data-genre="street">
+                        <span class="filter-icon">🍡</span>食べ歩き
+                    </button>
+                    <button class="gourmet-genre-filter" data-genre="sweets">
+                        <span class="filter-icon">🍮</span>スイーツ
+                    </button>
+                    <button class="gourmet-genre-filter" data-genre="shop">
+                        <span class="filter-icon">🛍️</span>ショップ
+                    </button>
+                </div>
+
+                <!-- 湯畑エリア -->
+                <div class="gourmet-area-content active" data-area="yubatake">
+                    <!-- 森田コーヒー -->
+                    <div class="gourmet-card" data-genre="cafe">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/森田コーヒー.jpeg" alt="森田コーヒー 外観" class="slider-img active">
+                                <img src="images/グルメ/森田コーヒー料理.jpeg" alt="森田コーヒー 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">☕ カフェ</div>
+                            <h3 class="gourmet-name">森田コーヒー</h3>
+                            <p class="gourmet-desc">丁寧にサイフォンで落としたコーヒーが楽しめるカフェ、モリタコライスや、スパゲッティも楽しめる喫茶店</p>
+                        </div>
+                    </div>
+
+                    <!-- 釜飯まんてん -->
+                    <div class="gourmet-card" data-genre="lunch">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/釜飯まんてん.jpg" alt="釜飯まんてん 外観" class="slider-img active">
+                                <img src="images/グルメ/釜飯まんてん料理.jpg" alt="釜飯まんてん 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍚 ランチ</div>
+                            <h3 class="gourmet-name">釜飯まんてん</h3>
+                            <p class="gourmet-desc">湯畑を眺めながら釜めしが楽しめるお店、海鮮三昧釜めしや鶏や舞茸きのこ釜めし、上州豚チャーシューと舞茸釜めしなどが楽しめる</p>
+                        </div>
+                    </div>
+
+                    <!-- 三國家（みくにや） -->
+                    <div class="gourmet-card" data-genre="lunch">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/三國家(みくにや).jpg" alt="三國家 外観" class="slider-img active">
+                                <img src="images/グルメ/三國家.jpg" alt="三國家 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍚 ランチ</div>
+                            <h3 class="gourmet-name">三國家（みくにや）</h3>
+                            <p class="gourmet-desc">湯畑を下り湯滝通りに入ったところにある行列のできる人気のおそば屋さん。お好みの分量を選べる三國つけ汁そばが人気。</p>
+                        </div>
+                    </div>
+
+                    <!-- 柏香亭 -->
+                    <div class="gourmet-card" data-genre="lunch">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/柏香亭.jpg" alt="柏香亭 外観" class="slider-img active">
+                                <img src="images/グルメ/柏香亭料理.jpg" alt="柏香亭 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍚 ランチ</div>
+                            <h3 class="gourmet-name">柏香亭</h3>
+                            <p class="gourmet-desc">レトロな古民家風の建物が特徴のおそば屋さん。挽き立て・打ち立て・茹で立ての三立てを味わってもらえるように、毎朝石臼で挽き、手打ちしたそばを提供しています。</p>
+                        </div>
+                    </div>
+
+                    <!-- 暖（だん） -->
+                    <div class="gourmet-card" data-genre="lunch">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/暖.jpg" alt="暖 外観" class="slider-img active">
+                                <img src="images/グルメ/暖料理.jpg" alt="暖 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍚 ランチ</div>
+                            <h3 class="gourmet-name">暖（だん）</h3>
+                            <p class="gourmet-desc">分厚いお肉でボリューム満点の豚の生姜焼きが人気のお店。他にもとんかつやてんぷら定食、ビーフカレーやラーメンなど豊富なメニューがラインナップ。</p>
+                        </div>
+                    </div>
+
+                    <!-- 湯畑草菴 -->
+                    <div class="gourmet-card" data-genre="lunch">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/湯畑草菴.jpg" alt="湯畑草菴 外観" class="slider-img active">
+                                <img src="images/グルメ/湯畑草菴料理.jpg" alt="湯畑草菴 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍚 ランチ</div>
+                            <h3 class="gourmet-name">湯畑草菴</h3>
+                            <p class="gourmet-desc">湯畑すぐそばの食事処。地元の食材を使った料理が楽しめます。</p>
+                        </div>
+                    </div>
+
+                    <!-- 湯川テラス -->
+                    <div class="gourmet-card" data-genre="lunch">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/湯川テラス.jpg" alt="湯川テラス 外観" class="slider-img active">
+                                <img src="images/グルメ/湯川テラス料理.jpg" alt="湯川テラス 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍚 ランチ</div>
+                            <h3 class="gourmet-name">湯川テラス</h3>
+                            <p class="gourmet-desc">料理人が監修する料理を、テーブル席やテラス、さらに足湯に入りながら楽しめます。おふくろの味「おきりこみ」、上州牛のひつまぶしなど、群馬の食材をつかった料理やカフェメニューをご用意。</p>
+                        </div>
+                    </div>
+
+                    <!-- うまいもの処（まる天） -->
+                    <div class="gourmet-card" data-genre="street">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/うまいもの処.jpg" alt="うまいもの処 外観" class="slider-img active">
+                                <img src="images/グルメ/うまいもの処料理.jpg" alt="うまいもの処 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍡 食べ歩き</div>
+                            <h3 class="gourmet-name">うまいもの処（まる天）</h3>
+                            <p class="gourmet-desc">食べ歩きにおすすめなのが、お店で揚げたてを提供してくれる「まる天」(各420円)。「たこ棒」「海老マヨ棒」「チーズ棒」の3種類があり、外はカリカリ、中はとろ～りとした食感が楽しめます。</p>
+                        </div>
+                    </div>
+
+                    <!-- 山びこ温泉まんじゅう -->
+                    <div class="gourmet-card" data-genre="street">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/山びこ温泉まんじゅう.jpg" alt="山びこ温泉まんじゅう 外観" class="slider-img active">
+                                <img src="images/グルメ/山びこ温泉まんじゅう料理.jpg" alt="山びこ温泉まんじゅう 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍡 食べ歩き</div>
+                            <h3 class="gourmet-name">山びこ温泉まんじゅう</h3>
+                            <p class="gourmet-desc">こちらの温泉まんじゅうは揚げまんじゅうです。黒ゴマの入った衣が付いて揚げられています。1個から購入可能なので食べ歩きにも適しています。</p>
+                        </div>
+                    </div>
+
+                    <!-- 草津温泉プリン -->
+                    <div class="gourmet-card" data-genre="sweets">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/草津温泉プリン.jpg" alt="草津温泉プリン 外観" class="slider-img active">
+                                <img src="images/グルメ/草津温泉プリン料理.jpg" alt="草津温泉プリン 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍮 スイーツ</div>
+                            <h3 class="gourmet-name">草津温泉プリン</h3>
+                            <p class="gourmet-desc">地元素材にこだわり、草津温泉の湯けむりを感じながら一つ一つ丁寧に手作りしたプリン。なめらかで美味しいプリン「昔ながらの王道プリン」</p>
+                        </div>
+                    </div>
+
+                    <!-- 湯あがり・かりんと -->
+                    <div class="gourmet-card" data-genre="sweets">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/湯あがり・かりんと.jpg" alt="湯あがり・かりんと 外観" class="slider-img active">
+                                <img src="images/グルメ/湯あがり・かりんと料理.jpg" alt="湯あがり・かりんと 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍮 スイーツ</div>
+                            <h3 class="gourmet-name">湯あがり・かりんと</h3>
+                            <p class="gourmet-desc">様々な種類のかりんとが販売されています。ラッピングをオシャレなのでお土産に喜ばれます。湯あがりチーズタルトもおすすめ</p>
+                        </div>
+                    </div>
+
+                    <!-- ごま福堂 -->
+                    <div class="gourmet-card" data-genre="sweets">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/ごま福堂 草津店.jpg" alt="ごま福堂 外観" class="slider-img active">
+                                <img src="images/グルメ/ごま福堂 草津店料理.jpg" alt="ごま福堂 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍮 スイーツ</div>
+                            <h3 class="gourmet-name">ごま福堂 草津店</h3>
+                            <p class="gourmet-desc">鉄板の黒ごま・金ごまのお団子はおすすめNo.1の商品となっており、ここに来たら食べなければいけない団子となっています。ごまの風味をすごく感じることができて、こだわっている商品</p>
+                        </div>
+                    </div>
+
+                    <!-- 花栞 -->
+                    <div class="gourmet-card" data-genre="cafe sweets">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/花栞.jpg" alt="花栞 外観" class="slider-img active">
+                                <img src="images/グルメ/花栞料理.jpg" alt="花栞 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">☕ カフェ / 🍮 スイーツ</div>
+                            <h3 class="gourmet-name">花栞</h3>
+                            <p class="gourmet-desc">「THE・純喫茶」といったレトロプリンやクリームソーダが女子のハートをわしづかみ！令和になろうが、昭和レトロな雰囲気にはきゅんきゅんしちゃう！</p>
+                        </div>
+                    </div>
+
+                    <!-- ナカヨシ堂 -->
+                    <div class="gourmet-card" data-genre="shop">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/ナカヨシ堂.jpg" alt="ナカヨシ堂 外観" class="slider-img active">
+                                <img src="images/グルメ/ナカヨシ堂料理.jpg" alt="ナカヨシ堂 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🛍️ ショップ</div>
+                            <h3 class="gourmet-name">ナカヨシ堂</h3>
+                            <p class="gourmet-desc">あれもこれも映える！これぞレトロ＆エモの宝庫。湯畑の眼の前にある、銭湯をコンセプトにした土産店。レトロかわいい店内には胸が高鳴る魅力的なグッズがズラリ。ソフトクリームソーダはテイクアウトにして湯畑前で撮るのもおすすめ。</p>
+                        </div>
+                    </div>
+
+                    <!-- 頼朝 湯畑店 -->
+                    <div class="gourmet-card" data-genre="shop">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/頼朝 湯畑店.jpg" alt="頼朝 湯畑店 外観" class="slider-img active">
+                                <img src="images/グルメ/頼朝 湯畑店料理.jpg" alt="頼朝 湯畑店 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🛍️ ショップ</div>
+                            <h3 class="gourmet-name">頼朝 湯畑店</h3>
+                            <p class="gourmet-desc">メインは漬物なんですが人気があるのは寒い時期に飲みたくなる純米大吟醸の酒粕を使用した甘酒と温泉たまごです。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 地蔵エリア -->
+                <div class="gourmet-area-content" data-area="jizo">
+                    <!-- カフェ月の貌 -->
+                    <div class="gourmet-card" data-genre="cafe">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/カフェ 月の貌外観.jpg" alt="カフェ月の貌 外観" class="slider-img active">
+                                <img src="images/グルメ/カフェ 月の貌.jpg" alt="カフェ月の貌 店内" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">☕ カフェ</div>
+                            <h3 class="gourmet-name">カフェ月の貌</h3>
+                            <p class="gourmet-desc">にぎやかな湯畑から少し離れた地蔵エリアにできた、落ち着いた大人のためのカフェ。木の香りに包まれた開放的でおしゃれな空間で、湯上がりにホッと一息カフェタイム。香り豊かな空間で、くつろぎのひとときを。</p>
+                        </div>
+                    </div>
+
+                    <!-- 奈良屋 喫茶去 -->
+                    <div class="gourmet-card" data-genre="cafe">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/喫茶去.jpg" alt="奈良屋 喫茶去 外観" class="slider-img active">
+                                <img src="images/グルメ/喫茶去料理.jpg" alt="奈良屋 喫茶去 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">☕ カフェ</div>
+                            <h3 class="gourmet-name">奈良屋 喫茶去</h3>
+                            <p class="gourmet-desc">店内は「木のぬくもりをいかしたモダンな空間」をイメージしている。抹茶と黒ごまプリンのパフェやサイフォンを使い1杯ずつ丁寧にいれた珈琲が名物。喫茶去とは「どうぞ、一服召し上がれ」という禅語のひとつなんだそうですよ。</p>
+                        </div>
+                    </div>
+
+                    <!-- TEA ROOM Yuki Usagi -->
+                    <div class="gourmet-card" data-genre="cafe">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/TEA ROOM Yuki Usagi.jpg" alt="TEA ROOM Yuki Usagi 外観" class="slider-img active">
+                                <img src="images/グルメ/TEA ROOM Yuki Usagi料理.png" alt="TEA ROOM Yuki Usagi 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">☕ カフェ</div>
+                            <h3 class="gourmet-name">TEA ROOM Yuki Usagi</h3>
+                            <p class="gourmet-desc">ゆきうさぎの自慢は煮出して作る濃いミルクティーとふんわりスコーン、そしてしっとりカステラ。ゆっくりたっぷりお楽しみいただけるよう、紅茶とミルクティーはポットでお出ししています。</p>
+                        </div>
+                    </div>
+
+                    <!-- TOLO STAND -->
+                    <div class="gourmet-card" data-genre="street">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/TOLO STAND.jpg" alt="TOLO STAND 外観" class="slider-img active">
+                                <img src="images/グルメ/TOLO STAND料理.jpg" alt="TOLO STAND 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍡 食べ歩き</div>
+                            <h3 class="gourmet-name">TOLO STAND</h3>
+                            <p class="gourmet-desc">お地蔵さんの形をした太鼓焼、ラッキー地蔵焼きをはじめとした食べ歩きにぴったりなフード・ドリンクが販売されています。</p>
+                        </div>
+                    </div>
+
+                    <!-- 射的茶屋祭りや -->
+                    <div class="gourmet-card" data-genre="street">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/射的茶屋祭りや.jpg" alt="射的茶屋祭りや 外観" class="slider-img active">
+                                <img src="images/グルメ/射的茶屋祭りや料理.jpg" alt="射的茶屋祭りや 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍡 食べ歩き</div>
+                            <h3 class="gourmet-name">射的茶屋祭りや</h3>
+                            <p class="gourmet-desc">射的はコルク銃で的を撃ち、景品を落とすシンプルなルールで、子どもから大人まで楽しめます。そこにある団子とフルーツ飴を売っている店舗。焼き印をジュ～っと体験できるのは面白い</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 西の河原エリア -->
+                <div class="gourmet-area-content" data-area="nishinokawara">
+                    <!-- 清月堂 カフェ -->
+                    <div class="gourmet-card" data-genre="cafe sweets">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/清月堂 カフェ花いんげん.jpg" alt="清月堂 カフェ 外観" class="slider-img active">
+                                <img src="images/グルメ/清月堂 カフェ花いんげん料理.jpg" alt="清月堂 カフェ 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">☕ カフェ / 🍮 スイーツ</div>
+                            <h3 class="gourmet-name">清月堂 カフェ</h3>
+                            <p class="gourmet-desc">自家製の花いんげん豆の入ったどらやきが1個丸々はいっているという和風のティラミス</p>
+                        </div>
+                    </div>
+
+                    <!-- 湯の香本舗 -->
+                    <div class="gourmet-card" data-genre="street">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/湯の香本舗.jpg" alt="湯の香本舗 外観" class="slider-img active">
+                                <img src="images/グルメ/湯の香本舗料理.jpg" alt="湯の香本舗 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍡 食べ歩き</div>
+                            <h3 class="gourmet-name">湯の香本舗</h3>
+                            <p class="gourmet-desc">草津の清らかな天然水をそのまま閉じこめた、透明感のあるわらび餅です。舟皿の上にちょこんと可愛らしく乗った風船を爪楊枝で割ると、わらび餅が、ぷるぷる震えながらあらわれます。創業110余年の土産店「草津温泉 湯の香本舗」の新名物です。</p>
+                        </div>
+                    </div>
+
+                    <!-- 上州地粉うどん まつもと -->
+                    <div class="gourmet-card" data-genre="lunch">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/上州地粉うどん まつもと.jpg" alt="上州地粉うどん まつもと 外観" class="slider-img active">
+                                <img src="images/グルメ/上州地粉うどん まつもと料理.jpg" alt="上州地粉うどん まつもと 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍚 ランチ</div>
+                            <h3 class="gourmet-name">上州地粉うどん まつもと</h3>
+                            <p class="gourmet-desc">群馬の地粉を使用したひもかわうどんとおっきりこみ（冬季限定）、上州もち豚を使用したソースカツ丼など地元の食材が食べられるお店です。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- その他エリア -->
+                <div class="gourmet-area-content" data-area="other">
+                    <!-- グランデフューメ -->
+                    <div class="gourmet-card" data-genre="sweets">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/グランデフューメ.avif" alt="グランデフューメ 外観" class="slider-img active">
+                                <img src="images/グルメ/グランデフューメ料理.avif" alt="グランデフューメ 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍮 スイーツ</div>
+                            <h3 class="gourmet-name">グランデフューメ</h3>
+                            <p class="gourmet-desc">イタリアンソフトジェラートをラスクなど十数種類のトッピングで自由に楽しめるブッフェスタイルのお店です</p>
+                        </div>
+                    </div>
+
+                    <!-- 洋風レストランどんぐり -->
+                    <div class="gourmet-card" data-genre="lunch">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/どんぐり.jpg" alt="洋風レストランどんぐり 外観" class="slider-img active">
+                                <img src="images/グルメ/どんぐり料理.jpg" alt="洋風レストランどんぐり 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍚 ランチ</div>
+                            <h3 class="gourmet-name">洋風レストランどんぐり</h3>
+                            <p class="gourmet-desc">カレーやハンバーグなどの洋風のレストラン、舞茸うどんや蕎麦の店が多いですが、それらとはまた異なる草津の地を代表するお店</p>
+                        </div>
+                    </div>
+
+                    <!-- おかき処 寺子屋本舗 -->
+                    <div class="gourmet-card" data-genre="shop">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/おかき処寺子屋本舗草津.jpg" alt="おかき処 寺子屋本舗 外観" class="slider-img active">
+                                <img src="images/グルメ/おかき処寺子屋本舗草津料理.jpg" alt="おかき処 寺子屋本舗 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🛍️ ショップ</div>
+                            <h3 class="gourmet-name">おかき処 寺子屋本舗 草津店</h3>
+                            <p class="gourmet-desc">醤油香るおかき。軽い手土産に。</p>
+                        </div>
+                    </div>
+
+                    <!-- 草津たまごファーム -->
+                    <div class="gourmet-card" data-genre="sweets shop">
+                        <div class="gourmet-card-slider">
+                            <div class="slider-images">
+                                <img src="images/グルメ/草津たまごファーム.jpg" alt="草津たまごファーム 外観" class="slider-img active">
+                                <img src="images/グルメ/草津たまごファーム料理.jpg" alt="草津たまごファーム 料理" class="slider-img">
+                            </div>
+                            <div class="slider-dots">
+                                <span class="dot active"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="gourmet-card-info">
+                            <div class="gourmet-genre-tag">🍮 スイーツ / 🛍️ ショップ</div>
+                            <h3 class="gourmet-name">草津たまごファーム</h3>
+                            <p class="gourmet-desc">草津たまごファームは、群馬県産のこだわり卵を使った『たまご菓子専門店』です。とにかくなめらかな口当たりでたまごの味がしっかり残っており、こだわった商品作りをしている</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
