@@ -684,6 +684,8 @@ function setupSightseeingTabs() {
 
                 // 地図の初期化（表示時に行う）
                 initMapIfNeeded(targetArea);
+                // 既存の地図のサイズを再調整
+                refreshMapSize(targetArea);
             }
         });
     });
@@ -941,10 +943,25 @@ function initMapIfNeeded(areaId) {
 
     maps[areaId] = map;
 
-    // 地図のサイズ調整（表示後に必要）
+    // 地図のサイズ調整（表示後に必要・複数回実行で確実に）
     setTimeout(() => {
         map.invalidateSize();
     }, 100);
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 300);
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 500);
+}
+
+// 既存の地図のサイズを再調整
+function refreshMapSize(areaId) {
+    if (maps[areaId]) {
+        setTimeout(() => {
+            maps[areaId].invalidateSize();
+        }, 100);
+    }
 }
 
 // ========== 初期化処理を更新 ==========
