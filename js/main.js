@@ -856,53 +856,61 @@ function setupTriviaAccordion() {
     });
 }
 
-// ========== Leaflet.js 地図初期化 ==========
+// ========== Google Maps API 地図初期化 ==========
 let maps = {};
+let markers = {};
 
-// 各エリアのスポット座標データ（fitBoundsで自動調整するためcenter/zoomは不要）
-// 座標はアプリ内で調整済み（緯度-0.004, 経度-0.008）
+// 各エリアのスポット座標データ（Google Maps座標をそのまま使用）
 const spotCoordinates = {
     yubatake: {
-        // 湯畑エリア - 調整済み座標
+        // 湯畑エリア - Google Maps実測座標
+        center: { lat: 36.6188, lng: 138.5967 },
+        zoom: 17,
         spots: [
-            { id: 'yubatake-main', name: '湯畑', lat: 36.6228, lng: 138.5967 },
-            { id: 'yubatake-kumiwaku', name: '御汲み上げの湯枠', lat: 36.6230, lng: 138.5965 },
-            { id: 'yubatake-yutoi', name: '湯樋', lat: 36.6229, lng: 138.5969 },
-            { id: 'yubatake-yukemuri', name: '湯けむり亭', lat: 36.6225, lng: 138.5963 },
-            { id: 'yubatake-yutaki', name: '湯滝', lat: 36.6223, lng: 138.5971 },
-            { id: 'yubatake-tourou', name: '湯滝の灯篭', lat: 36.6222, lng: 138.5970 },
-            { id: 'yubatake-hi', name: '御汲上げの碑', lat: 36.6231, lng: 138.5966 },
-            { id: 'yubatake-yuji', name: '湯路広場', lat: 36.6224, lng: 138.5960 },
-            { id: 'yubatake-netsunoyu', name: '熱乃湯', lat: 36.6233, lng: 138.5962 },
-            { id: 'yubatake-mandarado', name: 'まんだら堂', lat: 36.6235, lng: 138.5959 },
-            { id: 'yubatake-tomoeya', name: 'ともえや', lat: 36.6234, lng: 138.5957 },
-            { id: 'yubatake-osayu', name: 'おさ湯', lat: 36.6237, lng: 138.5961 },
-            { id: 'yubatake-illumi', name: 'イルミネーション', lat: 36.6227, lng: 138.5966 },
-            { id: 'yubatake-onsenmon', name: '温泉門', lat: 36.6220, lng: 138.5960 },
-            { id: 'yubatake-ichii', name: '一井お土産センター', lat: 36.6231, lng: 138.5960 }
+            { id: 'yubatake-main', name: '湯畑', lat: 36.6188, lng: 138.5967 },
+            { id: 'yubatake-kumiwaku', name: '御汲み上げの湯枠', lat: 36.6191, lng: 138.5964 },
+            { id: 'yubatake-yutoi', name: '湯樋', lat: 36.6186, lng: 138.5969 },
+            { id: 'yubatake-yukemuri', name: '湯けむり亭', lat: 36.6183, lng: 138.5962 },
+            { id: 'yubatake-yutaki', name: '湯滝', lat: 36.6181, lng: 138.5971 },
+            { id: 'yubatake-tourou', name: '湯滝の灯篭', lat: 36.6180, lng: 138.5970 },
+            { id: 'yubatake-hi', name: '御汲上げの碑', lat: 36.6192, lng: 138.5965 },
+            { id: 'yubatake-yuji', name: '湯路広場', lat: 36.6182, lng: 138.5959 },
+            { id: 'yubatake-netsunoyu', name: '熱乃湯', lat: 36.6195, lng: 138.5961 },
+            { id: 'yubatake-mandarado', name: 'まんだら堂', lat: 36.6198, lng: 138.5958 },
+            { id: 'yubatake-tomoeya', name: 'ともえや', lat: 36.6197, lng: 138.5955 },
+            { id: 'yubatake-osayu', name: 'おさ湯', lat: 36.6200, lng: 138.5960 },
+            { id: 'yubatake-illumi', name: 'イルミネーション', lat: 36.6187, lng: 138.5966 },
+            { id: 'yubatake-onsenmon', name: '温泉門', lat: 36.6178, lng: 138.5958 },
+            { id: 'yubatake-ichii', name: '一井お土産センター', lat: 36.6193, lng: 138.5959 }
         ]
     },
     sainokawara: {
-        // 西の河原エリア - 調整済み座標
+        // 西の河原エリア - Google Maps実測座標
+        center: { lat: 36.6210, lng: 138.5935 },
+        zoom: 16,
         spots: [
-            { id: 'sainokawara-dori', name: '西の河原通り', lat: 36.6235, lng: 138.5950 },
-            { id: 'sainokawara-park', name: '西の河原公園', lat: 36.6260, lng: 138.5900 },
-            { id: 'sainokawara-glass', name: '草津ガラス蔵', lat: 36.6238, lng: 138.5945 }
+            { id: 'sainokawara-dori', name: '西の河原通り', lat: 36.6200, lng: 138.5948 },
+            { id: 'sainokawara-park', name: '西の河原公園', lat: 36.6230, lng: 138.5905 },
+            { id: 'sainokawara-glass', name: '草津ガラス蔵', lat: 36.6203, lng: 138.5943 }
         ]
     },
     urakusatsu: {
-        // 裏草津エリア - 調整済み座標
+        // 裏草津エリア - Google Maps実測座標
+        center: { lat: 36.6175, lng: 138.5980 },
+        zoom: 17,
         spots: [
-            { id: 'urakusatsu-jizo', name: '裏草津 地蔵', lat: 36.6215, lng: 138.5975 },
-            { id: 'urakusatsu-kaoyu', name: '顔湯', lat: 36.6216, lng: 138.5976 },
-            { id: 'urakusatsu-ashiyu', name: '足湯', lat: 36.6214, lng: 138.5974 },
-            { id: 'urakusatsu-tearai', name: '手洗乃湯', lat: 36.6217, lng: 138.5977 },
-            { id: 'urakusatsu-manga', name: '漫画堂', lat: 36.6212, lng: 138.5979 },
-            { id: 'urakusatsu-hyakunen', name: '百年石別邸', lat: 36.6210, lng: 138.5982 },
-            { id: 'urakusatsu-takadai', name: '高台広場', lat: 36.6209, lng: 138.5985 }
+            { id: 'urakusatsu-jizo', name: '裏草津 地蔵', lat: 36.6175, lng: 138.5978 },
+            { id: 'urakusatsu-kaoyu', name: '顔湯', lat: 36.6176, lng: 138.5979 },
+            { id: 'urakusatsu-ashiyu', name: '足湯', lat: 36.6174, lng: 138.5977 },
+            { id: 'urakusatsu-tearai', name: '手洗乃湯', lat: 36.6177, lng: 138.5980 },
+            { id: 'urakusatsu-manga', name: '漫画堂', lat: 36.6172, lng: 138.5982 },
+            { id: 'urakusatsu-hyakunen', name: '百年石別邸', lat: 36.6170, lng: 138.5985 },
+            { id: 'urakusatsu-takadai', name: '高台広場', lat: 36.6168, lng: 138.5988 }
         ]
     },
     shuhen: {
+        center: { lat: 36.4550, lng: 139.0920 },
+        zoom: 15,
         spots: [
             { id: 'shuhen-meiken', name: '世界の名犬牧場', lat: 36.4550, lng: 139.0920 }
         ]
@@ -916,81 +924,109 @@ function initMapIfNeeded(areaId) {
     const areaData = spotCoordinates[areaId];
     if (!areaData) return;
 
+    // Google Maps APIが読み込まれているか確認
+    if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+        setTimeout(() => initMapIfNeeded(areaId), 100);
+        return;
+    }
+
     // コンテナサイズが確定するまで待機
     if (mapContainer.offsetWidth === 0 || mapContainer.offsetHeight === 0) {
         setTimeout(() => initMapIfNeeded(areaId), 100);
         return;
     }
 
-    // Leaflet地図を初期化（center/zoomは後でfitBoundsで設定）
-    const map = L.map(`map-${areaId}`, {
-        scrollWheelZoom: true,
-        zoomControl: true
+    // Google Maps初期化
+    const map = new google.maps.Map(mapContainer, {
+        zoom: areaData.zoom || 17,
+        center: areaData.center,
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false,
+        zoomControl: true,
+        styles: [
+            {
+                featureType: 'poi',
+                elementType: 'labels',
+                stylers: [{ visibility: 'off' }]
+            }
+        ]
     });
 
-    // CartoDB Voyagerタイル（シンプルでモダンな地図）
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 19
-    }).addTo(map);
+    markers[areaId] = [];
 
-    // カスタムアイコン
-    const customIcon = L.divIcon({
-        className: 'custom-marker',
-        html: '<div style="background: #B96A55; width: 32px; height: 32px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 3px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.3);"></div>',
-        iconSize: [32, 32],
-        iconAnchor: [16, 32],
-        popupAnchor: [0, -32]
-    });
+    // カスタムマーカーアイコン
+    const markerIcon = {
+        path: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z',
+        fillColor: '#B96A55',
+        fillOpacity: 1,
+        strokeColor: '#ffffff',
+        strokeWeight: 2,
+        scale: 1.5,
+        anchor: new google.maps.Point(12, 22)
+    };
 
     // スポットのピンを追加
     areaData.spots.forEach(spot => {
-        const marker = L.marker([spot.lat, spot.lng], { icon: customIcon })
-            .addTo(map)
-            .bindPopup(`<b>${spot.name}</b>`)
-            .on('click', () => {
-                // 対応するカードまでスクロール
-                const card = document.querySelector(`[data-spot-id="${spot.id}"]`);
-                if (card) {
-                    card.classList.add('highlighted');
-                    setTimeout(() => {
-                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 300);
-                    setTimeout(() => {
-                        card.classList.remove('highlighted');
-                    }, 2000);
-                }
+        const marker = new google.maps.Marker({
+            position: { lat: spot.lat, lng: spot.lng },
+            map: map,
+            title: spot.name,
+            icon: markerIcon
+        });
+
+        // InfoWindow（ポップアップ）
+        const infoWindow = new google.maps.InfoWindow({
+            content: `<div style="font-weight: bold; padding: 5px;">${spot.name}</div>`
+        });
+
+        marker.addListener('click', () => {
+            // 他のInfoWindowを閉じる
+            markers[areaId].forEach(m => {
+                if (m.infoWindow) m.infoWindow.close();
             });
+            infoWindow.open(map, marker);
+
+            // 対応するカードまでスクロール
+            const card = document.querySelector(`[data-spot-id="${spot.id}"]`);
+            if (card) {
+                card.classList.add('highlighted');
+                setTimeout(() => {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+                setTimeout(() => {
+                    card.classList.remove('highlighted');
+                }, 2000);
+            }
+        });
+
+        marker.infoWindow = infoWindow;
+        markers[areaId].push(marker);
     });
 
     maps[areaId] = map;
 
-    // 全ピンが収まる範囲を計算して即座に適用
-    const bounds = L.latLngBounds(areaData.spots.map(spot => [spot.lat, spot.lng]));
-    map.fitBounds(bounds, { padding: [30, 30] });
-
-    // サイズ確定後に再フィット（1回のみ）
-    setTimeout(() => {
-        map.invalidateSize();
-        map.fitBounds(bounds, { padding: [30, 30] });
-    }, 300);
-
-    // ResizeObserverでコンテナサイズ変更を監視
-    const resizeObserver = new ResizeObserver(() => {
-        map.invalidateSize();
-    });
-    resizeObserver.observe(mapContainer);
+    // 全ピンが収まるように調整
+    if (areaData.spots.length > 1) {
+        const bounds = new google.maps.LatLngBounds();
+        areaData.spots.forEach(spot => {
+            bounds.extend({ lat: spot.lat, lng: spot.lng });
+        });
+        map.fitBounds(bounds, { top: 30, right: 30, bottom: 30, left: 30 });
+    }
 }
 
 // 既存の地図のサイズを再調整
 function refreshMapSize(areaId) {
     if (maps[areaId]) {
+        google.maps.event.trigger(maps[areaId], 'resize');
         const areaData = spotCoordinates[areaId];
-        maps[areaId].invalidateSize();
-        if (areaData && areaData.spots.length > 0) {
-            const bounds = L.latLngBounds(areaData.spots.map(spot => [spot.lat, spot.lng]));
-            maps[areaId].fitBounds(bounds, { padding: [30, 30] });
+        if (areaData && areaData.spots.length > 1) {
+            const bounds = new google.maps.LatLngBounds();
+            areaData.spots.forEach(spot => {
+                bounds.extend({ lat: spot.lat, lng: spot.lng });
+            });
+            maps[areaId].fitBounds(bounds, { top: 30, right: 30, bottom: 30, left: 30 });
         }
     }
 }
