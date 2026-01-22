@@ -963,15 +963,22 @@ function setupGourmetSliders() {
     const sliders = document.querySelectorAll('.gourmet-card-slider');
 
     sliders.forEach(slider => {
+        // 既にセットアップ済みならスキップ
+        if (slider.dataset.sliderInit === 'true') return;
+        slider.dataset.sliderInit = 'true';
+
         const images = slider.querySelectorAll('.slider-img');
         const dots = slider.querySelectorAll('.slider-dots .dot');
         let currentIndex = 0;
         let startX = 0;
+        let startY = 0;
         let isDragging = false;
+        let isHorizontalSwipe = null;
 
         // ドットクリックで切り替え
         dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
                 showSlide(index);
             });
         });
@@ -979,17 +986,40 @@ function setupGourmetSliders() {
         // タッチ操作でスワイプ
         slider.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
             isDragging = true;
+            isHorizontalSwipe = null;
         }, { passive: true });
+
+        slider.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
+            const diffX = Math.abs(currentX - startX);
+            const diffY = Math.abs(currentY - startY);
+
+            // 最初の移動で水平か垂直か判定
+            if (isHorizontalSwipe === null && (diffX > 10 || diffY > 10)) {
+                isHorizontalSwipe = diffX > diffY;
+            }
+
+            // 水平スワイプの場合はスクロールを防止
+            if (isHorizontalSwipe) {
+                e.preventDefault();
+            }
+        }, { passive: false });
 
         slider.addEventListener('touchend', (e) => {
             if (!isDragging) return;
             isDragging = false;
 
+            if (!isHorizontalSwipe) return;
+
             const endX = e.changedTouches[0].clientX;
             const diff = startX - endX;
 
-            if (Math.abs(diff) > 50) {
+            if (Math.abs(diff) > 30) {
                 if (diff > 0 && currentIndex < images.length - 1) {
                     // 左スワイプ - 次へ
                     showSlide(currentIndex + 1);
@@ -998,12 +1028,14 @@ function setupGourmetSliders() {
                     showSlide(currentIndex - 1);
                 }
             }
+            isHorizontalSwipe = null;
         }, { passive: true });
 
         // マウス操作（PC用）
         slider.addEventListener('mousedown', (e) => {
             startX = e.clientX;
             isDragging = true;
+            e.preventDefault();
         });
 
         slider.addEventListener('mouseup', (e) => {
@@ -1012,7 +1044,7 @@ function setupGourmetSliders() {
 
             const diff = startX - e.clientX;
 
-            if (Math.abs(diff) > 50) {
+            if (Math.abs(diff) > 30) {
                 if (diff > 0 && currentIndex < images.length - 1) {
                     showSlide(currentIndex + 1);
                 } else if (diff < 0 && currentIndex > 0) {

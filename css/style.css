@@ -2675,6 +2675,14 @@ body.shiori-active .header {
     aspect-ratio: 16 / 10;
     overflow: hidden;
     background: var(--warm-beige);
+    cursor: grab;
+    touch-action: pan-y pinch-zoom;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.gourmet-card-slider:active {
+    cursor: grabbing;
 }
 
 .slider-images {
