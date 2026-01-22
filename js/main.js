@@ -1060,13 +1060,11 @@ function setupGourmetSliders() {
         function showSlide(index) {
             currentIndex = index;
 
-            images.forEach((img, i) => {
-                if (i === index) {
-                    img.classList.add('active');
-                } else {
-                    img.classList.remove('active');
-                }
-            });
+            // 横スライドで切り替え
+            const sliderImages = slider.querySelector('.slider-images');
+            if (sliderImages) {
+                sliderImages.style.transform = `translateX(-${index * 50}%)`;
+            }
 
             dots.forEach((dot, i) => {
                 if (i === index) {

@@ -2686,24 +2686,17 @@ body.shiori-active .header {
 }
 
 .slider-images {
-    position: relative;
-    width: 100%;
+    display: flex;
+    width: 200%;
     height: 100%;
+    transition: transform 0.3s ease;
 }
 
 .slider-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    width: 50%;
     height: 100%;
     object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.slider-img.active {
-    opacity: 1;
+    flex-shrink: 0;
 }
 
 .slider-dots {
