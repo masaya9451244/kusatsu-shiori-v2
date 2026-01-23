@@ -2814,3 +2814,28 @@ body.shiori-active .header {
         font-size: 15px;
     }
 }
+
+/* ========== Google Mapリンクボタン ========== */
+.spot-map-link,
+.gourmet-map-link {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 16px;
+    background: var(--brick-onsen);
+    color: white;
+    border-radius: 20px;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.spot-map-link:hover,
+.gourmet-map-link:hover {
+    background: var(--deep-brick);
+    transform: scale(1.02);
+}
+
+.spot-map-link:active,
+.gourmet-map-link:active {
+    transform: scale(0.98);
+}
